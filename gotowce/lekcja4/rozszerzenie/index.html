@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moja strona</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <span class="logo">GameStudio</span>
+    <div class="nav-links">
+      <a href="#start">Start</a>
+      <a href="#o-nas">O nas</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+  </nav>
+  <header>
+    <h1>Moja pierwsza strona</h1>
+    <p>Uczymy sie budowac uklad strony</p>
+  </header>
+  <section id="start" class="light">
+    <h2>Witaj na stronie</h2>
+    <p>Witaj w GameStudio! Tworzymy gry, ktore bawia i ucza.</p>
+    <p>Nasza misja to dostarczac rozrywke dla graczy.</p>
+    <p>Sprawdz nasze najnowsze projekty ponizej.</p>
+  </section>
+  <section id="o-nas" class="dark">
+    <h2>O nas</h2>
+    <p>Jestesmy zespolem pasjonatow programowania i designu.</p>
+    <p>Dzialamy od 2020 roku i stworzylismy juz 5 gier.</p>
+    <p>Nasz zespol sklada sie z 10 osob z calej Polski.</p>
+  </section>
+  <section id="kontakt" class="light">
+    <h2>Kontakt</h2>
+    <p>Chcesz z nami wspolpracowac? Napisz do nas!</p>
+    <p>Odpowiadamy na wiadomosci w ciagu 24 godzin.</p>
+    <p>Znajdziesz nas tez na portalach spolecznosciowych.</p>
+  </section>
+  <footer>
+    <p>Wszystkie prawa zastrzezone 2026</p>
+  </footer>
+  <script>
+    "use strict";
+    window.addEventListener("scroll", function() {
+      var nav = document.querySelector("nav");
+      if (window.scrollY > 50) {
+        nav.classList.add("scrolled");
+      } else {
+        nav.classList.remove("scrolled");
+      }
+    });
+  </script>
+</body>
+</html>

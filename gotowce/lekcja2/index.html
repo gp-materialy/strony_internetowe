@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karta Gracza</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="player-card">
+    <header class="card-header">
+      <figure class="avatar">
+        <img src="https://api.dicebear.com/7.x/pixel-art/svg?seed=PixelMaster" alt="Awatar gracza" width="80" height="80">
+        <figcaption>Awatar: PixelMaster_99</figcaption>
+      </figure>
+      <h1>🎮 Karta Gracza</h1>
+      <p>Nick: <span class="highlight">PixelMaster_99</span></p>
+    </header>
+
+    <nav class="card-nav">
+      <a href="#bio">📋 Bio</a>
+      <a href="#equipment">⚔️ Ekwipunek</a>
+      <a href="#achievements">🏆 Osiągnięcia</a>
+    </nav>
+
+    <section class="card-section bio" id="bio">
+      <h2>📋 Bio</h2>
+      <p>Poziom: <strong>42</strong></p>
+      <p>Klasa: <strong><mark>Mag Ognia</mark></strong></p>
+      <p>Gildia: <strong>Rycerze Pixeli</strong></p>
+    </section>
+
+    <section class="card-section equipment" id="equipment">
+      <h2>⚔️ Ekwipunek</h2>
+      <ul>
+        <li><mark>Różdżka Płomieni +5</mark></li>
+        <li>Szata Arcymaga</li>
+        <li>Pierścień Ochrony</li>
+      </ul>
+    </section>
+
+    <section class="card-section achievements" id="achievements">
+      <h2>🏆 Osiągnięcia</h2>
+      <ul>
+        <li>Pogromca Smoków</li>
+        <li>Mistrz Alchemii</li>
+        <li>Pierwsze 1000 punktów</li>
+      </ul>
+      <details>
+        <summary>Pokaż szczegóły osiągnięć</summary>
+        <p>Pogromca Smoków — zdobyte 15.03.2025 w lochu Ognia.</p>
+        <p>Mistrz Alchemii — ukończono 50 receptur.</p>
+        <p>Pierwsze 1000 pkt — osiągnięte w 3 dni od startu!</p>
+      </details>
+    </section>
+
+    <footer class="card-footer">
+      <p>Ostatnia aktywność: <time datetime="2025-04-01">1 kwietnia 2025</time></p>
+    </footer>
+  </main>
+</body>
+</html>
