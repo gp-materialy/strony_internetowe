@@ -1,0 +1,76 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Segoe UI", Arial, sans-serif;
+	color: rgb(31, 41, 55);
+	min-height: 100vh;
+	background: linear-gradient(135deg, hsl(220, 70%, 20%), hsl(280, 60%, 30%));
+}
+
+header {
+	padding: 24px 32px;
+	color: white;
+	background: rgba(0, 0, 0, 0.35);
+	text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+nav ul {
+	list-style: none;
+	display: flex;
+	gap: 16px;
+	margin-top: 12px;
+}
+
+nav a {
+	color: white;
+	text-decoration: none;
+}
+
+#intro {
+	padding: 32px;
+	color: white;
+	text-align: center;
+}
+
+.ranking-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	padding: 32px;
+	justify-content: center;
+}
+
+.phone-card {
+	background: radial-gradient(circle at top, #ffffff, #e5e7eb);
+	border-radius: 16px;
+	padding: 20px;
+	width: 280px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+	text-align: center;
+}
+
+.phone-card img {
+	width: 100%;
+	border-radius: 12px;
+	margin-bottom: 12px;
+}
+
+.phone-card .score {
+	display: inline-block;
+	margin-top: 12px;
+	padding: 6px 12px;
+	background: rgb(34, 197, 94);
+	color: white;
+	border-radius: 999px;
+}
+
+footer {
+	padding: 24px;
+	text-align: center;
+	color: white;
+	background: rgba(0, 0, 0, 0.4);
+}
