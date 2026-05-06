@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐛 Złap błąd w formularzu!</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F58220;
+    --orange-light: #F8E2CB;
+    --purple: #6F499D;
+    --purple-light: #D4CFE5;
+    --purple-mid: #B4A8CE;
+    --dark: #2D2D2D;
+    --gray-bg: #F5F5F5;
+    --white: #FFFFFF;
+    --red: #E74C3C;
+    --red-light: #FDEDEC;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--gray-bg);
+    color: var(--dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── top bar ── */
+  .topbar {
+    background: var(--purple);
+    color: var(--white);
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 14px;
+    letter-spacing: .5px;
+    font-weight: 700;
+  }
+  .topbar span { color: var(--orange-light); }
+
+  /* ── hero ── */
+  .hero {
+    background: linear-gradient(135deg, var(--purple) 0%, #8B6AB5 50%, var(--orange) 100%);
+    padding: 50px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '{ }  < / >  ( )  [ ]  !=  &&  ||  ===';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fira Code', monospace;
+    font-size: 80px;
+    color: rgba(255,255,255,.06);
+    letter-spacing: 20px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .hero h1 .bug { display: inline-block; animation: wiggle 1.5s ease-in-out infinite; }
+  @keyframes wiggle {
+    0%,100% { transform: rotate(0deg); }
+    25% { transform: rotate(-12deg) scale(1.15); }
+    75% { transform: rotate(12deg) scale(1.15); }
+  }
+  .hero p {
+    color: rgba(255,255,255,.85);
+    font-size: clamp(14px, 2.5vw, 18px);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  /* ── timer bar ── */
+  .timer-section {
+    background: var(--white);
+    border-bottom: 3px solid var(--orange);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+  }
+  .timer-display {
+    font-family: 'Fira Code', monospace;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--purple);
+    min-width: 130px;
+    text-align: center;
+    transition: color .3s;
+  }
+  .timer-display.danger { color: var(--red); animation: pulse .5s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.5; } }
+
+  .timer-btn {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-start {
+    background: var(--orange);
+    color: var(--white);
+  }
+  .btn-start:hover { background: #e0740f; transform: scale(1.05); }
+  .btn-reset {
+    background: var(--purple-light);
+    color: var(--purple);
+  }
+  .btn-reset:hover { background: var(--purple-mid); }
+  .btn-reveal {
+    background: var(--purple);
+    color: var(--white);
+    display: none;
+  }
+  .btn-reveal:hover { background: #5a3a85; transform: scale(1.05); }
+
+  /* ── form card ── */
+  .form-wrapper {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px 60px;
+  }
+  .form-card {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(111,73,157,.12);
+    overflow: hidden;
+  }
+  .form-header {
+    background: var(--purple);
+    color: var(--white);
+    padding: 24px 32px;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .form-header .dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .form-header .dot:nth-child(1) { background: #E74C3C; }
+  .form-header .dot:nth-child(2) { background: #F39C12; }
+  .form-header .dot:nth-child(3) { background: #2ECC71; }
+
+  .form-body { padding: 32px; }
+
+  .field {
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .field-number {
+    position: absolute;
+    left: -8px;
+    top: -8px;
+    width: 28px;
+    height: 28px;
+    background: var(--orange);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(245,130,32,.35);
+  }
+  .field label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--purple);
+    font-size: 15px;
+    padding-left: 26px;
+  }
+  .field label .required {
+    color: var(--red);
+    margin-left: 2px;
+  }
+  .field label .tag {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    background: var(--purple-light);
+    color: var(--purple);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: 500;
+  }
+
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #E0D8EA;
+    border-radius: 12px;
+    font-family: 'Fira Code', monospace;
+    font-size: 15px;
+    color: var(--dark);
+    background: var(--gray-bg);
+    transition: border-color .2s;
+    outline: none;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    border-color: var(--purple);
+    background: var(--white);
+  }
+  .field textarea { resize: vertical; min-height: 70px; }
+
+  .field-error-value {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* checkbox */
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--gray-bg);
+    border: 2px solid #E0D8EA;
+    border-radius: 12px;
+  }
+  .checkbox-row input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--purple);
+  }
+  .checkbox-row span {
+    font-size: 14px;
+    color: var(--dark);
+  }
+
+  /* ── submit ── */
+  .submit-row { text-align: center; margin-top: 8px; }
+  .submit-btn {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 16px 60px;
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(245,130,32,.35);
+    transition: all .2s;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(245,130,32,.45); }
+
+  /* ── error hints (hidden by default) ── */
+  .error-hint {
+    display: none;
+    margin-top: 8px;
+    padding: 10px 14px;
+    background: var(--red-light);
+    border-left: 4px solid var(--red);
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--dark);
+    animation: slideIn .3s ease-out;
+  }
+  .error-hint.visible { display: block; }
+  @keyframes slideIn { from { opacity:0; transform:translateX(-10px); } to { opacity:1; transform:translateX(0); } }
+  .error-hint strong { color: var(--red); }
+  .error-hint code {
+    font-family: 'Fira Code', monospace;
+    background: rgba(231,76,60,.1);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+  /* ── score panel ── */
+  .score-panel {
+    display: none;
+    max-width: 700px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+  }
+  .score-panel.visible { display: block; }
+  .score-card {
+    background: linear-gradient(135deg, var(--purple), #8B6AB5);
+    border-radius: 20px;
+    padding: 32px;
+    text-align: center;
+    color: var(--white);
+    box-shadow: 0 8px 40px rgba(111,73,157,.25);
+  }
+  .score-card h2 { font-size: 24px; margin-bottom: 8px; }
+  .score-card p { font-size: 15px; opacity: .85; line-height: 1.6; }
+
+  /* ── footer ── */
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 13px;
+    color: #999;
+  }
+  .footer a { color: var(--orange); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  Misja: <span>„Złap błąd w formularzu"</span> · Pracujcie w parach · Zapiszcie WSZYSTKIE błędy!
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <h1><span class="bug">🐛</span> Złap błąd w formularzu!</h1>
+  <p>Poniżej znajduje się formularz rejestracji — ale ktoś go wypełnił ŹLE.<br>
+  Ile błędów potraficie znaleźć w 60 sekund?</p>
+</div>
+
+<!-- TIMER -->
+<div class="timer-section">
+  <div class="timer-display" id="timer">1:00</div>
+  <button class="timer-btn btn-start" id="startBtn" onclick="startTimer()">▶ Start 60s</button>
+  <button class="timer-btn btn-reset" id="resetBtn" onclick="resetTimer()">↺ Reset</button>
+  <button class="timer-btn btn-reveal" id="revealBtn" onclick="revealErrors()">🔍 Pokaż odpowiedzi</button>
+</div>
+
+<!-- FORM CARD -->
+<div class="form-wrapper">
+  <div class="form-card">
+    <div class="form-header">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      &nbsp; formularz-rejestracji.html
+    </div>
+    <div class="form-body">
+
+      <!-- 1) Imię — puste, a jest required -->
+      <div class="field">
+        <span class="field-number">1</span>
+        <label>Imię <span class="required">*</span> <span class="tag">required</span></label>
+        <input type="text" value="" placeholder="" readonly>
+        <div class="error-hint" id="hint1">
+          <strong>🐛 Błąd:</strong> Pole jest <strong>puste</strong>, a ma atrybut <code>required</code>.<br>
+          <strong>✅ Naprawa:</strong> Wpisz prawdziwe imię, np. <code>Anna</code>.
+        </div>
+      </div>
+
+      <!-- 2) E-mail — brak @ -->
+      <div class="field">
+        <span class="field-number">2</span>
+        <label>E-mail <span class="required">*</span> <span class="tag">type="email"</span></label>
+        <input type="text" value="janek.com" readonly class="field-error-value">
+        <div class="error-hint" id="hint2">
+          <strong>🐛 Błąd:</strong> Adres <code>janek.com</code> nie ma znaku <strong>@</strong> — to nie jest prawidłowy e-mail.<br>
+          <strong>✅ Naprawa:</strong> Popraw na <code>janek@email.com</code>. Atrybut <code>type="email"</code> sam to sprawdzi!
+        </div>
+      </div>
+
+      <!-- 3) Wiek — ujemna liczba -->
+      <div class="field">
+        <span class="field-number">3</span>
+        <label>Wiek <span class="tag">type="number"</span></label>
+        <input type="text" value="-3" readonly class="field-error-value">
+        <div class="error-hint" id="hint3">
+          <strong>🐛 Błąd:</strong> Wiek <code>-3</code> to liczba <strong>ujemna</strong> — nie ma sensu!<br>
+          <strong>✅ Naprawa:</strong> Dodaj atrybut <code>min="1"</code> i <code>max="120"</code> do inputa.<br>
+          Wpisz prawdziwy wiek, np. <code>12</code>.
+        </div>
+      </div>
+
+      <!-- 4) Hasło — za krótkie -->
+      <div class="field">
+        <span class="field-number">4</span>
+        <label>Hasło <span class="required">*</span> <span class="tag">minlength="8"</span></label>
+        <input type="text" value="123" readonly class="field-error-value" style="letter-spacing: 4px;">
+        <div class="error-hint" id="hint4">
+          <strong>🐛 Błąd:</strong> Hasło <code>123</code> ma tylko <strong>3 znaki</strong> — minimalna długość to 8.<br>
+          <strong>✅ Naprawa:</strong> Wymyśl dłuższe hasło, np. <code>MojeHaslo2024!</code>.<br>
+          Atrybut <code>minlength="8"</code> nie pozwoli wysłać za krótkiego hasła.
+        </div>
+      </div>
+
+      <!-- 5) Checkbox — niezaznaczony -->
+      <div class="field">
+        <span class="field-number">5</span>
+        <label>Zgoda na regulamin <span class="required">*</span> <span class="tag">required</span></label>
+        <div class="checkbox-row">
+          <input type="checkbox" disabled>
+          <span>Akceptuję regulamin serwisu</span>
+        </div>
+        <div class="error-hint" id="hint5">
+          <strong>🐛 Błąd:</strong> Checkbox jest <strong>niezaznaczony</strong>, a zgoda jest wymagana (<code>required</code>).<br>
+          <strong>✅ Naprawa:</strong> Zaznacz checkbox. Bez tego formularz nie powinien się wysłać!
+        </div>
+      </div>
+
+      <!-- 6) Wiadomość — pusta, 0 znaków -->
+      <div class="field">
+        <span class="field-number">6</span>
+        <label>Wiadomość <span class="tag">minlength="10"</span></label>
+        <textarea readonly placeholder=""></textarea>
+        <div style="text-align:right; font-size:12px; color:#999; margin-top:4px; font-family:'Fira Code',monospace;">
+          0 / 10 znaków (minimum 10)
+        </div>
+        <div class="error-hint" id="hint6">
+          <strong>🐛 Błąd:</strong> Pole jest <strong>puste</strong> — 0 znaków, a minimum to 10.<br>
+          <strong>✅ Naprawa:</strong> Wpisz treść wiadomości. Atrybut <code>minlength="10"</code> wymusi min. 10 znaków.
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button class="submit-btn" onclick="handleSubmit()">📨 Wyślij formularz</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SCORE PANEL -->
+<div class="score-panel" id="scorePanel">
+  <div class="score-card">
+    <h2>🎯 Podsumowanie</h2>
+    <p>
+      Formularz miał <strong>6 celowych błędów</strong>.<br>
+      Dokładnie tak działa formularz na stronie — ma pola, ma zasady,<br>
+      a przeglądarka potrafi część sprawdzić sama.<br><br>
+    </p>
+  </div>
+</div>
+
+<div class="footer">
+  Ćwiczenie dydaktyczne · <a href="https://www.giganciprogramowania.edu.pl" target="_blank">Giganci Programowania</a>
+</div>
+
+<script>
+  let countdown = 60;
+  let timerInterval = null;
+  const timerEl = document.getElementById('timer');
+  const startBtn = document.getElementById('startBtn');
+  const revealBtn = document.getElementById('revealBtn');
+
+  function startTimer() {
+    if (timerInterval) return;
+    startBtn.textContent = '⏳ Czas leci…';
+    startBtn.style.opacity = '.6';
+    startBtn.style.pointerEvents = 'none';
+
+    timerInterval = setInterval(() => {
+      countdown--;
+      const m = Math.floor(countdown / 60);
+      const s = String(countdown % 60).padStart(2, '0');
+      timerEl.textContent = m + ':' + s;
+
+      if (countdown <= 10) timerEl.classList.add('danger');
+
+      if (countdown <= 0) {
+        clearInterval(timerInterval);
+        timerEl.textContent = '0:00';
+        timerEl.classList.add('danger');
+        startBtn.textContent = '⏰ Koniec czasu!';
+        revealBtn.style.display = 'inline-block';
+      }
+    }, 1000);
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    countdown = 60;
+    timerEl.textContent = '1:00';
+    timerEl.classList.remove('danger');
+    startBtn.textContent = '▶ Start 60s';
+    startBtn.style.opacity = '1';
+    startBtn.style.pointerEvents = 'auto';
+    revealBtn.style.display = 'none';
+
+    for (let i = 1; i <= 6; i++) {
+      document.getElementById('hint' + i).classList.remove('visible');
+    }
+    document.getElementById('scorePanel').classList.remove('visible');
+  }
+
+  function revealErrors() {
+    for (let i = 1; i <= 6; i++) {
+      setTimeout(() => {
+        document.getElementById('hint' + i).classList.add('visible');
+      }, i * 200);
+    }
+    setTimeout(() => {
+      document.getElementById('scorePanel').classList.add('visible');
+      document.getElementById('scorePanel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 1600);
+  }
+
+  function handleSubmit() {
+    // Shake the button to show it "doesn't work"
+    const btn = event.target;
+    btn.style.background = '#E74C3C';
+    btn.textContent = '❌ Formularz ma błędy!';
+    btn.style.animation = 'shake .4s ease-in-out';
+    setTimeout(() => {
+      btn.style.background = '';
+      btn.textContent = '📨 Wyślij formularz';
+      btn.style.animation = '';
+    }, 2000);
+  }
+
+  // Add shake keyframe dynamically
+  const style = document.createElement('style');
+  style.textContent = `@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}`;
+  document.head.appendChild(style);
+</script>
+
+</body>
+</html>

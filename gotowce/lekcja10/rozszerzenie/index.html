@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Fan Mail</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Napisz do nas</h1><br>
+  <form id="contact-form">
+    <label for="name">Imię</label>
+    <input id="name" type="text" required>
+    <label for="email">E-mail</label>
+    <input id="email" type="email" required>
+    <label for="phone">Telefon</label>
+    <input id="phone" type="tel">
+    <label for="category">Kategoria</label>
+    <select id="category">
+      <option value="pytanie">Pytanie</option>
+      <option value="opinia">Opinia</option>
+      <option value="blad">Zgłoszenie błędu</option>
+    </select>
+    <label for="message">Wiadomość</label>
+    <textarea id="message" rows="5"></textarea>
+    <label>
+      <input type="checkbox" id="terms" required>
+      Akceptuję <a href="terms.html">regulamin</a>
+    </label>
+    <button type="submit">Wyślij</button>
+  </form>
+  <div id="result"></div>
+  <script src="script.js"></script>
+</body>
+</html>
