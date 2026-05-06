@@ -1,16 +1,220 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Strony internetowe z AI (10-12 lat)</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap');
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --orange: #F58220;
+      --orange-light: #F8E2CB;
+      --purple: #6F499D;
+      --purple-light: #D4CFE5;
+      --dark: #2D2D2D;
+      --bg: #F5F5F5;
+      --header-h: 52px;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+    }
+
+    /* ── HEADER ── */
+    header {
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--orange) 100%);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      user-select: none;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 2px 12px rgba(0,0,0,.15);
+    }
+
+    header span.icon {
+      font-size: 22px;
+    }
+
+    /* ── PANEL CONTAINER ── */
+    .panels {
+      display: flex;
+      height: calc(100% - var(--header-h));
+      position: relative;
+    }
+
+    .panel {
+      display: flex;
+      flex-direction: column;
+      min-width: 80px;
+      overflow: hidden;
+    }
+
+    .panel-left  { flex: 1 1 0; }
+    .panel-right { flex: 1 1 0; }
+
+    /* ── PANEL LABELS ── */
+    .panel-label {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .panel-left .panel-label {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    .panel-right .panel-label {
+      background: var(--purple);
+      color: #fff;
+    }
+
+    .panel iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    /* ── SLIDER ── */
+    .slider {
+      width: 6px;
+      cursor: col-resize;
+      background: var(--dark);
+      position: relative;
+      z-index: 5;
+      flex-shrink: 0;
+      transition: background .15s;
+    }
+
+    .slider:hover,
+    .slider.active {
+      background: var(--orange);
+    }
+
+    .slider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 4px;
+      height: 40px;
+      border-radius: 3px;
+      background: rgba(255,255,255,.45);
+      pointer-events: none;
+    }
+
+    /* ── OVERLAY – blocks iframe pointer events while dragging ── */
+    .drag-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      cursor: col-resize;
+    }
+
+    .drag-overlay.visible { display: block; }
+  </style>
 </head>
 <body>
-   <h1>Strony internetowe z AI (10-12 lat)</h1>
-   <iframe src="./startery/" width="100%" height="500px">STARTERY</iframe>
-   <iframe src="./gotowce/" width="100%" height="500px">GOTOWCE</iframe>
-   
+
+  <header>
+    <span class="icon">🌐</span>
+    Strony internetowe z AI (10-12 lat)
+  </header>
+
+  <div class="panels">
+    <div class="panel panel-left" id="panelLeft">
+      <div class="panel-label">Startery</div>
+      <iframe src="./startery/"></iframe>
+    </div>
+
+    <div class="slider" id="slider"></div>
+
+    <div class="panel panel-right" id="panelRight">
+      <div class="panel-label">Gotowce</div>
+      <iframe src="./gotowce/"></iframe>
+    </div>
+  </div>
+
+  <div class="drag-overlay" id="overlay"></div>
+
+  <script>
+    const slider  = document.getElementById('slider');
+    const overlay = document.getElementById('overlay');
+    const left    = document.getElementById('panelLeft');
+    const right   = document.getElementById('panelRight');
+    const panels  = document.querySelector('.panels');
+
+    let dragging = false;
+
+    slider.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      dragging = true;
+      slider.classList.add('active');
+      overlay.classList.add('visible');
+      slider.setPointerCapture(e.pointerId);
+    });
+
+    const onMove = (e) => {
+      if (!dragging) return;
+      const rect = panels.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const total = rect.width;
+      const sliderW = slider.offsetWidth;
+
+      const minPx = 80;
+      const clamped = Math.max(minPx, Math.min(x, total - minPx - sliderW));
+
+      const leftPct  = (clamped / total) * 100;
+      const rightPct = ((total - clamped - sliderW) / total) * 100;
+
+      left.style.flex  = `0 0 ${leftPct}%`;
+      right.style.flex = `0 0 ${rightPct}%`;
+    };
+
+    const onUp = () => {
+      if (!dragging) return;
+      dragging = false;
+      slider.classList.remove('active');
+      overlay.classList.remove('visible');
+    };
+
+    document.addEventListener('pointermove', onMove);
+    document.addEventListener('pointerup', onUp);
+
+    // Double-click resets to 50/50
+    slider.addEventListener('dblclick', () => {
+      left.style.flex  = '1 1 0';
+      right.style.flex = '1 1 0';
+    });
+  </script>
+
 </body>
 </html>
