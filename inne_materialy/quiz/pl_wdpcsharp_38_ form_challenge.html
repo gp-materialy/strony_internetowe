@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona rejstarcji uczesnitka kursu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0e0e12;
+            --surface: #16161d;
+            --surface2: #1e1e28;
+            --border: #2a2a3a;
+            --accent: #ff3c6f;
+            --accent2: #7b5cff;
+            --accent3: #00d4aa;
+            --text: #e8e6f0;
+            --text-dim: #8a879a;
+            --danger: #ff4444;
+            --font: 'Outfit', sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(123, 92, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 60, 111, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(0, 212, 170, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            animation: bgShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgShift {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-5%, 3%) rotate(3deg); }
+        }
+
+        /* Header */
+        .header {
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(14, 14, 18, 0.85);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
+            animation: fadeUp 0.6s ease-out both;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+            animation: fadeUp 0.6s 0.1s ease-out both;
+        }
+
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            max-width: 520px;
+            margin: 0 auto;
+            animation: fadeUp 0.6s 0.2s ease-out both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Challenge info */
+        .challenge-bar {
+            max-width: 680px;
+            margin: 30px auto;
+            padding: 16px 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            animation: fadeUp 0.6s 0.3s ease-out both;
+        }
+
+        .challenge-bar .icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .challenge-bar .info {
+            flex: 1;
+        }
+
+        .challenge-bar .info strong {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .challenge-bar .info p {
+            font-size: 0.88rem;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+
+        .bug-counter {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 18px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .bug-counter .num {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            font-family: var(--mono);
+        }
+
+        .bug-counter .label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+        }
+
+        /* Form Card */
+        .form-card {
+            max-width: 580px;
+            margin: 30px auto 60px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp 0.6s 0.4s ease-out both;
+        }
+
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+        }
+
+        .form-card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .form-card .subtitle {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group input[type="tel"],
+        .form-group input[type="time"],
+        .form-group input[type="date"],
+        .form-group input[type="email"],
+        .form-group input[type="url"],
+        .form-group input[type="search"],
+        .form-group input[type="number"],
+        .form-group input[type="file"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: var(--font);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent2);
+            box-shadow: 0 0 0 3px rgba(123, 92, 255, 0.15);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .checkbox-group, .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 6px;
+        }
+
+        .checkbox-group label, .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            accent-color: var(--accent2);
+            width: 18px;
+            height: 18px;
+        }
+
+        input[type="color"] {
+            width: 50px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface2);
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent2);
+            margin-top: 6px;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 28px 0;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-family: var(--font);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.25s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 60, 111, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--surface2);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-dim);
+        }
+
+        /* Answer Section */
+        .answers-section {
+            max-width: 680px;
+            margin: 0 auto 80px;
+            animation: fadeUp 0.6s 0.5s ease-out both;
+        }
+
+        .answers-toggle {
+            width: 100%;
+            padding: 16px 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: var(--text);
+            font-family: var(--font);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+
+        .answers-toggle:hover {
+            border-color: var(--accent2);
+        }
+
+        .answers-toggle .arrow {
+            transition: transform 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .answers-toggle.open .arrow {
+            transform: rotate(180deg);
+        }
+
+        .answers-content {
+            display: none;
+            margin-top: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px;
+        }
+
+        .answers-content.visible {
+            display: block;
+            animation: fadeUp 0.3s ease-out;
+        }
+
+        .answers-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .bug-item {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .bug-item:last-child {
+            border-bottom: none;
+        }
+
+        .bug-item .bug-num {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background: var(--surface2);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-right: 10px;
+        }
+
+        .bug-item .bug-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .bug-item .bug-desc {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-top: 4px;
+            margin-left: 38px;
+            line-height: 1.5;
+        }
+
+        .bug-item code {
+            background: var(--surface2);
+            padding: 2px 7px;
+            border-radius: 5px;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--accent3);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2rem; }
+            .form-card { margin: 20px 16px 40px; padding: 24px; }
+            .form-row { grid-template-columns: 1fr; }
+            .challenge-bar { margin: 20px 16px; flex-direction: column; text-align: center; }
+            .answers-section { margin: 0 16px 60px; }
+            .header { padding: 16px 20px; }
+            .nav-links { gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">BugHunter Academy</div>
+        <ul class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Wyzwania</a>
+            <a href="#">Kontakt</a>
+        </ul>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="badge">🐛 Wyzwanie HTML</div>
+        <h1>Znajdź wszystkie <span class="gradient">bugi w formularzu</span></h1>
+        <p>Poniższy formularz zapisu do newslettera zawiera celowe błędy. Twoim zadaniem jest znaleźć je wszystkie. Powodzenia!</p>
+    </section>
+
+    <!-- Challenge Info -->
+    <div class="challenge-bar">
+        <div class="icon">🔍</div>
+        <div class="info">
+            <strong>Zasady wyzwania:</strong>
+            <p>Przeanalizuj formularz, znajdź błędy w kodzie HTML i opisz, jak je naprawić. Błędy dotyczą typów pól, etykiet, atrybutów i logiki przycisków.</p>
+        </div>
+        <div class="bug-counter">
+            <div class="num">10</div>
+            <div class="label">Błędów</div>
+        </div>
+    </div>
+
+    <!-- ======================== -->
+    <!-- ZEPSUTY FORMULARZ START -->
+    <!-- ======================== -->
+    <div class="form-card">
+        <h2>Zapis do newslettera mailowego</h2>
+        <p class="subtitle">Wypełnij poniższe pola, aby dołączyć do naszej społeczności.</p>
+
+        <form>
+            <!-- BUG 1: Brak pola na e-mail w formularzu newslettera -->
+
+            <div class="section-label">Dane osobowe</div>
+
+            <div class="form-group">
+                <!-- BUG 2: atrybut for="fullname" nie zgadza się z id="name" -->
+                <label for="fullname">Imię i Nazwisko:</label>
+                <input type="text" id="name" name="name" placeholder="Jan Kowalski">
+            </div>
+
+            <div class="form-group">
+                <!-- BUG 3: Hasło w formularzu newslettera — nie powinno go być -->
+                <label for="password">Hasło:</label>
+                <input type="password" id="password" name="password" placeholder="••••••••">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tel">Numer telefonu:</label>
+                    <input type="tel" id="tel" name="tel" placeholder="+48 123 456 789">
+                </div>
+                <div class="form-group">
+                    <!-- BUG 4: type="time" zamiast type="date" dla daty urodzenia -->
+                    <label for="date">Data urodzenia:</label>
+                    <input type="time" id="date" name="date">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <!-- BUG 5: checkbox zamiast radio — użytkownik może wybrać oba -->
+                <label>Płeć:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="gender"> Kobieta</label>
+                    <label><input type="checkbox" name="gender"> Mężczyzna</label>
+                    <label><input type="checkbox" name="gender"> Inna</label>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+            <div class="section-label">Preferencje</div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="color">Ulubiony kolor:</label>
+                    <input type="color" id="color" name="color" value="#7b5cff">
+                </div>
+                <div class="form-group">
+                    <!-- BUG 6: min i max odwrócone (min="10" max="1") -->
+                    <label for="range">Twoja ocena (1-10):</label>
+                    <input type="range" id="range" name="range" min="10" max="1">
+                    <div class="range-labels">
+                        <span>Nisko</span>
+                        <span>Wysoko</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <!-- BUG 7: type="number" zamiast type="email" z label "Twój email" -->
+                <label for="email">Twój e-mail:</label>
+                <input type="number" id="email" name="email" placeholder="twoj@email.pl">
+            </div>
+
+            <div class="form-group">
+                <!-- BUG 8: for="website" nie zgadza się z id="url" -->
+                <label for="website">Strona internetowa:</label>
+                <input type="url" id="url" name="url" placeholder="https://example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="file">Załącznik (avatar):</label>
+                <input type="file" id="file" name="file">
+            </div>
+
+            <div class="form-group">
+                <label for="search">Jak nas znalazłeś?</label>
+                <input type="search" id="search" name="search" placeholder="np. Google, znajomy...">
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- BUG 9 & 10: Przyciski mają zamienione wartości/typy -->
+            <div class="btn-row">
+                <!-- BUG 9: przycisk "Wyczyść" ma type="submit" -->
+                <input type="submit" class="btn btn-primary" onclick="alert('Powodzenie rejestracji konta');" value="Wyczyść formularz">
+                <!-- BUG 10: przycisk "Zapisz się" ma type="reset" -->
+                <input type="reset" class="btn btn-secondary" value="Zapisz się do newslettera">
+            </div>
+        </form>
+    </div>
+    <!-- ======================== -->
+    <!-- ZEPSUTY FORMULARZ KONIEC -->
+    <!-- ======================== -->
+
+    <!-- Answers -->
+    <div class="answers-section">
+        <button class="answers-toggle" onclick="toggleAnswers()">
+            🔑 Pokaż odpowiedzi
+            <span class="arrow">▼</span>
+        </button>
+        <div class="answers-content" id="answersContent">
+            <h3>Lista 10 błędów w formularzu:</h3>
+
+            <div class="bug-item">
+                <span class="bug-num">1</span>
+                <span class="bug-title">Brak pola e-mail w formularzu newslettera</span>
+                <div class="bug-desc">Formularz służy do zapisu do <strong>newslettera mailowego</strong>, ale nie zawiera żadnego pola <code>&lt;input type="email"&gt;</code> do wpisania adresu e-mail na samej górze formularza. Pole "Twój e-mail" (bug #7) istnieje, ale ma zły typ.</div>
+            </div>
+
+            <div class="bug-item">
+                <span class="bug-num">2</span>
+                <span class="bug-title">Niedopasowany atrybut <code>for</code> w label</span>
+                <div class="bug-desc">Label ma <code>for="fullname"</code>, ale pole ma <code>id="name"</code>. Kliknięcie etykiety nie przenosi kursora do pola. Powinno być <code>for="name"</code> lub <code>id="fullname"</code>.</div>
+            </div>
+
+            <div class="bug-item">
+                <span class="bug-num">3</span>
+                <span class="bug-title">Pole hasła w formularzu newslettera</span>
+                <div class="bug-desc">Newsletter nie wymaga hasła — to pole nie powinno istnieć. Zapis do newslettera to jedynie podanie danych kontaktowych, nie tworzenie konta.</div>
+            </div>
+
+            <div class="bug-item">
+                <span class="bug-num">4</span>
+                <span class="bug-title"><code>type="time"</code> zamiast <code>type="date"</code></span>
+                <div class="bug-desc">Pole "Data urodzenia" używa <code>type="time"</code>, co pozwala wybrać godzinę, a nie datę. Powinno być <code>type="date"</code>.</div>
+            </div>
+
+            <div class="bug-item">
+                <span class="bug-num">5</span>
+                <span class="bug-title">Checkbox zamiast radio button dla płci</span>
+                <div class="bug-desc">Pola płci używają <code>type="checkbox"</code>, co pozwala wybrać więcej niż jedną opcję. Powinno być <code>type="radio"</code> z tym samym atrybutem <code>name</code>, aby można było wybrać tylko jedną.</div>
+            </div>
+
+            <div class="bug-item">
+                <span class="bug-num">6</span>
+                <span class="bug-title">Odwrócone wartości <code>min</code> i <code>max</code></span>
+                <div class="bug-desc">Suwak oceny ma <code>min="10"</code> i <code>max="1"</code>, co jest odwrócone. Powinno być <code>min="1" max="10"</code>.</div>
+            </div>
+
+            <div class="bug-item">
+                <span class="bug-num">7</span>
+                <span class="bug-title"><code>type="number"</code> zamiast <code>type="email"</code></span>
+                <div class="bug-desc">Pole "Twój e-mail" używa <code>type="number"</code>, co akceptuje tylko liczby. Powinno być <code>type="email"</code>, aby przeglądarka walidowała adres e-mail.</div>
+            </div>
+
+            <div class="bug-item">
+                <span class="bug-num">8</span>
+                <span class="bug-title">Niedopasowany <code>for="website"</code> z <code>id="url"</code></span>
+                <div class="bug-desc">Label ma <code>for="website"</code>, ale pole ma <code>id="url"</code>. Powinny się zgadzać.</div>
+            </div>
+
+            <div class="bug-item">
+                <span class="bug-num">9</span>
+                <span class="bug-title">Przycisk "Wyczyść" ma <code>type="submit"</code></span>
+                <div class="bug-desc">Przycisk z napisem "Wyczyść formularz" tak naprawdę wysyła formularz (<code>type="submit"</code>). Powinien mieć <code>type="reset"</code> lub <code>type="button"</code>.</div>
+            </div>
+
+            <div class="bug-item">
+                <span class="bug-num">10</span>
+                <span class="bug-title">Przycisk "Zapisz się" ma <code>type="reset"</code></span>
+                <div class="bug-desc">Przycisk "Zapisz się do newslettera" czyści formularz zamiast go wysłać, bo ma <code>type="reset"</code>. Powinien mieć <code>type="submit"</code>.</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        Copyright © 2024 BugHunter Academy — Wyzwanie HTML dla uczniów
+    </footer>
+
+    <script>
+        function toggleAnswers() {
+            const btn = document.querySelector('.answers-toggle');
+            const content = document.getElementById('answersContent');
+            if (!content.classList.contains('visible')) {
+                if (!confirm('Czy na pewno chcesz zobaczyć odpowiedzi?')) return;
+            }
+            btn.classList.toggle('open');
+            content.classList.toggle('visible');
+        }
+    </script>
+</body>
+</html>
