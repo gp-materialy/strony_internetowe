@@ -1,0 +1,409 @@
+
+<style>
+  :root {
+    --gp-orange: #F58220;
+    --gp-orange-light: #F8E2CB;
+    --gp-orange-mid: #EEB27C;
+    --gp-purple: #6F499D;
+    --gp-purple-light: #D4CFE5;
+    --gp-purple-mid: #9786BA;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans, sans-serif); }
+
+  .app { padding: 1rem 0; }
+
+  .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .nav-btn {
+    padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
+    border: 1.5px solid var(--color-border-tertiary); cursor: pointer;
+    background: var(--color-background-primary); color: var(--color-text-secondary);
+    transition: all 0.15s;
+  }
+  .nav-btn.active {
+    background: var(--gp-orange); color: #fff; border-color: var(--gp-orange);
+  }
+  .nav-btn:hover:not(.active) { border-color: var(--gp-orange); color: var(--gp-orange); }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── ŚCIĄGAWKA ── */
+  .cheat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .cheat-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem;
+    border-top: 3px solid var(--gp-orange);
+  }
+  .cheat-card h3 { font-size: 13px; font-weight: 500; color: var(--gp-orange); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .cheat-card ul { list-style: none; }
+  .cheat-card ul li { font-size: 13px; color: var(--color-text-secondary); padding: 3px 0; border-bottom: 0.5px solid var(--color-border-tertiary); line-height: 1.4; }
+  .cheat-card ul li:last-child { border-bottom: none; }
+  .cheat-card ul li strong { color: var(--color-text-primary); font-weight: 500; }
+  .tag { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 11px; font-weight: 500; margin-left: 4px; }
+  .tag-orange { background: var(--gp-orange-light); color: #c05a00; }
+  .tag-purple { background: var(--gp-purple-light); color: #4a2f78; }
+
+  /* ── QUIZ ── */
+  .quiz-box { max-width: 560px; }
+  .quiz-progress { display: flex; gap: 4px; margin-bottom: 1.25rem; }
+  .quiz-dot { height: 4px; flex: 1; border-radius: 2px; background: var(--color-border-tertiary); transition: background 0.3s; }
+  .quiz-dot.done { background: var(--gp-orange); }
+  .quiz-dot.current { background: var(--gp-orange-mid); }
+  .quiz-q { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 1rem; line-height: 1.5; }
+  .quiz-options { display: grid; gap: 8px; }
+  .quiz-opt {
+    padding: 10px 14px; border-radius: var(--border-radius-md); font-size: 14px;
+    border: 1.5px solid var(--color-border-tertiary); cursor: pointer;
+    background: var(--color-background-primary); color: var(--color-text-primary);
+    text-align: left; transition: all 0.15s; line-height: 1.4;
+  }
+  .quiz-opt:hover:not(:disabled) { border-color: var(--gp-orange); background: var(--gp-orange-light); }
+  .quiz-opt.correct { border-color: #3a9b6f; background: #eaf3de; color: #1a5c3a; }
+  .quiz-opt.wrong { border-color: #c0392b; background: #fcebeb; color: #7a1a1a; }
+  .quiz-opt:disabled { cursor: default; }
+  .quiz-feedback {
+    margin-top: 12px; padding: 10px 14px; border-radius: var(--border-radius-md);
+    font-size: 13px; line-height: 1.5; display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: #eaf3de; color: #1a5c3a; border: 0.5px solid #639922; }
+  .quiz-feedback.err { background: #fcebeb; color: #7a1a1a; border: 0.5px solid #c0392b; }
+  .quiz-next {
+    margin-top: 14px; padding: 8px 20px; border-radius: var(--border-radius-md);
+    background: var(--gp-orange); color: #fff; border: none; font-size: 14px; font-weight: 500;
+    cursor: pointer; display: none;
+  }
+  .quiz-next.show { display: inline-block; }
+  .quiz-score {
+    text-align: center; padding: 2rem 1rem; display: none;
+  }
+  .quiz-score.show { display: block; }
+  .score-num { font-size: 48px; font-weight: 500; color: var(--gp-orange); }
+  .score-label { font-size: 16px; color: var(--color-text-secondary); margin-bottom: 1rem; }
+  .score-msg { font-size: 15px; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+  .quiz-restart {
+    padding: 8px 20px; border-radius: var(--border-radius-md);
+    background: var(--gp-purple); color: #fff; border: none; font-size: 14px;
+    font-weight: 500; cursor: pointer;
+  }
+
+  /* ── CHECKLISTY ── */
+  .checklist-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .cl-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem;
+  }
+  .cl-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 10px; color: var(--color-text-primary); display: flex; align-items: center; gap: 6px; }
+  .cl-item { display: flex; align-items: flex-start; gap: 8px; padding: 5px 0; border-bottom: 0.5px solid var(--color-border-tertiary); cursor: pointer; }
+  .cl-item:last-child { border-bottom: none; }
+  .cl-cb {
+    width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid var(--color-border-secondary);
+    flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; background: var(--color-background-primary);
+  }
+  .cl-item.checked .cl-cb { background: var(--gp-orange); border-color: var(--gp-orange); }
+  .cl-item.checked .cl-cb::after { content: '✓'; color: #fff; font-size: 11px; font-weight: 700; }
+  .cl-text { font-size: 13px; color: var(--color-text-secondary); line-height: 1.4; }
+  .cl-item.checked .cl-text { text-decoration: line-through; color: var(--color-text-tertiary); }
+  .cl-progress { height: 3px; border-radius: 2px; background: var(--color-border-tertiary); margin-top: 10px; overflow: hidden; }
+  .cl-progress-bar { height: 100%; background: var(--gp-orange); border-radius: 2px; transition: width 0.3s; }
+  .cl-count { font-size: 11px; color: var(--color-text-tertiary); margin-top: 4px; }
+
+  /* ── SŁOWNIK ── */
+  .dict-grid { display: grid; gap: 8px; }
+  .dict-item {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+  }
+  .dict-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; cursor: pointer;
+  }
+  .dict-term { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .dict-abbr { font-size: 12px; color: var(--gp-orange); font-weight: 500; }
+  .dict-chevron { font-size: 14px; color: var(--color-text-tertiary); transition: transform 0.2s; }
+  .dict-item.open .dict-chevron { transform: rotate(180deg); }
+  .dict-def { display: none; padding: 0 14px 12px; font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 10px; }
+  .dict-item.open .dict-def { display: block; }
+  .dict-example { margin-top: 6px; font-size: 12px; color: var(--color-text-tertiary); font-style: italic; }
+
+  .section-title { font-size: 11px; font-weight: 500; color: var(--color-text-tertiary); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+</style>
+
+<div class="app">
+  <h2 class="sr-only">Interaktywna ściągawka — Lekcja: Publikowanie na YouTube</h2>
+
+  <div class="nav">
+    <button class="nav-btn active" onclick="switchTab('scigawka')"><i class="ti ti-notes" aria-hidden="true"></i> Ściągawka</button>
+    <button class="nav-btn" onclick="switchTab('quiz')"><i class="ti ti-help-circle" aria-hidden="true"></i> Quiz</button>
+    <button class="nav-btn" onclick="switchTab('checklist')"><i class="ti ti-check" aria-hidden="true"></i> Checklista</button>
+    <button class="nav-btn" onclick="switchTab('slownik')"><i class="ti ti-book" aria-hidden="true"></i> Słownik</button>
+  </div>
+
+  <!-- ŚCIĄGAWKA -->
+  <div id="scigawka" class="screen active">
+    <p class="section-title">Kluczowe zasady publikacji</p>
+    <div class="cheat-grid">
+      <div class="cheat-card">
+        <h3><i class="ti ti-upload" aria-hidden="true"></i> Wgrywanie filmu</h3>
+        <ul>
+          <li><strong>Kamera + plus</strong> → Prześlij film</li>
+          <li><strong>Miniatura</strong> — 1280×720 px <span class="tag tag-orange">ważne</span></li>
+          <li><strong>Widoczność:</strong> publiczny / niepubliczny / prywatny</li>
+          <li><strong>Zaplanuj</strong> — wybierz datę i godzinę premiery</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <h3><i class="ti ti-align-left" aria-hidden="true"></i> Opis PRO</h3>
+        <ul>
+          <li><strong>Linijka 1</strong> — słowo kluczowe + o czym film</li>
+          <li><strong>Linijka 2</strong> — zachęta / korzyść dla widza</li>
+          <li><strong>Rozdziały</strong> — min. 3, zaczyna się od <code>0:00</code></li>
+          <li><strong>CTA</strong> — subskrybuj / skomentuj / link</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <h3><i class="ti ti-device-tv" aria-hidden="true"></i> End screen</h3>
+        <ul>
+          <li>Ostatnie <strong>20 sekund</strong> filmu</li>
+          <li>Elementy: Film + Subskrypcja</li>
+          <li>Film musi mieć min. <strong>25 sek.</strong></li>
+          <li>Edytor → Ekran końcowy</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <h3><i class="ti ti-info-circle" aria-hidden="true"></i> Karty informacyjne</h3>
+        <ul>
+          <li>Pojawiają się <strong>w dowolnym momencie</strong></li>
+          <li>Typy: film, playlista, kanał</li>
+          <li>Ustaw czas na osi czasu</li>
+          <li>Szczegóły → Karty</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <h3><i class="ti ti-subtask" aria-hidden="true"></i> Napisy</h3>
+        <ul>
+          <li>Zakładka <strong>Napisy</strong> w Studio</li>
+          <li>Wgraj plik <strong>.sbv / .srt</strong></li>
+          <li>Lub edytor ręczny w YT</li>
+          <li>Dodaj drugi język dla zasięgu <span class="tag tag-purple">bonus</span></li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <h3><i class="ti ti-message" aria-hidden="true"></i> Pinned comment</h3>
+        <ul>
+          <li>Dodaj komentarz pod filmem</li>
+          <li><strong>Trzy kropki</strong> → Przypnij</li>
+          <li>CTA lub pytanie do widzów</li>
+          <li>Widoczny na samej górze</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <h3><i class="ti ti-playlist" aria-hidden="true"></i> Playlista</h3>
+        <ul>
+          <li><strong>...</strong> pod filmem → Zapisz</li>
+          <li>Utwórz nową playlistę</li>
+          <li>Dodaj sekcję do strony kanału</li>
+          <li><strong>Dostosuj kanał</strong> → Układ</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <h3><i class="ti ti-tags" aria-hidden="true"></i> Tagi SEO</h3>
+        <ul>
+          <li>5–8 tagów na film</li>
+          <li>1. tag = dokładny tytuł kanału</li>
+          <li>Ogólne + szczegółowe słowa</li>
+          <li>Niewidoczne dla widza, czyta algorytm</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="screen">
+    <div class="quiz-box">
+      <div class="quiz-progress" id="qprog"></div>
+      <div id="quiz-main">
+        <p class="quiz-q" id="qtext"></p>
+        <div class="quiz-options" id="qopts"></div>
+        <div class="quiz-feedback" id="qfeedback"></div>
+        <button class="quiz-next" id="qnext" onclick="nextQ()">Dalej →</button>
+      </div>
+      <div class="quiz-score" id="qscore">
+        <div class="score-num" id="score-num"></div>
+        <div class="score-label" id="score-label"></div>
+        <div class="score-msg" id="score-msg"></div>
+        <button class="quiz-restart" onclick="startQuiz()">Zagraj jeszcze raz</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKLISTA -->
+  <div id="checklist" class="screen">
+    <p class="section-title">Kliknij, żeby zaznaczyć co już zrobione</p>
+    <div class="checklist-wrap" id="cl-wrap"></div>
+  </div>
+
+  <!-- SŁOWNIK -->
+  <div id="slownik" class="screen">
+    <p class="section-title">Kliknij termin, żeby zobaczyć definicję</p>
+    <div class="dict-grid" id="dict-grid"></div>
+  </div>
+</div>
+
+<script>
+const QUIZ = [
+  {q:"Jaki rozmiar powinna mieć miniatura wgrywanego na YouTube filmu?",opts:["640×480 px","1280×720 px","1920×1080 px","500×500 px"],ans:1,fb:"1280×720 px (HD) to zalecany rozmiar miniatury. Format JPG lub PNG, maks. 2 MB."},
+  {q:"Co to jest CTR w kontekście YouTube?",opts:["Czas trwania filmu","Współczynnik kliknięć – ilu widzów kliknęło miniaturę po zobaczeniu jej","Liczba subskrybentów","Liczba komentarzy pod filmem"],ans:1,fb:"CTR (Click-Through Rate) pokazuje, ile % widzów kliknęło w miniaturę. Im wyższy, tym lepiej algorytm promuje film."},
+  {q:"Od jakiego znacznika czasu MUSI zaczynać się lista rozdziałów w opisie?",opts:["1:00","0:30","0:00","Dowolny – ważne, żeby było min. 3"],ans:2,fb:"Pierwszy wpis musi być dokładnie 0:00, inaczej YouTube nie rozpozna listy jako rozdziałów."},
+  {q:"Ile co najmniej rozdziałów trzeba dodać, żeby pojawiły się na osi odtwarzania?",opts:["2","3","5","10"],ans:1,fb:"Potrzebne są minimum 3 rozdziały, z odstępem co najmniej 10 sekund między nimi."},
+  {q:"W którym momencie filmu można dodać end screen?",opts:["Tylko na początku","W połowie","W ostatnich 20 sekundach","W dowolnym miejscu"],ans:2,fb:"End screen działa wyłącznie w ostatnich 20 sekundach. Film musi mieć co najmniej 25 sekund długości."},
+  {q:"Czym różni się tryb Niepubliczny od Prywatnego?",opts:["Nie ma różnicy","Niepubliczny – widoczny tylko dla właściciela; Prywatny – widoczny przez link","Niepubliczny – widoczny przez link; Prywatny – tylko dla właściciela","Oba są widoczne publicznie"],ans:2,fb:"Niepubliczny = dostępny dla każdego, kto ma link. Prywatny = tylko właściciel konta. Idealne gdy chcesz podzielić się filmem z grupą bez publicznej widoczności."},
+  {q:"Co to jest CTA?",opts:["Nazwa formatu wideo","Call To Action – wezwanie do działania (subskrybuj, skomentuj...)","Typ karty informacyjnej","Skrót od Copyright To Author"],ans:1,fb:"CTA (Call To Action) to konkretna prośba do widza: 'subskrybuj', 'napisz w komentarzu', 'obejrzyj następny film'. Umieszczamy go na końcu opisu i w pinned comment."},
+  {q:"W jakim formacie pliku można wgrać napisy do YouTube?",opts:[".mp4 i .avi",".pdf i .doc",".sbv i .srt",".png i .jpg"],ans:2,fb:"YouTube obsługuje pliki .sbv i .srt (i kilka innych). Każda linijka zawiera znaczniki czasu początku i końca napisu."},
+  {q:"Gdzie ustawiamy czas pojawienia się karty informacyjnej?",opts:["W zakładce Napisy","Na osi czasu w edytorze kart","W ustawieniach kanału","Kart nie można ustawiać – pojawiają się automatycznie"],ans:1,fb:"Po dodaniu karty ustawiamy dokładny moment jej pojawienia się na osi czasu – najlepiej w miejscu powiązanym z treścią."},
+  {q:"Jak dodać film do playlisty po jego opublikowaniu?",opts:["Tylko przez YouTube Studio","... pod filmem → Zapisz → Utwórz nową playlistę","Playlista tworzy się automatycznie","Przez zakładkę Napisy"],ans:1,fb:"Pod filmem (jako widz) klikasz trzy kropki '...', wybierasz Zapisz, a następnie tworzysz nową playlistę lub dodajesz do istniejącej."},
+];
+
+let qi = 0, score = 0, answered = false;
+
+function startQuiz() {
+  qi = 0; score = 0; answered = false;
+  document.getElementById('qscore').classList.remove('show');
+  document.getElementById('quiz-main').style.display = '';
+  renderQ();
+}
+
+function renderQ() {
+  answered = false;
+  const q = QUIZ[qi];
+  const prog = document.getElementById('qprog');
+  prog.innerHTML = QUIZ.map((_,i) => `<div class="quiz-dot${i<qi?' done':i===qi?' current':''}"></div>`).join('');
+  document.getElementById('qtext').textContent = `${qi+1}/${QUIZ.length} — ${q.q}`;
+  document.getElementById('qopts').innerHTML = q.opts.map((o,i) => `<button class="quiz-opt" onclick="answer(${i})">${o}</button>`).join('');
+  document.getElementById('qfeedback').className = 'quiz-feedback';
+  document.getElementById('qnext').className = 'quiz-next';
+}
+
+function answer(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUIZ[qi];
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach((b,j) => {
+    b.disabled = true;
+    if (j === q.ans) b.classList.add('correct');
+    else if (j === i && i !== q.ans) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('qfeedback');
+  if (i === q.ans) { score++; fb.className = 'quiz-feedback show ok'; fb.textContent = '✓ Dobrze! ' + q.fb; }
+  else { fb.className = 'quiz-feedback show err'; fb.textContent = '✗ ' + q.fb; }
+  document.getElementById('qnext').className = 'quiz-next show';
+}
+
+function nextQ() {
+  qi++;
+  if (qi >= QUIZ.length) showScore();
+  else renderQ();
+}
+
+function showScore() {
+  document.getElementById('quiz-main').style.display = 'none';
+  const s = document.getElementById('qscore');
+  s.classList.add('show');
+  document.getElementById('score-num').textContent = `${score}/${QUIZ.length}`;
+  document.getElementById('score-label').textContent = 'poprawnych odpowiedzi';
+  const pct = score/QUIZ.length;
+  const msgs = pct===1?"Perfekcyjnie! Jesteś gotowy na własny kanał!":pct>=0.8?"Świetnie! Tylko kilka szczegółów do dopracowania.":pct>=0.6?"Nieźle! Wróć do ściągawki i spróbuj ponownie.":"Powtórz materiał i zagraj jeszcze raz – dasz radę!";
+  document.getElementById('score-msg').textContent = msgs;
+  const prog = document.getElementById('qprog');
+  prog.innerHTML = QUIZ.map(() => `<div class="quiz-dot done"></div>`).join('');
+}
+
+const CHECKLISTS = [
+  { title: "Wgrywanie i ustawienia", icon: "ti-upload", items: [
+    "Wgrałem/-am film przez Prześlij film","Dodałem/-am tytuł ze słowem kluczowym","Dodałem/-am miniaturę 1280×720 px","Ustawiłem/-am widoczność (publiczny / niepubliczny)","Wybrałem/-am datę publikacji lub Zaplanuj",
+  ]},
+  { title: "Opis i SEO", icon: "ti-align-left", items: [
+    "Pierwsze 2 linijki mają słowo kluczowe i zachętę","Dodałem/-am rozdziały zaczynające się od 0:00","Mam co najmniej 3 rozdziały","Na końcu opisu jest CTA","Dodałem/-am tagi SEO (5–8 słów)",
+  ]},
+  { title: "End screen i karty", icon: "ti-device-tv", items: [
+    "End screen w ostatnich 20 sekundach","Dodałem/-am element Film do end screenu","Dodałem/-am element Subskrypcja do end screenu","Dodałem/-am przynajmniej jedną kartę informacyjną","Karta ma ustawiony czas pojawienia się",
+  ]},
+  { title: "Napisy i komentarz", icon: "ti-message", items: [
+    "Napisy w języku polskim są dodane i widoczne","Napisy są zsynchronizowane z audio","Dodałem/-am pinned comment pod filmem","Pinned comment ma CTA lub pytanie do widzów","Przetestowałem/-am napisy na filmie",
+  ]},
+  { title: "Playlista i kanał", icon: "ti-playlist", items: [
+    "Film jest zapisany na playliście","Playlista ma sensowną nazwę","Na stronie kanału jest sekcja Playlista","Sprawdziłem/-am jak wygląda strona kanału","Udostępniłem/-am link do filmu grupie",
+  ]},
+];
+
+const clWrap = document.getElementById('cl-wrap');
+CHECKLISTS.forEach((cl, ci) => {
+  const state = cl.items.map(() => false);
+  const id = `cl-${ci}`;
+  const card = document.createElement('div');
+  card.className = 'cl-card';
+  card.innerHTML = `<h3><i class="ti ${cl.icon}" aria-hidden="true"></i> ${cl.title}</h3><div id="${id}-items"></div><div class="cl-progress"><div class="cl-progress-bar" id="${id}-bar" style="width:0%"></div></div><div class="cl-count" id="${id}-count">0 / ${cl.items.length}</div>`;
+  clWrap.appendChild(card);
+  const itemsEl = document.getElementById(`${id}-items`);
+  const updateProgress = () => {
+    const done = state.filter(Boolean).length;
+    document.getElementById(`${id}-bar`).style.width = Math.round(done/state.length*100)+'%';
+    document.getElementById(`${id}-count`).textContent = `${done} / ${state.length}`;
+  };
+  cl.items.forEach((txt, ii) => {
+    const item = document.createElement('div');
+    item.className = 'cl-item';
+    item.innerHTML = `<div class="cl-cb" id="${id}-cb-${ii}"></div><span class="cl-text">${txt}</span>`;
+    item.addEventListener('click', () => {
+      state[ii] = !state[ii];
+      item.classList.toggle('checked', state[ii]);
+      updateProgress();
+    });
+    itemsEl.appendChild(item);
+  });
+});
+
+const DICT = [
+  {term:"CTR",full:"Click-Through Rate",def:"Współczynnik klikalności – stosunek liczby kliknięć w miniaturę do liczby jej wyświetleń. Wysoki CTR (powyżej 4–5%) oznacza, że miniatura i tytuł przyciągają uwagę.",ex:"Przykład: Film wyświetlony 1000 razy, kliknięty 60 razy → CTR = 6%"},
+  {term:"SEO",full:"Search Engine Optimization",def:"Optymalizacja treści pod kątem algorytmów wyszukiwania. Na YouTube SEO obejmuje tytuł, opis, tagi i napisy – wszystko co pomaga algorytmowi zrozumieć, o czym jest film i komu go pokazać.",ex:"Przykład: Użycie frazy 'jak zrobić animację w Canvie' w tytule i pierwszej linijce opisu."},
+  {term:"CTA",full:"Call To Action",def:"Wezwanie do działania – konkretna prośba kierowana do widza. Powinna być jedna i konkretna. Umieszczamy ją na końcu opisu i w przypiętym komentarzu.",ex:"Przykład: 'Subskrybuj kanał, żeby nie przegapić następnych filmów!'"},
+  {term:"End screen",full:"Ekran końcowy",def:"Klikalna nakładka pojawiająca się w ostatnich 20 sekundach filmu. Służy do zatrzymania widza na kanale – linkuje do kolejnego filmu lub zachęca do subskrypcji. Wymaga co najmniej 25 sekund długości wideo.",ex:"Przykład: Logo kanału + polecany film pojawiają się 20 sekund przed końcem."},
+  {term:"Karta informacyjna",full:"Info card",def:"Mały, klikalny element pojawiający się w dowolnym momencie podczas odtwarzania. Można linkować do innego filmu, playlisty lub kanału. Różni się od end screenu tym, że może pojawić się w środku treści.",ex:"Przykład: W połowie tutoriala pojawia się karta: 'Sprawdź część 1!'"},
+  {term:"Miniatura",full:"Thumbnail",def:"Obraz reprezentujący film w wynikach wyszukiwania i sekcji polecanych. Zalecany rozmiar: 1280×720 px (format 16:9). To pierwsze wrażenie – od niej zależy CTR.",ex:"Przykład: Zdjęcie twarzy twórcy + duży tekst na kontrastowym tle."},
+  {term:"Pinned comment",full:"Przypięty komentarz",def:"Komentarz autora wyświetlany na samej górze sekcji komentarzy. Idealne miejsce na CTA, linki do zasobów lub pytanie angażujące widzów.",ex:"Przykład: '👇 Napisz, jakiego tematu chcesz więcej!'"},
+  {term:"Plik .sbv / .srt",full:"Subtitle file",def:"Plik tekstowy z napisami zsynchronizowanymi z wideo. Każda linijka zawiera czas początku i końca (np. 0:00:15.000,0:00:18.000) oraz treść napisu. Można go wgrać w zakładce Napisy w YouTube Studio.",ex:"Przykład: 0:00:15.000,0:00:18.000\nDzień dobry, witajcie na kanale!"},
+  {term:"Widoczność",full:"Visibility setting",def:"Ustawienie decydujące o tym, kto może zobaczyć film. Trzy opcje: Publiczny (wszyscy), Niepubliczny (tylko z linkiem), Prywatny (tylko właściciel). Można też zaplanować publikację na konkretny dzień i godzinę.",ex:"Przykład: Ustaw Niepubliczny, podziel się linkiem z klasą, potem zmień na Publiczny."},
+  {term:"Playlista",full:"Playlist",def:"Zbiór filmów pogrupowanych tematycznie. Zachęca widzów do oglądania kolejnych materiałów i wpływa na czas spędzony na kanale – ważny sygnał dla algorytmu YouTube.",ex:"Przykład: Playlista 'Kurs CapCut od zera' z 5 filmami."},
+];
+
+const dictGrid = document.getElementById('dict-grid');
+DICT.forEach(d => {
+  const item = document.createElement('div');
+  item.className = 'dict-item';
+  item.innerHTML = `<div class="dict-header" onclick="toggleDict(this)"><div style="display:flex;align-items:center;gap:8px"><span class="dict-term">${d.term}</span><span class="dict-abbr">${d.full}</span></div><i class="ti ti-chevron-down dict-chevron" aria-hidden="true"></i></div><div class="dict-def">${d.def}<div class="dict-example">${d.ex}</div></div>`;
+  dictGrid.appendChild(item);
+});
+
+function toggleDict(el) {
+  el.parentElement.classList.toggle('open');
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+  event.target.classList.add('active');
+  if (name === 'quiz' && qi === 0 && !answered) startQuiz();
+}
+
+startQuiz();
+</script>
