@@ -1,26 +1,29 @@
 "use strict";
 
-let stickers = [
-  "Lew", "Panda", "Delfin",
-  "Orzeł", "Tygrys", "Żółw",
-  "Koala", "Flaming", "Wilk"
-];
+const btn = document.getElementById("run-btn");
+const container = document.getElementById("game-container");
+const scoreDisplay = document.getElementById("score");
+const message = document.getElementById("message");
 
-function drawSticker() {
-  let index = Math.floor(Math.random() * stickers.length);
-  return stickers[index];
+let clicks = 0;
+const winAt = 3;
+
+function moveButton() {
+  const maxX = container.clientWidth - btn.offsetWidth;
+  const maxY = container.clientHeight - btn.offsetHeight;
+  const newX = Math.floor(Math.random() * maxX);
+  const newY = Math.floor(Math.random() * maxY);
+  btn.style.left = newX + "px";
+  btn.style.top = newY + "px";
 }
 
-let counter = 0;
-let table = document.getElementById("album");
+btn.addEventListener("mouseover", moveButton);
 
-function addToAlbum() {
-  let sticker = drawSticker();
-  counter = counter + 1;
-  let row = table.insertRow();
-  row.insertCell().textContent = counter;
-  row.insertCell().textContent = sticker;
-}
-
-let btn = document.getElementById("draw-btn");
-btn.addEventListener("click", addToAlbum);
+btn.addEventListener("click", function () {
+  clicks = clicks + 1;
+  scoreDisplay.textContent = "Kliknięcia: " + clicks;
+  if (clicks >= winAt) {
+    btn.removeEventListener("mouseover", moveButton);
+    message.textContent = "Brawo! Udało Ci się!";
+  }
+});

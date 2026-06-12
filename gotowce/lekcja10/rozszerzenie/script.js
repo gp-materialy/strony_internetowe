@@ -1,17 +1,26 @@
 "use strict";
 
-let form = document.getElementById("contact-form");
-let result = document.getElementById("result");
+let avatar = document.getElementById("avatar");
+let name = document.getElementById("name");
+let description = document.getElementById("description");
+let toggleBtn = document.getElementById("toggle-btn");
 
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
-  let name = document.getElementById("name").value;
-  let email = document.getElementById("email").value;
-  let phone = document.getElementById("phone").value;
-  let category = document.getElementById("category").value;
-  let message = document.getElementById("message").value;
-  result.textContent = "Kategoria: " + category
-    + ". Dziękujemy, " + name
-    + "! Telefon: " + phone
-    + ", e-mail: " + email + ".";
+toggleBtn.addEventListener("click", function () {
+  let isHero = document.body.classList.contains("hero");
+
+  if (isHero) {
+    document.body.classList.replace("hero", "villain");
+    name.textContent = "Shadow Villain";
+    description.textContent = "Tryb: Villain";
+    avatar.src = "https://api.dicebear.com/9.x/adventurer/svg?seed=Shadow";
+    avatar.style.borderColor = "#ef4444";
+    toggleBtn.textContent = "Wróć do Hero";
+  } else {
+    document.body.classList.replace("villain", "hero");
+    name.textContent = "Felix Hero";
+    description.textContent = "Tryb: Hero";
+    avatar.src = "https://api.dicebear.com/9.x/adventurer/svg?seed=Felix";
+    avatar.style.borderColor = "#3b82f6";
+    toggleBtn.textContent = "Zmień tryb";
+  }
 });

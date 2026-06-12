@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zadanie dodatkowe - Policja</title>
+<style>
+	body {
+		background-color: #cfe8ff;
+		font-family: sans-serif;
+		margin: 0;
+		padding: 24px;
+	}
+
+	h1 {
+		color: #0033a0;
+		font-size: 22px;
+	}
+
+	#siren {
+		position: relative;
+		left: 200px;
+		width: 100px;
+		height: 100px;
+		background-color: #002060;
+		border-radius: 50px 50px 5px 5px;
+	}
+
+	#siren:hover {
+		animation: siren 0.6s infinite;
+	}
+
+	@keyframes siren {
+		0% { background-color: blue; }
+		50% { background-color: red; }
+		100% { background-color: blue; }
+	}
+
+	#body {
+		width: 500px;
+		height: 240px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		font-weight: bold;
+		font-family: monospace;
+		font-size: 52px;
+		letter-spacing: 4px;
+		text-align: center;
+		background: linear-gradient(0deg, #ffffff 0%, #ffffff 34%, #0033a0 34%, #0033a0 66%, #ffffff 66%, #ffffff 100%);
+		border: 2px solid #0033a0;
+		border-radius: 160px 10px 10px 20px;
+	}
+
+	.wheel {
+		width: 90px;
+		height: 90px;
+		background: #e8e8e8;
+		border: 10px solid black;
+		border-radius: 100px;
+		text-align: center;
+		line-height: 90px;
+		color: grey;
+		animation: spin 1s linear infinite;
+	}
+
+	@keyframes spin {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
+	}
+
+	#wheel-front {
+		position: relative;
+		bottom: 50px;
+		left: 70px;
+	}
+
+	#wheel-back {
+		position: relative;
+		bottom: 150px;
+		left: 350px;
+	}
+
+	#sign {
+		position: absolute;
+		right: 22%;
+		top: 240px;
+		padding: 20px;
+		background: #0033a0;
+		color: white;
+		text-align: center;
+		font-weight: bold;
+		border: 3px solid white;
+		border-radius: 10px;
+		transition: transform 1s;
+	}
+
+	#sign:hover {
+		transform: scale(1.5);
+	}
+</style>
+</head>
+<body>
+	<h1>Zadanie dodatkowe: Policja</h1>
+	<div id="siren"></div>
+	<div id="body">POLICJA</div>
+	<div id="wheel-front" class="wheel">X</div>
+	<div id="wheel-back" class="wheel">X</div>
+	<div id="sign">NUMER ALARMOWY<br>997</div>
+</body>
+</html>

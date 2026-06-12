@@ -2,21 +2,17 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Fan Mail</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kreator Avatara</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <h1>Napisz do nas</h1>
-  <form id="contact-form">
-    <label for="name">Imię</label>
-    <input id="name" type="text" required>
-    <label for="email">E-mail</label>
-    <input id="email" type="email" required>
-    <label for="message">Wiadomość</label>
-    <textarea id="message" rows="5"></textarea>
-    <button type="submit">Wyślij</button>
-  </form>
-  <div id="result"></div>
+<body class="hero">
+  <div class="card">
+    <img id="avatar" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Felix" alt="Avatar">
+    <h1 id="name">Felix Hero</h1>
+    <p id="description">Tryb: Hero</p>
+    <button id="toggle-btn">Zmień tryb</button>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

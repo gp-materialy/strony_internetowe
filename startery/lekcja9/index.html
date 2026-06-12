@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kreator Avatara</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktywna strona</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="hero">
-  <div class="card">
-    <img id="avatar" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Felix" alt="Avatar">
-    <h1 id="name">Felix Hero</h1>
-    <p id="description">Tryb: Hero</p>
-    <button id="toggle-btn">Zmień tryb</button>
-  </div>
-  <script src="script.js"></script>
+<body>
+    <h1>Moja interaktywna strona</h1>
+    <div class="container">
+        <div class="card">
+            <h2>Licznik</h2>
+            <p id="counter-display">0</p>
+            <!-- TODO: dodaj przycisk zwiększający licznik -->
+        </div>
+        <div class="card">
+            <h2>Losowanie</h2>
+            <p id="random-display">Kliknij i sprawdź!</p>
+            <!-- TODO: dodaj przycisk uruchamiający losowanie -->
+        </div>
+        <div class="card">
+            <h2>Widget</h2>
+            <!-- TODO: osadź zewnętrzny widget za pomocą iframe -->
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

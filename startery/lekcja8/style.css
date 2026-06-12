@@ -1,63 +1,47 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #1a1a2e;
-    color: #eee;
-    text-align: center;
-    padding: 20px;
+	font-family: "Segoe UI", Arial, sans-serif;
+	color: rgb(31, 41, 55);
+	min-height: 100vh;
+	/* TODO: dodaj gradient liniowy jako tło strony */
 }
 
-h1 {
-    margin-bottom: 30px;
-    color: #e94560;
+header {
+	padding: 24px 32px;
+	color: white;
+	/* TODO: dodaj półprzezroczyste tło i cień tekstu dla nagłówka */
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+nav ul {
+	list-style: none;
+	display: flex;
+	gap: 16px;
+	margin-top: 12px;
 }
 
-.card {
-    background-color: #16213e;
-    border-radius: 12px;
-    padding: 30px;
-    width: 280px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+nav a {
+	color: white;
+	text-decoration: none;
 }
 
-.card h2 {
-    color: #e94560;
-    margin-bottom: 15px;
+#intro {
+	padding: 32px;
+	color: white;
+	text-align: center;
 }
 
-#counter-display,
-#random-display {
-    font-size: 2em;
-    margin: 15px 0;
-    color: #0f3460;
-    background-color: #eee;
-    border-radius: 8px;
-    padding: 10px;
-}
+/* TODO: dodaj style siatki .ranking-grid z flex-wrap, gap i wyśrodkowaniem kart */
 
-button {
-    background-color: #e94560;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    font-size: 1.1em;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 10px;
-}
+/* TODO: dodaj style pojedynczej karty .phone-card oraz obrazka i odznaki z oceną */
 
-button:hover {
-    background-color: #c81e45;
+footer {
+	padding: 24px;
+	text-align: center;
+	color: white;
+	background: rgba(0, 0, 0, 0.4);
 }

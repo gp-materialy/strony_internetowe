@@ -1,29 +1,13 @@
 "use strict";
 
-const btn = document.getElementById("run-btn");
-const container = document.getElementById("game-container");
-const scoreDisplay = document.getElementById("score");
-const message = document.getElementById("message");
+let form = document.getElementById("contact-form");
+let result = document.getElementById("result");
 
-let clicks = 0;
-const winAt = 3;
-
-function moveButton() {
-  const maxX = container.clientWidth - btn.offsetWidth;
-  const maxY = container.clientHeight - btn.offsetHeight;
-  const newX = Math.floor(Math.random() * maxX);
-  const newY = Math.floor(Math.random() * maxY);
-  btn.style.left = newX + "px";
-  btn.style.top = newY + "px";
-}
-
-btn.addEventListener("mouseover", moveButton);
-
-btn.addEventListener("click", function () {
-  clicks = clicks + 1;
-  scoreDisplay.textContent = "Kliknięcia: " + clicks;
-  if (clicks >= winAt) {
-    btn.removeEventListener("mouseover", moveButton);
-    message.textContent = "Brawo! Udało Ci się!";
-  }
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+  let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
+  let message = document.getElementById("message").value;
+  result.textContent = "Dziękujemy, " + name
+    + "! Wiadomość wysłana z adresu " + email + ".";
 });

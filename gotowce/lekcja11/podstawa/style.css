@@ -1,52 +1,39 @@
 body {
-  margin: 0;
+  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #1a1a2e;
-  font-family: sans-serif;
+  padding: 40px 20px;
+  background-color: #f5f5f5;
 }
 
-#game-container {
-  position: relative;
-  width: 600px;
-  height: 400px;
-  border: 2px solid #e94560;
-  border-radius: 12px;
-  overflow: hidden;
-  background-color: #16213e;
-}
-
-#score {
-  text-align: center;
-  color: #eee;
-  font-size: 18px;
-}
-
-#run-btn {
-  position: absolute;
-  top: 170px;
-  left: 250px;
-  padding: 14px 28px;
-  font-size: 18px;
-  background-color: #e94560;
-  color: #fff;
-  border: none;
+form {
+  background: white;
+  padding: 24px;
   border-radius: 8px;
-  cursor: pointer;
-  transition: top 0.3s ease, left 0.3s ease;
-  animation: pulse 1.5s infinite;
+  width: 100%;
+  max-width: 400px;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-#message {
-  text-align: center;
-  color: #0f3460;
-  font-size: 22px;
+label {
+  display: block;
+  margin-top: 12px;
   font-weight: bold;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 16px;
+  padding: 10px 24px;
+  background: #4a90d9;
+  color: white;
+  border: none;
+  cursor: pointer;
 }

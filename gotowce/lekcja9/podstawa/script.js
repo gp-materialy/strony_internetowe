@@ -1,22 +1,20 @@
 "use strict";
 
-let avatar = document.getElementById("avatar");
-let name = document.getElementById("name");
-let description = document.getElementById("description");
-let toggleBtn = document.getElementById("toggle-btn");
+let counter = 0;
 
-toggleBtn.addEventListener("click", function () {
-  let isHero = document.body.classList.contains("hero");
+function addPoint() {
+    counter = counter + 1;
+    document.getElementById("counter-display").textContent = counter;
+}
 
-  if (isHero) {
-    document.body.classList.replace("hero", "villain");
-    name.textContent = "Shadow Villain";
-    description.textContent = "Tryb: Villain";
-    avatar.src = "https://api.dicebear.com/9.x/adventurer/svg?seed=Shadow";
-  } else {
-    document.body.classList.replace("villain", "hero");
-    name.textContent = "Felix Hero";
-    description.textContent = "Tryb: Hero";
-    avatar.src = "https://api.dicebear.com/9.x/adventurer/svg?seed=Felix";
-  }
-});
+function resetCounter() {
+    counter = 0;
+    document.getElementById("counter-display").textContent = counter;
+}
+
+let items = ["Wojownik", "Mag", "Łucznik", "Złodziej", "Uzdrowiciel"];
+
+function drawItem() {
+    let index = Math.floor(Math.random() * items.length);
+    document.getElementById("random-display").textContent = items[index];
+}
