@@ -6,14 +6,45 @@ body {
 
 table { margin: 20px auto; border-collapse: collapse; }
 th, td { border: 1px solid #333; padding: 8px 16px; }
-th { background-color: #f0a030; color: white; }
 
-#album tr:hover td {
-  background-color: #fff3e0;
-}
+th { background-color: #f0a030; color: white; }
 
 button {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+}
+
+.Zwykła td      { background-color: #e0e0e0; }  /* szary */
+.Rzadka td      { background-color: #c0c0c0; }  /* srebrny */
+.Epicka td      { background-color: #ffd700; }  /* złoty */
+
+.Legendarna td {
+  background-color: #7df9ff;
+  background: linear-gradient(90deg, #fceabb, #ffd700, #fceabb);
+  background-size: 200% 100%;
+  font-weight: bold;
+  animation: blask 2s linear infinite;
+}
+
+@keyframes blask {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.Legendarna:hover td {
+  transform: scale(1.05);
+}
+
+.Mityczna td    { 
+  background-color: #ff7ad9; 
+  background: linear-gradient(90deg, #ea16fd, #6b81ff, #902fff);
+  background-size: 200% 100%;
+  font-weight: bold;
+  animation: blask 2s linear infinite;
+
+}
+
+.Mityczna:hover td {
+  transform: scale(1.05);
 }

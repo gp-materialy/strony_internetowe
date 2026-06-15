@@ -9,8 +9,20 @@
   <h1>Album kolekcjonerski</h1>
   <button id="draw-btn">Losuj naklejkę</button>
   <table id="album">
-    <tr><th>Nr</th><th>Naklejka</th></tr>
+    <tr><th>Nr</th><th>Naklejka</th><th>Ranga</th></tr>
   </table>
+
+  <div id="panel">
+  <input id="custom-name" type="text" placeholder="Nazwa naklejki">
+  <select id="custom-rank">
+    <option value="Zwykła">Zwykła</option>
+    <option value="Rzadka">Rzadka</option>
+    <option value="Epicka">Epicka</option>
+    <option value="Legendarna">Legendarna</option>
+  </select>
+  <button id="add-btn">Dodaj własną</button>
+</div>
+<p id="info">Zebrane naklejki: 0</p>
   <script src="script.js"></script>
 </body>
 </html>
