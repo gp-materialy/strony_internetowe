@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Ściśle tajna strona</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="container">
+    <h1>🔒 Strefa tajna</h1>
+    <input type="password" id="password-input"
+      placeholder="Wpisz hasło">
+    <button id="check-btn">Sprawdź</button>
+    <p id="message"></p>
+    <div id="secret" class="hidden">
+      <h2>🎉 Witaj, agencie!</h2>
+      <p>Tajna wiadomość: misja rozpoczyna się o północy.</p>
+    </div>
+
+<hr>
+<div id="captcha"></div>
+  <p>CAPTCHA jest tu, by upewnić się, że jesteś człowiekiem.<br> Proszę rozwiązać poniższe zadanie:</p>
+	<p id="captcha-question">Podaj wartośc większą od 10</p>
+	<input type="text" id="captcha-input" placeholder="Wpisz odpowiedź">
+	<button id="captcha-btn">Sprawdź CAPTCHA</button>
+	<p id="captcha-message"></p>
+  </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
