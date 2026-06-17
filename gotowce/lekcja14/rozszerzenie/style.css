@@ -1,21 +1,72 @@
 body {
-	font-family: Arial, sans-serif;
-	background: #0b0f1a;
-	color: #e6edf3;
-	text-align: center;
-	padding: 40px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+  transition: background-color 0.5s;
 }
 
-input, button {
-	padding: 10px;
-	margin-top: 8px;
-	font-size: 16px;
+#container {
+  text-align: center;
+  padding: 40px;
+  border-radius: 12px;
+  background-color: #16213e;
+}
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #0f3460;
+  border-radius: 8px;
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #e94560;
+  color: white;
+  cursor: pointer;
+}
+
+#toggle-visibility {
+  padding: 10px;
+  background-color: #0f3460;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+input:disabled {
+  opacity: 0.5;
 }
 
 .hidden {
-	display: none;
+  display: none;
 }
 
-body.unlocked {
-	background: #0a2a14;
+.granted {
+  background-color: #1b4332;
+}
+
+.denied {
+  background-color: #641220;
+}
+
+.limited {
+  background-color: #1b3a4b;
+}
+
+#message {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 15px;
 }

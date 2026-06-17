@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorium zdarzeń · JavaScript</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#15132e;          /* deep indigo base */
+    --panel:#1e1b41;        /* card / panel */
+    --panel-2:#26224f;      /* raised */
+    --line:#39356b;         /* hairlines */
+    --paper:#f3f0e6;        /* warm off-white text */
+    --muted:#a39fc9;        /* secondary text */
+    --c-click:#ff5d73;
+    --c-dbl:#ff9e45;
+    --c-keydown:#ffd23f;
+    --c-keyup:#b6e34a;
+    --c-change:#46e0d0;
+    --c-input:#46b8e0;
+    --c-focus:#7c7bff;
+    --c-blur:#b97bff;
+    --c-over:#ff7bd0;
+    --c-out:#ff6f91;
+    --c-submit:#5ce6a0;
+    --c-load:#ffffff;
+    --radius:14px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:
+      radial-gradient(900px 500px at 85% -10%, #2a2560 0%, transparent 60%),
+      radial-gradient(700px 600px at -10% 110%, #2c1f4d 0%, transparent 55%),
+      var(--ink);
+    color:var(--paper);
+    font-family:"Inter",system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 22px}
+
+  /* ---------- header ---------- */
+  header.hero{padding:56px 0 26px}
+  .eyebrow{
+    font-family:"JetBrains Mono",monospace;
+    font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--muted);
+  }
+  .eyebrow b{color:var(--c-keydown);font-weight:500}
+  h1{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:700;
+    font-size:clamp(2.3rem,6vw,4rem);
+    line-height:1.02;
+    margin:.18em 0 .35em;
+    letter-spacing:-.01em;
+  }
+  h1 em{font-style:normal;color:var(--c-click)}
+  .lede{max-width:60ch;color:var(--muted);font-size:1.05rem}
+  .lede strong{color:var(--paper);font-weight:600}
+
+  /* ---------- layout ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:340px 1fr;
+    gap:26px;
+    align-items:start;
+    padding-bottom:80px;
+  }
+  @media(max-width:880px){.grid{grid-template-columns:1fr}}
+
+  /* ---------- live monitor (signature) ---------- */
+  .monitor{
+    position:sticky;top:18px;
+    background:linear-gradient(180deg,#100e26,#181539);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:0 18px 50px rgba(0,0,0,.4);
+  }
+  @media(max-width:880px){.monitor{position:static}}
+  .monitor .bar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 16px;border-bottom:1px solid var(--line);
+    background:rgba(255,255,255,.02);
+  }
+  .monitor .bar h2{
+    margin:0;font-family:"Space Grotesk",sans-serif;font-size:.98rem;
+    display:flex;align-items:center;gap:9px;letter-spacing:.01em;
+  }
+  .pulse-dot{width:9px;height:9px;border-radius:50%;background:var(--c-submit);
+    box-shadow:0 0 0 0 rgba(92,230,160,.6);animation:beat 2.4s infinite}
+  @keyframes beat{0%{box-shadow:0 0 0 0 rgba(92,230,160,.55)}70%{box-shadow:0 0 0 8px rgba(92,230,160,0)}100%{box-shadow:0 0 0 0 rgba(92,230,160,0)}}
+  .count{font-family:"JetBrains Mono",monospace;font-size:.78rem;color:var(--muted)}
+  .count b{color:var(--paper)}
+
+  #log{list-style:none;margin:0;padding:8px;max-height:62vh;overflow-y:auto;
+    font-family:"JetBrains Mono",monospace;font-size:.8rem}
+  @media(max-width:880px){#log{max-height:280px}}
+  #log li{
+    display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;
+    padding:7px 9px;border-radius:8px;animation:slidein .35s ease both;
+  }
+  #log li:nth-child(odd){background:rgba(255,255,255,.025)}
+  @keyframes slidein{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  #log .ev{color:var(--paper);font-weight:500}
+  #log .tg{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #log .ts{color:#6f6aa3;font-size:.72rem}
+  #log .dot{width:8px;height:8px;border-radius:50%;align-self:center}
+  .empty{color:var(--muted);padding:18px 12px;text-align:center;font-style:italic}
+  .clearbtn{
+    width:100%;border:none;border-top:1px solid var(--line);
+    background:transparent;color:var(--muted);
+    font-family:"JetBrains Mono",monospace;font-size:.76rem;letter-spacing:.05em;
+    padding:11px;cursor:pointer;transition:background .15s,color .15s;
+  }
+  .clearbtn:hover{background:rgba(255,255,255,.04);color:var(--paper)}
+
+  /* ---------- demo cards ---------- */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  @media(max-width:560px){.cards{grid-template-columns:1fr}}
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+    display:flex;flex-direction:column;gap:13px;
+    transition:border-color .2s,transform .2s;
+  }
+  .card:hover{border-color:var(--accent,var(--line));transform:translateY(-2px)}
+  .card .name{
+    font-family:"JetBrains Mono",monospace;font-weight:700;font-size:1.02rem;
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--accent,var(--paper));
+  }
+  .card .name::before{content:"";width:10px;height:10px;border-radius:50%;
+    background:var(--accent,var(--paper))}
+  .card .desc{color:var(--muted);font-size:.9rem;margin:-4px 0 2px}
+
+  /* interactive bits */
+  .stage{
+    background:var(--panel-2);border:1px dashed var(--line);border-radius:10px;
+    padding:16px;min-height:78px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:10px;text-align:center;
+  }
+  .btn{
+    font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.92rem;
+    border:none;border-radius:9px;padding:10px 18px;cursor:pointer;
+    background:var(--accent,#fff);color:#15132e;transition:filter .15s,transform .05s;
+  }
+  .btn:hover{filter:brightness(1.08)}
+  .btn:active{transform:scale(.97)}
+  .field{
+    width:100%;font-family:"Inter",sans-serif;font-size:.92rem;
+    background:#100e26;border:1px solid var(--line);color:var(--paper);
+    border-radius:9px;padding:10px 12px;outline:none;transition:border-color .15s,box-shadow .15s;
+  }
+  .field:focus{border-color:var(--accent,#7c7bff);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent,#7c7bff) 28%,transparent)}
+  select.field{cursor:pointer}
+  .readout{
+    font-family:"JetBrains Mono",monospace;font-size:.86rem;color:var(--paper);
+    min-height:1.2em;
+  }
+  .readout span{color:var(--accent,#fff);font-weight:700}
+  .keycap{
+    display:inline-block;min-width:46px;padding:8px 12px;border-radius:8px;
+    background:#100e26;border:1px solid var(--line);border-bottom-width:3px;
+    font-family:"JetBrains Mono",monospace;font-weight:700;font-size:1.1rem;
+    color:var(--accent,#fff);
+  }
+  .hoverbox{
+    width:100%;padding:18px;border-radius:9px;background:#100e26;
+    border:1px solid var(--line);font-size:.9rem;color:var(--muted);
+    transition:background .2s,color .2s,border-color .2s;cursor:default;
+  }
+  .badge{
+    display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.72rem;
+    padding:3px 9px;border-radius:99px;background:#100e26;border:1px solid var(--line);
+    color:var(--muted);
+  }
+  .badge.on{background:var(--accent,#fff);color:#15132e;border-color:transparent}
+
+  code.snippet{
+    display:block;background:#100e26;border:1px solid var(--line);border-radius:9px;
+    padding:11px 13px;font-family:"JetBrains Mono",monospace;font-size:.76rem;
+    color:#cfcbef;white-space:pre;overflow-x:auto;line-height:1.5;
+  }
+  code .k{color:var(--c-keydown)}
+  code .s{color:var(--c-submit)}
+  code .c{color:#6f6aa3}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 50px;color:var(--muted);
+    font-size:.85rem}
+  footer code{font-family:"JetBrains Mono",monospace;color:var(--paper)}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">JavaScript · <b>addEventListener</b></div>
+    <h1>Laboratorium <em>zdarzeń</em></h1>
+    <p class="lede">Zdarzenie (event) to sygnał, że coś się stało — klik, naciśnięcie klawisza, wysłanie formularza. Ta strona jest <strong>cała oprzyrządowana</strong>: każda Twoja interakcja trafia na żywo do monitora po lewej. Wypróbuj 12 najczęstszych zdarzeń i obserwuj, jak się wyzwalają.</p>
+  </header>
+
+  <div class="grid">
+    <!-- LIVE MONITOR -->
+    <aside class="monitor" aria-label="Monitor zdarzeń na żywo">
+      <div class="bar">
+        <h2><span class="pulse-dot"></span> Monitor zdarzeń</h2>
+        <span class="count">razem: <b id="total">0</b></span>
+      </div>
+      <ul id="log">
+        <li class="empty" id="emptyState">Nasłuchuję… wykonaj dowolną akcję poniżej.</li>
+      </ul>
+      <button class="clearbtn" id="clearBtn">wyczyść dziennik</button>
+    </aside>
+
+    <!-- DEMO CARDS -->
+    <section class="cards">
+
+      <!-- click -->
+      <article class="card" style="--accent:var(--c-click)">
+        <span class="name">click</span>
+        <p class="desc">Pojedyncze kliknięcie elementu — najczęstsze zdarzenie w sieci.</p>
+        <div class="stage">
+          <button class="btn" id="clickBtn">Kliknij mnie</button>
+          <div class="readout">kliknięć: <span id="clickOut">0</span></div>
+        </div>
+        <code class="snippet"><span class="k">btn</span>.addEventListener(<span class="s">'click'</span>, () => { … });</code>
+      </article>
+
+      <!-- dblclick -->
+      <article class="card" style="--accent:var(--c-dbl)">
+        <span class="name">dblclick</span>
+        <p class="desc">Dwa szybkie kliknięcia pod rząd na tym samym elemencie.</p>
+        <div class="stage">
+          <button class="btn" id="dblBtn">Kliknij dwa razy</button>
+          <div class="readout" id="dblOut">czekam na podwójne kliknięcie…</div>
+        </div>
+        <code class="snippet"><span class="k">box</span>.addEventListener(<span class="s">'dblclick'</span>, () => { … });</code>
+      </article>
+
+      <!-- keydown -->
+      <article class="card" style="--accent:var(--c-keydown)">
+        <span class="name">keydown</span>
+        <p class="desc">Klawisz został wciśnięty (jeszcze nie puszczony).</p>
+        <div class="stage">
+          <input class="field" id="keydownIn" placeholder="Naciśnij dowolny klawisz tutaj">
+          <div class="readout">wciśnięto: <span class="keycap" id="keydownOut">—</span></div>
+        </div>
+        <code class="snippet"><span class="k">input</span>.addEventListener(<span class="s">'keydown'</span>, e => e.key);</code>
+      </article>
+
+      <!-- keyup -->
+      <article class="card" style="--accent:var(--c-keyup)">
+        <span class="name">keyup</span>
+        <p class="desc">Klawisz został puszczony — fizyczne zwolnienie przycisku.</p>
+        <div class="stage">
+          <input class="field" id="keyupIn" placeholder="Naciśnij i puść klawisz">
+          <div class="readout">puszczono: <span class="keycap" id="keyupOut">—</span></div>
+        </div>
+        <code class="snippet"><span class="k">input</span>.addEventListener(<span class="s">'keyup'</span>, e => e.key);</code>
+      </article>
+
+      <!-- change -->
+      <article class="card" style="--accent:var(--c-change)">
+        <span class="name">change</span>
+        <p class="desc">Wartość pola zmieniła się <em>i</em> pole straciło aktywność (lub wybrano opcję).</p>
+        <div class="stage">
+          <select class="field" id="changeIn">
+            <option value="">— wybierz język —</option>
+            <option>JavaScript</option>
+            <option>Python</option>
+            <option>HTML</option>
+          </select>
+          <div class="readout" id="changeOut">jeszcze nic nie wybrano</div>
+        </div>
+        <code class="snippet"><span class="k">sel</span>.addEventListener(<span class="s">'change'</span>, e => e.target.value);</code>
+      </article>
+
+      <!-- input -->
+      <article class="card" style="--accent:var(--c-input)">
+        <span class="name">input</span>
+        <p class="desc">Reaguje przy każdym znaku — w trakcie pisania, na bieżąco.</p>
+        <div class="stage">
+          <input class="field" id="inputIn" placeholder="Pisz, a licznik rośnie">
+          <div class="readout">znaków: <span id="inputOut">0</span></div>
+        </div>
+        <code class="snippet"><span class="k">input</span>.addEventListener(<span class="s">'input'</span>, e => e.target.value);</code>
+      </article>
+
+      <!-- focus -->
+      <article class="card" style="--accent:var(--c-focus)">
+        <span class="name">focus</span>
+        <p class="desc">Element stał się aktywny (np. po kliknięciu lub klawiszu Tab).</p>
+        <div class="stage">
+          <input class="field" id="focusIn" placeholder="Kliknij to pole">
+          <div class="readout"><span class="badge" id="focusBadge">nieaktywne</span></div>
+        </div>
+        <code class="snippet"><span class="k">input</span>.addEventListener(<span class="s">'focus'</span>, () => { … });</code>
+      </article>
+
+      <!-- blur -->
+      <article class="card" style="--accent:var(--c-blur)">
+        <span class="name">blur</span>
+        <p class="desc">Element stracił aktywność — kliknięto gdzie indziej.</p>
+        <div class="stage">
+          <input class="field" id="blurIn" placeholder="Kliknij tu, potem poza pole">
+          <div class="readout" id="blurOut">aktywuj i opuść pole…</div>
+        </div>
+        <code class="snippet"><span class="k">input</span>.addEventListener(<span class="s">'blur'</span>, () => { … });</code>
+      </article>
+
+      <!-- mouseover -->
+      <article class="card" style="--accent:var(--c-over)">
+        <span class="name">mouseover</span>
+        <p class="desc">Kursor wjechał na obszar elementu.</p>
+        <div class="stage">
+          <div class="hoverbox" id="overBox">Najedź kursorem tutaj</div>
+        </div>
+        <code class="snippet"><span class="k">box</span>.addEventListener(<span class="s">'mouseover'</span>, () => { … });</code>
+      </article>
+
+      <!-- mouseout -->
+      <article class="card" style="--accent:var(--c-out)">
+        <span class="name">mouseout</span>
+        <p class="desc">Kursor opuścił obszar elementu.</p>
+        <div class="stage">
+          <div class="hoverbox" id="outBox">Najedź, a potem zjedź kursorem</div>
+        </div>
+        <code class="snippet"><span class="k">box</span>.addEventListener(<span class="s">'mouseout'</span>, () => { … });</code>
+      </article>
+
+      <!-- submit -->
+      <article class="card" style="--accent:var(--c-submit)">
+        <span class="name">submit</span>
+        <p class="desc">Formularz został wysłany. <code style="font-family:'JetBrains Mono',monospace;color:var(--c-submit)">preventDefault()</code> blokuje przeładowanie strony.</p>
+        <div class="stage">
+          <form id="demoForm" style="width:100%;display:flex;gap:8px">
+            <input class="field" id="submitIn" placeholder="Twoje imię" style="flex:1">
+            <button class="btn" type="submit">Wyślij</button>
+          </form>
+          <div class="readout" id="submitOut">formularz nie został jeszcze wysłany</div>
+        </div>
+        <code class="snippet"><span class="k">form</span>.addEventListener(<span class="s">'submit'</span>, e => {
+  e.preventDefault(); <span class="c">// nie przeładowuj</span>
+});</code>
+      </article>
+
+      <!-- load -->
+      <article class="card" style="--accent:var(--c-load)">
+        <span class="name">load</span>
+        <p class="desc">Cała strona (z obrazkami i zasobami) skończyła się ładować. To zdarzenie wyzwoliło się raz, przy starcie.</p>
+        <div class="stage">
+          <div class="readout" id="loadOut">ładowanie…</div>
+        </div>
+        <code class="snippet"><span class="k">window</span>.addEventListener(<span class="s">'load'</span>, () => { … });</code>
+      </article>
+
+    </section>
+  </div>
+
+  <footer>
+    Wskazówka: w monitorze widzisz <em>typ</em> zdarzenia, jego <em>cel</em> (<code>e.target</code>) i czas wyzwolenia. Każde z 12 zdarzeń podłączono przez <code>addEventListener(typ, funkcja)</code>.
+  </footer>
+</div>
+
+<script>
+  // ---- kolory zdarzeń w monitorze ----
+  const COLORS = {
+    click:'#ff5d73', dblclick:'#ff9e45', keydown:'#ffd23f', keyup:'#b6e34a',
+    change:'#46e0d0', input:'#46b8e0', focus:'#7c7bff', blur:'#b97bff',
+    mouseover:'#ff7bd0', mouseout:'#ff6f91', submit:'#5ce6a0', load:'#ffffff'
+  };
+
+  const logEl   = document.getElementById('log');
+  const totalEl = document.getElementById('total');
+  const emptyEl = document.getElementById('emptyState');
+  let total = 0;
+
+  // centralna funkcja zapisująca zdarzenie do monitora
+  function record(type, targetLabel){
+    if(emptyEl) emptyEl.remove();
+    total++; totalEl.textContent = total;
+
+    const now = new Date();
+    const ts = now.toLocaleTimeString('pl-PL') + '.' +
+               String(now.getMilliseconds()).padStart(3,'0');
+
+    const li = document.createElement('li');
+    li.innerHTML =
+      '<span class="dot" style="background:'+(COLORS[type]||'#fff')+'"></span>' +
+      '<span class="ev">'+type+'</span>' +
+      '<span class="ts">'+ts+'</span>';
+    // cel jako druga linia poprzez tytuł, plus widoczny target
+    const tg = document.createElement('span');
+    tg.className='tg'; tg.textContent = targetLabel || '';
+    li.insertBefore(tg, li.children[2]);
+
+    logEl.prepend(li);
+    // ogranicz długość dziennika
+    while(logEl.children.length > 40) logEl.lastChild.remove();
+  }
+
+  document.getElementById('clearBtn').addEventListener('click', e => {
+    logEl.innerHTML = '';
+    const empty = document.createElement('li');
+    empty.className='empty'; empty.id='emptyState';
+    empty.textContent='Dziennik wyczyszczony — działaj dalej.';
+    logEl.appendChild(empty);
+    // sam klik w "wyczyść" też jest zdarzeniem 'click', ale go nie logujemy,
+    // żeby nie zaśmiecać świeżo wyczyszczonej listy.
+    e.stopPropagation();
+  }, true);
+
+  // ---- 1. click ----
+  let clicks = 0;
+  document.getElementById('clickBtn').addEventListener('click', () => {
+    clicks++; document.getElementById('clickOut').textContent = clicks;
+    record('click', 'button#clickBtn');
+  });
+
+  // ---- 2. dblclick ----
+  document.getElementById('dblBtn').addEventListener('dblclick', () => {
+    document.getElementById('dblOut').textContent = 'Podwójne kliknięcie wykryte! ✦';
+    record('dblclick', 'button#dblBtn');
+  });
+
+  // ---- 3. keydown ----
+  document.getElementById('keydownIn').addEventListener('keydown', e => {
+    document.getElementById('keydownOut').textContent =
+      e.key === ' ' ? 'Spacja' : e.key;
+    record('keydown', 'key: ' + e.key);
+  });
+
+  // ---- 4. keyup ----
+  document.getElementById('keyupIn').addEventListener('keyup', e => {
+    document.getElementById('keyupOut').textContent =
+      e.key === ' ' ? 'Spacja' : e.key;
+    record('keyup', 'key: ' + e.key);
+  });
+
+  // ---- 5. change ----
+  document.getElementById('changeIn').addEventListener('change', e => {
+    const v = e.target.value || '(puste)';
+    document.getElementById('changeOut').textContent = 'wybrano: ' + v;
+    record('change', 'value: ' + v);
+  });
+
+  // ---- 6. input ----
+  document.getElementById('inputIn').addEventListener('input', e => {
+    document.getElementById('inputOut').textContent = e.target.value.length;
+    record('input', '"' + e.target.value + '"');
+  });
+
+  // ---- 7. focus ----
+  const focusBadge = document.getElementById('focusBadge');
+  document.getElementById('focusIn').addEventListener('focus', () => {
+    focusBadge.textContent = 'aktywne'; focusBadge.classList.add('on');
+    record('focus', 'input#focusIn');
+  });
+  document.getElementById('focusIn').addEventListener('blur', () => {
+    focusBadge.textContent = 'nieaktywne'; focusBadge.classList.remove('on');
+  });
+
+  // ---- 8. blur ----
+  document.getElementById('blurIn').addEventListener('blur', () => {
+    document.getElementById('blurOut').textContent = 'pole straciło aktywność';
+    record('blur', 'input#blurIn');
+  });
+
+  // ---- 9. mouseover ----
+  const overBox = document.getElementById('overBox');
+  overBox.addEventListener('mouseover', () => {
+    overBox.style.background = 'var(--c-over)';
+    overBox.style.color = '#15132e';
+    overBox.textContent = 'Kursor wszedł na element';
+    record('mouseover', 'div#overBox');
+  });
+  overBox.addEventListener('mouseout', () => {
+    overBox.style.background = '#100e26';
+    overBox.style.color = 'var(--muted)';
+    overBox.textContent = 'Najedź kursorem tutaj';
+  });
+
+  // ---- 10. mouseout ----
+  const outBox = document.getElementById('outBox');
+  outBox.addEventListener('mouseover', () => {
+    outBox.style.borderColor = 'var(--c-out)';
+    outBox.textContent = 'Teraz zjedź kursorem…';
+  });
+  outBox.addEventListener('mouseout', () => {
+    outBox.style.borderColor = 'var(--line)';
+    outBox.textContent = 'Kursor opuścił element ✓';
+    record('mouseout', 'div#outBox');
+  });
+
+  // ---- 11. submit ----
+  document.getElementById('demoForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('submitIn').value.trim() || '(brak imienia)';
+    document.getElementById('submitOut').textContent = 'wysłano dane: ' + name;
+    record('submit', 'form#demoForm');
+  });
+
+  // ---- 12. load ----
+  window.addEventListener('load', () => {
+    document.getElementById('loadOut').textContent = 'strona załadowana ✓';
+    record('load', 'window');
+  });
+</script>
+</body>
+</html>

@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-	<meta charset="UTF-8">
-	<title>Ściśle tajne</title>
-	<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Ściśle tajna strona</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<h1>Strefa tajna</h1>
-	<p>Podaj hasło, aby uzyskać dostęp.</p>
-	<input type="password" id="password" placeholder="Hasło">
-	<label><input type="checkbox" id="show"> Pokaż hasło</label>
-	<button id="unlock">Odblokuj</button>
-	<p id="message"></p>
-	<section id="secret" class="hidden">
-		<h2>Akta agenta</h2>
-		<p>Misja Kryptonim Sokół: o północy odbierz paczkę przy fontannie w parku. Hasło rozpoznawcze brzmi "księżyc w pełni". Nie ufaj nikomu w czerwonym szaliku.</p>
-	</section>
-	<script src="script.js"></script>
+  <div id="container">
+    <h1>🔒 Strefa tajna</h1>
+    <input type="password" id="password-input"
+      placeholder="Wpisz hasło">
+    <button id="toggle-visibility">👁</button>
+    <button id="check-btn">Sprawdź</button>
+    <p id="message"></p>
+    <div id="secret" class="hidden">
+      <h2>🎉 Witaj, agencie!</h2>
+      <p>Tajna wiadomość: misja rozpoczyna się o północy.</p>
+    </div>
+    <div id="secret-limited" class="hidden">
+      <h2>👤 Witaj, gościu</h2>
+      <p>Masz ograniczony dostęp.</p>
+    </div>
+  </div>
+<hr>
+<div id="captcha"></div>
+  <p>CAPTCHA jest tu, by upewnić się, że jesteś człowiekiem.<br> Proszę rozwiązać poniższe zadanie:</p>
+	<p id="captcha-question">Podaj wartośc większą od 10</p>
+	<input type="text" id="captcha-input" placeholder="Wpisz odpowiedź">
+	<button id="captcha-btn">Sprawdź CAPTCHA</button>
+	<p id="captcha-message"></p>
+  </div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
