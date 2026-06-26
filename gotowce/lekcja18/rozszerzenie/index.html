@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator obrażeń</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>⚔️ Arena Bohaterów</h1>
+  <div class="arena">
+    <div class="fighter">
+      <img id="hero-avatar" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Felix" alt="Bohater">
+      <h2 id="hero-name">Felix</h2>
+      <div class="hp-bar"><div id="hero-hp-fill" class="hp-fill"></div></div>
+      <span id="hero-hp-text" class="hp-text">100/100</span>
+      <div class="stats">
+        <p>💪 Siła: <strong id="hero-strength">8</strong></p>
+        <p>🛡️ Obrona: <strong id="hero-defense">3</strong></p>
+      </div>
+    </div>
+    <div class="vs">⚔️</div>
+    <div class="fighter">
+      <img id="enemy-avatar" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Goblin" alt="Przeciwnik">
+      <h2 id="enemy-name">Goblin</h2>
+      <div class="hp-bar"><div id="enemy-hp-fill" class="hp-fill enemy"></div></div>
+      <span id="enemy-hp-text" class="hp-text">80/80</span>
+      <div class="stats">
+        <p>💪 Siła: <strong id="enemy-strength">6</strong></p>
+        <p>🛡️ Obrona: <strong id="enemy-defense">2</strong></p>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <button id="quick-btn">⚡ Szybki atak</button>
+    <button id="heavy-btn">🗡️ Mocny atak</button>
+    <div class="custom-attack">
+      <input id="custom-power" type="number" min="1" max="20" step="1" value="5">
+      <button id="custom-btn">🎯 Własny atak</button>
+    </div>
+    <button id="heal-btn">💚 Mikstura (3x)</button>
+    <button id="reset-btn">🔄 Rewanż</button>
+  </div>
+  <div id="log" class="log"></div>
+  <script src="script.js"></script>
+</body>
+</html>

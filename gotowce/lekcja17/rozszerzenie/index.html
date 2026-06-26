@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kreator kart bohatera</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card">
+    <img id="avatar" src="https://api.dicebear.com/9.x/adventurer/svg?seed=Felix" alt="Avatar">
+    <h1 id="name">Bohater</h1>
+    <p id="title">Klasa</p>
+    <div class="stats">
+      <div class="stat-row">
+        <span>❤️ HP</span>
+        <div class="hp-bar">
+          <div id="hp-fill" class="hp-fill"></div>
+        </div>
+        <span id="hp-text">0/0</span>
+      </div>
+      <div class="stat-row">
+        <span>⭐ Poziom</span>
+        <span id="level">0</span>
+      </div>
+      <div class="stat-row">
+        <span>💪 Siła</span>
+        <span id="strength">0</span>
+      </div>
+      <div class="stat-row">
+        <span>🧠 Inteligencja</span>
+        <span id="intelligence">0</span>
+      </div>
+      <div class="stat-row">
+        <span>🛡️ Obrona</span>
+        <span id="defense">0</span>
+      </div>
+    </div>
+    <div class="buttons">
+      <button id="level-up-btn">⬆️ Poziom w górę</button>
+      <button id="damage-btn">💥 Obrażenia</button>
+      <button id="heal-btn">💚 Ulecz</button>
+    </div>
+    <div class="seed-section">
+      <input id="name-input" type="text" placeholder="Wpisz imię...">
+      <button id="name-btn">Zmień</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

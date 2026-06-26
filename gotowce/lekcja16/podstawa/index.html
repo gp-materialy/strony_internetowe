@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bossowy Quiz</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&family=Shojumaru&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <h1>Bossowy Quiz</h1>
+
+  <ul>
+    <!-- ############# PYTANIE 1 ############# -->
+    <li id="pytanie1"><span>Pytanie 1</span>
+      <div class="pytanieKontener">
+        <img class="bossImg" src="ender_dragon.jpg">
+        <input type="radio" name="odpowiedz1" id="p1-odp1" class="poprawna"><label>Ender Dragon</label><br>
+        <input type="radio" name="odpowiedz1" id="p1-odp2"><label>Drogon</label><br>
+        <input type="radio" name="odpowiedz1" id="p1-odp3"><label>Shén Lóng</label><br>
+      </div>
+    </li>
+    <!-- ############# PYTANIE 2 ############# -->
+    <li id="pytanie2"><span>Pytanie 2</span>
+      <div class="pytanieKontener">
+        <img class="bossImg" src="goro.png">
+        <input type="radio" name="odpowiedz2" id="p2-odp1"><label>Rider</label><br>
+        <input type="radio" name="odpowiedz2" id="p2-odp2" class="poprawna"><label>Goro</label><br>
+        <input type="radio" name="odpowiedz2" id="p2-odp3"><label>Shén Lóng</label><br>
+      </div>
+    </li>
+    <!-- ############# PYTANIE 3 ############# -->
+    <li id="pytanie3"><span>Pytanie 3</span>
+      <div class="pytanieKontener">
+        <img class="bossImg" src="freezer.jpg">
+        <input type="radio" name="odpowiedz3" id="p3-odp1"><label>Cell</label><br>
+        <input type="radio" name="odpowiedz3" id="p3-odp2"><label>Buu</label><br>
+        <input type="radio" name="odpowiedz3" id="p3-odp3" class="poprawna"><label>Freezer</label><br>
+      </div>
+    </li>
+  </ul>
+
+  <button type="button" id="sprawdz">Sprawdź odpowiedzi</button>
+  <h3 id="wynik"></h3>
+
+</body>
+</html>
