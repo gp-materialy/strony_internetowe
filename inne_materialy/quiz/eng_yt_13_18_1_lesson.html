@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 3 – Creating a YouTube Channel | Giganci Programowania</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F58220;
+    --orange-light: #F8E2CB;
+    --orange-mid: #EEB27C;
+    --purple: #6F499D;
+    --purple-light: #D4CFE5;
+    --purple-mid: #9786BA;
+    --dark: #2D2D2D;
+    --gray: #F5F5F5;
+    --white: #FFFFFF;
+    --text: #333333;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: #F5F4F0;
+    color: var(--dark);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* NAV PROGRESS */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 4px;
+    background: var(--orange);
+    width: 0%;
+    transition: width 0.4s ease;
+    z-index: 1000;
+  }
+
+  /* TOP NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: var(--purple);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  nav .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    text-decoration: none;
+  }
+  .brand-dot {
+    width: 28px; height: 28px;
+    background: var(--orange);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; color: white;
+    font-family: 'Nunito', sans-serif;
+  }
+  nav .nav-steps {
+    display: flex; gap: 4px;
+  }
+  .nav-step {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+  }
+  .nav-step.active { background: var(--orange); transform: scale(1.3); }
+  .nav-step.done { background: rgba(255,255,255,0.7); }
+
+  /* MAIN LAYOUT */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 1.5rem 4rem;
+  }
+
+  /* SECTIONS */
+  .section {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* HERO SECTION */
+  .hero {
+    background: var(--purple);
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: rgba(245,130,32,0.2);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 160px; height: 160px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+  .hero h1 span { color: var(--orange); }
+  .hero p {
+    font-size: 1rem;
+    opacity: 0.85;
+    max-width: 520px;
+    margin-bottom: 1.75rem;
+  }
+  .hero-stats {
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .hero-stat {
+    background: rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+  }
+  .hero-stat strong {
+    display: block;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--orange);
+  }
+  .hero-stat span { font-size: 12px; opacity: 0.8; }
+
+  /* SECTION HEADER */
+  .sec-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .sec-icon {
+    width: 48px; height: 48px;
+    background: var(--orange);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .sec-header h2 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: var(--purple);
+  }
+  .sec-header p {
+    font-size: 14px;
+    color: #666;
+  }
+
+  /* CARD */
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    border: 1.5px solid rgba(0,0,0,0.06);
+  }
+  .card h3 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--purple);
+    margin-bottom: 0.6rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card h3 .num {
+    width: 26px; height: 26px;
+    background: var(--orange);
+    border-radius: 8px;
+    color: white;
+    font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .card p, .card li {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .card ul { padding-left: 1.25rem; }
+  .card ul li { margin-bottom: 4px; }
+
+  /* HIGHLIGHT CARD */
+  .card-orange {
+    background: var(--orange-light);
+    border-color: var(--orange-mid);
+  }
+  .card-purple {
+    background: var(--purple-light);
+    border-color: var(--purple-mid);
+  }
+
+  /* DEKALOG CARDS */
+  .dekalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .d-card {
+    background: white;
+    border-radius: 14px;
+    padding: 1.25rem;
+    border: 1.5px solid rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .d-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(111,73,157,0.12);
+  }
+  .d-card .d-num {
+    width: 36px; height: 36px;
+    background: var(--purple);
+    border-radius: 10px;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .d-card h4 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--purple);
+  }
+  .d-card p { font-size: 13.5px; color: #555; line-height: 1.5; }
+  .d-card.accent { border-color: var(--orange-mid); }
+  .d-card.accent .d-num { background: var(--orange); }
+  .d-card.accent h4 { color: var(--orange); }
+
+  /* QUIZ */
+  .quiz-container {
+    background: white;
+    border-radius: 16px;
+    padding: 1.75rem;
+    border: 1.5px solid rgba(0,0,0,0.06);
+    margin-bottom: 1.25rem;
+  }
+  .quiz-q {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--dark);
+    margin-bottom: 1rem;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-btn {
+    background: var(--gray);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 15px;
+    font-family: 'Nunito Sans', sans-serif;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .quiz-btn:hover { border-color: var(--purple-mid); background: var(--purple-light); }
+  .quiz-btn.correct { background: #EAF8EE; border-color: #4CAF50; color: #2D7A35; }
+  .quiz-btn.wrong { background: #FEF0F0; border-color: #E53935; color: #B71C1C; }
+  .quiz-btn.disabled { pointer-events: none; opacity: 0.6; }
+  .quiz-feedback {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-size: 14px;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: #EAF8EE; color: #2D7A35; }
+  .quiz-feedback.fail { background: #FEF0F0; color: #B71C1C; }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    font-size: 15px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 1px;
+    background: white;
+  }
+  .check-box.done { background: var(--orange); border-color: var(--orange); }
+  .check-box.done::after { content: '✓'; color: white; font-size: 13px; font-weight: 700; }
+  .checklist li.done-item > span { text-decoration: line-through; color: #999; }
+
+  /* RESOURCES TABLE */
+  .resource-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  @media (max-width: 600px) { .resource-grid { grid-template-columns: 1fr; } }
+  .res-group {
+    background: white;
+    border-radius: 14px;
+    padding: 1.25rem;
+    border: 1.5px solid rgba(0,0,0,0.06);
+  }
+  .res-group h4 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--orange-light);
+  }
+  .res-group h4.purple { border-bottom-color: var(--purple-light); color: var(--purple); }
+  .res-group h4.orange { color: var(--orange); }
+  .res-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--purple);
+    text-decoration: none;
+    padding: 4px 0;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  .res-link:hover { color: var(--orange); }
+  .res-link .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+    flex-shrink: 0;
+  }
+
+  /* STRATEGY FORM */
+  .strategy-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-group label {
+    display: block;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--purple);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    border: 1.5px solid rgba(0,0,0,0.12);
+    border-radius: 10px;
+    padding: 0.6rem 0.9rem;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 15px;
+    color: var(--dark);
+    background: white;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--orange);
+  }
+  .form-group textarea { min-height: 80px; resize: vertical; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+
+  /* TAGS */
+  .tag-input-wrap { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tag {
+    background: var(--purple-light);
+    color: var(--purple);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: flex; align-items: center; gap: 5px;
+    font-family: 'Nunito', sans-serif;
+  }
+  .tag .del { cursor: pointer; font-size: 11px; opacity: 0.7; }
+  .tag.orange-tag { background: var(--orange-light); color: #8B4500; }
+  .tag-add {
+    background: var(--gray);
+    border: 1.5px dashed rgba(0,0,0,0.2);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Nunito Sans', sans-serif;
+    color: #888;
+    transition: all 0.2s;
+  }
+  .tag-add:hover { border-color: var(--orange); color: var(--orange); }
+
+  /* ACCORDION */
+  .accordion { margin-bottom: 1rem; }
+  .acc-head {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1.5px solid rgba(0,0,0,0.06);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--dark);
+    transition: border-color 0.2s;
+    user-select: none;
+  }
+  .acc-head:hover { border-color: var(--orange-mid); }
+  .acc-head.open { border-color: var(--orange); color: var(--orange); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .acc-arrow { font-size: 12px; transition: transform 0.3s; }
+  .acc-head.open .acc-arrow { transform: rotate(180deg); }
+  .acc-body {
+    display: none;
+    background: white;
+    padding: 1rem 1.25rem 1.25rem;
+    border: 1.5px solid var(--orange);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+  }
+  .acc-body.open { display: block; }
+  .acc-body p, .acc-body li { font-size: 14.5px; color: #444; line-height: 1.7; }
+  .acc-body ul { padding-left: 1.2rem; }
+  .acc-body li { margin-bottom: 4px; }
+
+  /* MISSION CARD */
+  .mission-card {
+    background: linear-gradient(135deg, var(--purple) 0%, #4A2D7A 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .mission-card::after {
+    content: '🎯';
+    position: absolute;
+    right: 1.5rem; top: 1.25rem;
+    font-size: 2.5rem;
+  }
+  .mission-card h3 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .mission-card p { font-size: 14px; opacity: 0.9; margin-bottom: 0.5rem; }
+  .mission-goal {
+    background: rgba(245,130,32,0.25);
+    border: 1px solid rgba(245,130,32,0.5);
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    margin-top: 0.75rem;
+    font-size: 14px;
+  }
+  .mission-goal strong { color: var(--orange-mid); }
+
+  /* BUTTONS */
+  .btn-group { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .btn {
+    padding: 0.75rem 1.75rem;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--orange);
+    color: white;
+  }
+  .btn-primary:hover { background: #E07418; transform: translateY(-1px); }
+  .btn-secondary {
+    background: white;
+    color: var(--purple);
+    border: 2px solid var(--purple);
+  }
+  .btn-secondary:hover { background: var(--purple-light); }
+  .btn-purple {
+    background: var(--purple);
+    color: white;
+  }
+  .btn-purple:hover { background: #5A3A80; transform: translateY(-1px); }
+
+  /* SCENARIO BUILDER */
+  .scenario-step {
+    background: white;
+    border-radius: 14px;
+    padding: 1.25rem;
+    border: 1.5px solid rgba(0,0,0,0.06);
+    margin-bottom: 0.75rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 32px; height: 32px;
+    background: var(--purple);
+    border-radius: 10px;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .scenario-step .step-body { flex: 1; }
+  .scenario-step .step-body label {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--purple);
+    display: block;
+    margin-bottom: 5px;
+  }
+  .scenario-step .step-body input,
+  .scenario-step .step-body textarea {
+    width: 100%;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    font-size: 14px;
+    font-family: 'Nunito Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+    color: var(--dark);
+    background: white;
+  }
+  .scenario-step .step-body input:focus,
+  .scenario-step .step-body textarea:focus { border-color: var(--orange); }
+
+  /* NOTICE */
+  .notice {
+    background: var(--orange-light);
+    border-left: 4px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    padding: 0.85rem 1rem;
+    font-size: 14px;
+    color: #6B3D0A;
+    margin-bottom: 1rem;
+  }
+  .notice strong { color: var(--orange); }
+
+  /* FOOTER NAV */
+  .foot-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+  .step-indicator {
+    font-size: 13px;
+    color: #888;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+  }
+  .step-indicator span { color: var(--orange); }
+
+  /* CC ICONS */
+  .cc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .cc-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1.5px solid rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  .cc-card .cc-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .cc-card h5 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--purple);
+    margin-bottom: 4px;
+  }
+  .cc-card p { font-size: 12px; color: #666; }
+
+  /* BADGE */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+  }
+  .badge-orange { background: var(--orange-light); color: #8B4500; }
+  .badge-purple { background: var(--purple-light); color: var(--purple); }
+  .badge-green { background: #EAF3DE; color: #3B6D11; }
+
+  /* COLUMNS */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* YOUTUBE GOAL */
+  .yt-goal {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1.5px solid rgba(0,0,0,0.06);
+    margin-bottom: 1rem;
+  }
+  .yt-goal h4 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .goal-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    font-size: 14.5px;
+  }
+  .goal-row:last-child { border-bottom: none; }
+  .goal-icon { font-size: 18px; }
+  .goal-row strong { font-family: 'Nunito', sans-serif; font-weight: 700; min-width: 160px; }
+  .goal-num {
+    background: var(--orange-light);
+    color: #8B4500;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-left: auto;
+  }
+
+  /* SCORE */
+  #score-display {
+    background: var(--purple);
+    color: white;
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  #score-display .big-num {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 4rem;
+    color: var(--orange);
+    display: block;
+    line-height: 1;
+  }
+  #score-display p { font-size: 15px; opacity: 0.9; margin-top: 0.5rem; }
+
+  /* SUMMARY */
+  .summary-card {
+    background: white;
+    border-radius: 14px;
+    padding: 1.25rem;
+    border: 1.5px solid rgba(0,0,0,0.06);
+    margin-bottom: 0.75rem;
+  }
+  .summary-card h4 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--purple);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .summary-val {
+    font-size: 15px;
+    color: var(--dark);
+    font-style: italic;
+    min-height: 22px;
+  }
+  .summary-val.empty { color: #bbb; font-size: 13px; font-style: normal; }
+
+  /* PRINT */
+  @media print {
+    nav, #progress-bar, .btn-group, .foot-nav { display: none; }
+    .section { display: block !important; page-break-after: always; }
+    main { padding-top: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav>
+  <a class="brand" href="#">
+    <div class="brand-dot">G</div>
+    Giganci Programowania
+  </a>
+  <div class="nav-steps" id="navSteps"></div>
+</nav>
+
+<main>
+
+  <!-- ====== SECTION 0: INTRO ====== -->
+  <section class="section active" id="s0">
+    <div class="hero">
+      <div class="hero-badge">🎬 Lesson 3</div>
+      <h1>I&#x2019;m Creating My Own<br><span>YouTube Channel!</span></h1>
+      <p>Plan your channel from scratch: goal, topic, resources, licenses, and the ten commandments of a good creator. This is your start in the world of content creation!</p>
+    </div>
+
+    <div class="card card-orange">
+      <h3>🚀 What Will You Achieve Today?</h3>
+      <ul>
+        <li>You&#x2019;ll learn how YouTube works and how to build a channel that <strong>stands out from the crowd</strong></li>
+        <li>You&#x2019;ll create a <strong>strategy for your channel</strong> - goal, topic, and schedule</li>
+        <li>You&#x2019;ll learn the <strong>ten commandments of a good YouTuber</strong> - 10 rules for success</li>
+        <li>You&#x2019;ll learn to use <strong>legal resources</strong> (music, photos, video)</li>
+        <li>You&#x2019;ll design your <strong>channel banner in Canva</strong></li>
+      </ul>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="goTo(1)">Let&#x2019;s Begin! →</button>
+    </div>
+  </section>
+
+  <!-- ====== SECTION 1: DEKALOG ====== -->
+  <section class="section" id="s1">
+    <div class="sec-header">
+      <div class="sec-icon">📋</div>
+      <div>
+        <h2>The YouTuber&#x2019;s Ten Commandments</h2>
+        <p>10 rules that separate channels with 100 viewers from those with millions</p>
+      </div>
+    </div>
+
+    <div class="card card-purple" style="margin-bottom:1.5rem">
+      <h3>💡 Before You Record Your First Video...</h3>
+      <p>Every big channel started from zero. The difference? Creators with millions of subscribers <strong>followed these 10 rules</strong> from the very beginning. Read them carefully - there&#x2019;s a quiz coming up!</p>
+    </div>
+
+    <div class="dekalog-grid">
+      <div class="d-card">
+        <div class="d-num">1</div>
+        <h4>Do Your Research</h4>
+        <p>Before you start recording, learn the topic and watch what other creators are doing. Create something original, not another copy.</p>
+      </div>
+      <div class="d-card accent">
+        <div class="d-num">2</div>
+        <h4>Think Through Your Topic</h4>
+        <p>Funny or educational? How often will you post videos? Answer these questions BEFORE you create your channel.</p>
+      </div>
+      <div class="d-card">
+        <div class="d-num">3</div>
+        <h4>Stand Out!</h4>
+        <p>YouTube is full of channels that look the same. Do the same thing, but differently. Show your unique point of view.</p>
+      </div>
+      <div class="d-card accent">
+        <div class="d-num">4</div>
+        <h4>Provide Real Value</h4>
+        <p>People are looking for answers to specific questions. Solve their problems - that&#x2019;s when they come back for more.</p>
+      </div>
+      <div class="d-card">
+        <div class="d-num">5</div>
+        <h4>Show Your Personality</h4>
+        <p>Viewers come back for the creator, not the topic. Be authentic and don&#x2019;t copy others - be yourself!</p>
+      </div>
+      <div class="d-card accent">
+        <div class="d-num">6</div>
+        <h4>Care About Quality</h4>
+        <p>Good sound matters most! A bad microphone puts people off more than a weak camera. Invest wisely.</p>
+      </div>
+      <div class="d-card">
+        <div class="d-num">7</div>
+        <h4>Catchy Titles</h4>
+        <p>&#x201C;7 Ways to...&#x201D; beats &#x201C;Ways to...&#x201D; every single day. The thumbnail is your channel&#x2019;s cover - make it good.</p>
+      </div>
+      <div class="d-card accent">
+        <div class="d-num">8</div>
+        <h4>Interact With Viewers</h4>
+        <p>Reply to comments, ask what they want to see. The better you know them, the better content you&#x2019;ll create.</p>
+      </div>
+      <div class="d-card">
+        <div class="d-num">9</div>
+        <h4>Create Regularly</h4>
+        <p>The YouTube algorithm loves consistency. One video a week is better than daily for a month, then silence.</p>
+      </div>
+      <div class="d-card accent">
+        <div class="d-num">10</div>
+        <h4>Social Media</h4>
+        <p>Tell the world you&#x2019;re making a channel! There&#x2019;s no point making public videos just to keep them secret.</p>
+      </div>
+    </div>
+
+    <div class="card" style="background:#FFFDF5; border-color:#F4CAA0">
+      <h3>🎮 Mini Quiz - Did You Remember the Commandments?</h3>
+      <div id="quiz1">
+        <div class="quiz-container">
+          <p class="quiz-q">According to the commandments, what&#x2019;s worth investing in first to improve your video quality?</p>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="answer(this,'wrong','q1')">A professional 4K camera</button>
+            <button class="quiz-btn" onclick="answer(this,'correct','q1')">A good condenser microphone</button>
+            <button class="quiz-btn" onclick="answer(this,'wrong','q1')">Studio LED lighting</button>
+            <button class="quiz-btn" onclick="answer(this,'wrong','q1')">A stabilizing gimbal</button>
+          </div>
+          <div class="quiz-feedback" id="fb-q1"></div>
+        </div>
+        <div class="quiz-container">
+          <p class="quiz-q">The &#x201C;sub for sub&#x201D; rule is, according to the commandments:</p>
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="answer(this,'wrong','q2')">Recommended as a quick way to grow</button>
+            <button class="quiz-btn" onclick="answer(this,'correct','q2')">Discouraged - subscribers don&#x2019;t watch the videos</button>
+            <button class="quiz-btn" onclick="answer(this,'wrong','q2')">Neutral - it depends on the channel</button>
+          </div>
+          <div class="quiz-feedback" id="fb-q2"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="goTo(0)">← Wstecz</button>
+      <button class="btn btn-primary" onclick="goTo(2)">Channel Strategy →</button>
+    </div>
+  </section>
+
+  <!-- ====== SECTION 2: STRATEGIA ====== -->
+  <section class="section" id="s2">
+    <div class="sec-header">
+      <div class="sec-icon">🎯</div>
+      <div>
+        <h2>Channel Strategy</h2>
+        <p>Plan your channel so the algorithm falls in love with it!</p>
+      </div>
+    </div>
+
+    <!-- CHANNEL GOAL -->
+    <div class="mission-card">
+      <h3>Channel Goal - YouTube Partner Program</h3>
+      <p>One popular goal is joining the <strong>YPP</strong> and earning money from your videos. To qualify, you need:</p>
+      <div class="mission-goal">
+        <strong>1,000</strong> subscribers &nbsp;+&nbsp; <strong>4,000</strong> watch hours in 12 months
+      </div>
+    </div>
+
+    <div class="yt-goal">
+      <h4>📊 YouTube Partner Program Requirements</h4>
+      <div class="goal-row">
+        <span class="goal-icon">👥</span>
+        <strong>Subscribers</strong>
+        <span>Minimum number of channel followers</span>
+        <span class="goal-num">1,000</span>
+      </div>
+      <div class="goal-row">
+        <span class="goal-icon">⏱️</span>
+        <strong>Watch Time</strong>
+        <span>Verified public watch hours (12 months)</span>
+        <span class="goal-num">4,000 h</span>
+      </div>
+      <div class="goal-row">
+        <span class="goal-icon">💰</span>
+        <strong>AdSense Account</strong>
+        <span>Linked to the channel</span>
+        <span class="goal-num">✓</span>
+      </div>
+      <div class="goal-row">
+        <span class="goal-icon">📜</span>
+        <strong>Monetization Policies</strong>
+        <span>Compliance with all YouTube rules</span>
+        <span class="goal-num">✓</span>
+      </div>
+    </div>
+
+    <!-- KARTA PRACY: STRATEGIA -->
+    <div class="card">
+      <h3>📝 Worksheet - Fill in Your Channel Strategy</h3>
+      <div class="strategy-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Channel Name (max. 3 words)</label>
+            <input type="text" id="channelName" placeholder="e.g. Ducky&#x2019;s Adventures" oninput="saveData()">
+          </div>
+          <div class="form-group">
+            <label>Handle / @username</label>
+            <input type="text" id="channelHandle" placeholder="@your-name" oninput="saveData()">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Channel Goal (specific, measurable)</label>
+          <input type="text" id="channelGoal" placeholder="e.g. 1000 subscribers by June 2025" oninput="saveData()">
+        </div>
+        <div class="form-group">
+          <label>Topic - Up to 3 Areas</label>
+          <div class="tag-input-wrap" id="topicTags">
+            <button class="tag-add" onclick="addTag('topicTags','topic')">+ Add Topic</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Who Is Your Viewer? (age, interests)</label>
+          <input type="text" id="audience" placeholder="e.g. kids aged 10-14, Minecraft fans" oninput="saveData()">
+        </div>
+        <div class="form-group">
+          <label>What Will Make Your Channel Stand Out?</label>
+          <textarea id="unique" placeholder="What will you do differently than everyone else?" oninput="saveData()"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Publishing Frequency</label>
+            <select id="freq" onchange="saveData()">
+              <option value="">Choose...</option>
+              <option>Daily</option>
+              <option>2-3 times a week</option>
+              <option>Once a week</option>
+              <option>Every two weeks</option>
+              <option>Once a month</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Publishing Day</label>
+            <select id="pubDay" onchange="saveData()">
+              <option value="">Choose...</option>
+              <option>Monday</option>
+              <option>Tuesday</option>
+              <option>Wednesday</option>
+              <option>Thursday</option>
+              <option>Friday</option>
+              <option>Saturday</option>
+              <option>Sunday</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>5 Video Titles You Want to Record</label>
+          <div id="videoTitles">
+            <input type="text" class="vt-input" placeholder="Title 1..." oninput="saveData()" style="margin-bottom:6px">
+            <input type="text" class="vt-input" placeholder="Title 2..." oninput="saveData()" style="margin-bottom:6px">
+            <input type="text" class="vt-input" placeholder="Title 3..." oninput="saveData()" style="margin-bottom:6px">
+            <input type="text" class="vt-input" placeholder="Title 4..." oninput="saveData()" style="margin-bottom:6px">
+            <input type="text" class="vt-input" placeholder="Title 5..." oninput="saveData()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice">
+      <strong>Tip:</strong> A good channel name relates to your topic, is easy to remember, contains no numbers or special characters, and is made up of max. 3 words.
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="goTo(1)">← Wstecz</button>
+      <button class="btn btn-primary" onclick="goTo(3)">Resources and Licenses →</button>
+    </div>
+  </section>
+
+  <!-- ====== SECTION 3: ZASOBY I LICENCJE ====== -->
+  <section class="section" id="s3">
+    <div class="sec-header">
+      <div class="sec-icon">🔍</div>
+      <div>
+        <h2>Resources and Licenses</h2>
+        <p>Where to find legal music, photos, and video for your productions</p>
+      </div>
+    </div>
+
+    <div class="card card-purple">
+      <h3>⚖️ Copyright - Why Does It Matter?</h3>
+      <p>Using someone else&#x2019;s music, photo, or video without permission is <strong>theft of intellectual property</strong> - and can get your channel taken down! Luckily, there are plenty of free, legal resources.</p>
+    </div>
+
+    <!-- CC LICENCJE -->
+    <div class="card">
+      <h3>🏛️ Creative Commons (CC) License</h3>
+      <p style="margin-bottom:1rem; font-size:14px; color:#555">The creator shares their work under certain conditions. Always check which license applies before using it!</p>
+      <div class="cc-grid">
+        <div class="cc-card">
+          <span class="cc-icon">👤</span>
+          <h5>BY - Attribution</h5>
+          <p>You can use it, but credit the author. Commercial use is allowed.</p>
+        </div>
+        <div class="cc-card">
+          <span class="cc-icon">💰</span>
+          <h5>NC - Non-Commercial</h5>
+          <p>For private purposes only - not on a monetized channel.</p>
+        </div>
+        <div class="cc-card">
+          <span class="cc-icon">🔄</span>
+          <h5>SA - Share Alike</h5>
+          <p>Your derivative work must have an identical license.</p>
+        </div>
+        <div class="cc-card">
+          <span class="cc-icon">🚫</span>
+          <h5>ND - No Derivatives</h5>
+          <p>Use only the original - don&#x2019;t create adaptations.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZASOBY -->
+    <div class="card">
+      <h3>🌐 Legal Resource Sources</h3>
+      <div class="resource-grid">
+        <div class="res-group">
+          <h4 class="orange">🖼️ Photos and Graphics</h4>
+          <a class="res-link" href="https://pixabay.com" target="_blank"><span class="dot"></span>Pixabay</a>
+          <a class="res-link" href="https://pexels.com" target="_blank"><span class="dot"></span>Pexels</a>
+          <a class="res-link" href="https://unsplash.com" target="_blank"><span class="dot"></span>Unsplash</a>
+          <a class="res-link" href="https://flaticon.com" target="_blank"><span class="dot"></span>Flaticon</a>
+          <a class="res-link" href="https://freepik.com" target="_blank"><span class="dot"></span>Freepik</a>
+          <a class="res-link" href="https://images.google.com" target="_blank"><span class="dot"></span>Google Images (CC)</a>
+        </div>
+        <div class="res-group">
+          <h4 class="purple">🎵 Music and Sound</h4>
+          <a class="res-link" href="https://bensound.com" target="_blank"><span class="dot"></span>BenSound</a>
+          <a class="res-link" href="https://mixkit.co" target="_blank"><span class="dot"></span>Mixkit</a>
+          <a class="res-link" href="https://studio.youtube.com" target="_blank"><span class="dot"></span>YouTube Library</a>
+        </div>
+        <div class="res-group">
+          <h4 class="orange">🎬 Video Footage</h4>
+          <a class="res-link" href="https://pexels.com/videos" target="_blank"><span class="dot"></span>Pexels Video</a>
+          <a class="res-link" href="https://videvo.net" target="_blank"><span class="dot"></span>Videvo</a>
+          <a class="res-link" href="https://mazwai.com" target="_blank"><span class="dot"></span>Mazwai</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQUIPMENT RESOURCES -->
+    <div class="card">
+      <h3>🎒 Resources for Your Project - Fill In</h3>
+      <div class="strategy-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>What Will You Record With?</label>
+            <select id="recDevice" onchange="saveData()">
+              <option value="">Choose...</option>
+              <option>Smartphone (camera)</option>
+              <option>Tablet</option>
+              <option>Digital camera</option>
+              <option>GoPro camera</option>
+              <option>Webcam</option>
+              <option>Screen recording (OBS)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>How You&#x2019;ll Hold the Camera</label>
+            <select id="camStyle" onchange="saveData()">
+              <option value="">Choose...</option>
+              <option>Handheld (vlog)</option>
+              <option>On a tripod</option>
+              <option>Camera operator / someone helping</option>
+              <option>Resting on furniture</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Editing Software</label>
+          <div class="tag-input-wrap" id="editTags">
+            <button class="tag-add" onclick="addTag('editTags','edit')">+ Add Software</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Where Will You Record?</label>
+          <input type="text" id="location" placeholder="e.g. in your room, in a park, in a studio" oninput="saveData()">
+        </div>
+        <div class="form-group">
+          <label>Things You&#x2019;ll Need (props, clothes, materials)</label>
+          <textarea id="props" placeholder="List everything you&#x2019;ll prepare for the recording..." oninput="saveData()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ LICENCJE -->
+    <div class="card" style="background:#FFFDF5; border-color:#F4CAA0">
+      <h3>🎮 Quiz - CC Licenses</h3>
+      <div class="quiz-container">
+        <p class="quiz-q">You want to use a CC-BY licensed song in a video you&#x2019;re monetizing. What do you need to do?</p>
+        <div class="quiz-options">
+          <button class="quiz-btn" onclick="answer(this,'wrong','q3')">You can&#x2019;t use this music</button>
+          <button class="quiz-btn" onclick="answer(this,'correct','q3')">Credit the author in the video description</button>
+          <button class="quiz-btn" onclick="answer(this,'wrong','q3')">Pay the author</button>
+          <button class="quiz-btn" onclick="answer(this,'wrong','q3')">Nothing - CC licenses are always free with no restrictions</button>
+        </div>
+        <div class="quiz-feedback" id="fb-q3"></div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="goTo(2)">← Wstecz</button>
+      <button class="btn btn-primary" onclick="goTo(4)">Video Script →</button>
+    </div>
+  </section>
+
+  <!-- ====== SECTION 4: SCENARIUSZ ====== -->
+  <section class="section" id="s4">
+    <div class="sec-header">
+      <div class="sec-icon">🎬</div>
+      <div>
+        <h2>Script for Your First Video</h2>
+        <p>Plan every step of your production - from idea to finished footage</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>🎭 Project Types</h3>
+        <ul style="margin-top:0.5rem">
+          <li><span class="badge badge-orange">🎵 Music Video</span> - Instagram Reels / TikTok</li>
+          <li style="margin-top:6px"><span class="badge badge-purple">😂 Gag Reel</span> - skits, comedy (like Abstarchuje)</li>
+          <li style="margin-top:6px"><span class="badge badge-green">🎙️ Vlog / Tutorial</span> - talking head, tutorial</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>⏱️ Duration</h3>
+        <p style="font-size:14px">For starters, we make short videos:</p>
+        <div style="margin-top:0.75rem; background:var(--orange-light); border-radius:10px; padding:0.75rem 1rem; text-align:center">
+          <strong style="font-size:2rem; font-family:'Nunito',sans-serif; color:var(--orange); display:block">2–3 min</strong>
+          <span style="font-size:13px; color:#6B3D0A">maximum time - polished!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHOOSE TOPIC -->
+    <div class="card">
+      <h3>🎯 Choose Your Project Type</h3>
+      <p style="font-size:14px; margin-bottom:1rem; color:#555">Together with your teacher, choose one topic for the whole group. Everyone creates their own video!</p>
+      <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+        <button class="quiz-btn" onclick="selectProject(this,'Music Video / Reels')" style="flex:1; min-width:140px; text-align:center">🎵 Music Video / Reels</button>
+        <button class="quiz-btn" onclick="selectProject(this,'Gag Video')" style="flex:1; min-width:140px; text-align:center">😂 Gag Video</button>
+        <button class="quiz-btn" onclick="selectProject(this,'Vlog / Tutorial')" style="flex:1; min-width:140px; text-align:center">🎙️ Vlog / Tutorial</button>
+        <button class="quiz-btn" onclick="selectProject(this,'Interview / Skit')" style="flex:1; min-width:140px; text-align:center">🎭 Interview / Skit</button>
+      </div>
+      <div id="projectChoice" style="margin-top:1rem; display:none; padding:0.75rem 1rem; background:var(--orange-light); border-radius:10px; font-weight:700; color:#8B4500; font-family:'Nunito',sans-serif; font-size:15px"></div>
+    </div>
+
+    <!-- ACTION PLAN -->
+    <div class="card">
+      <h3>📋 Action Plan - Fill In Before Recording</h3>
+      <div class="scenario-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <label>Your Video&#x2019;s Title</label>
+          <input type="text" id="filmTitle" placeholder="Come up with a catchy title..." oninput="saveData()">
+        </div>
+      </div>
+      <div class="scenario-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <label>Where Are You Recording? (location, lighting)</label>
+          <input type="text" id="filmLocation" placeholder="e.g. in a room by the window, in a park..." oninput="saveData()">
+        </div>
+      </div>
+      <div class="scenario-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <label>Things to Prepare (props, decorations, clothing)</label>
+          <textarea id="filmProps" placeholder="List of things you&#x2019;ll prepare..." oninput="saveData()" style="min-height:60px"></textarea>
+        </div>
+      </div>
+      <div class="scenario-step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <label>Script / Outline (what happens in order?)</label>
+          <textarea id="filmScript" placeholder="Intro → Part 1 → Part 2 → Ending..." oninput="saveData()" style="min-height:90px"></textarea>
+        </div>
+      </div>
+      <div class="scenario-step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <label>Music (where from? link or title)</label>
+          <input type="text" id="filmMusic" placeholder="np. BenSound – Happy Rock (CC-BY)" oninput="saveData()">
+        </div>
+      </div>
+    </div>
+
+    <!-- CHECKLISTA -->
+    <div class="card">
+      <h3>✅ Pre-Recording Checklist</h3>
+      <ul class="checklist" id="preFilmChecklist">
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>My phone / camera is charged</span></li>
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>I have free storage space (minimum 2 GB)</span></li>
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>I&#x2019;ve chosen a well-lit location</span></li>
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>I have all my props and decorations</span></li>
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>I&#x2019;ve practiced my video plan (outline/script)</span></li>
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>I&#x2019;ve chosen music from a legal source</span></li>
+      </ul>
+    </div>
+
+    <div class="notice">
+      <strong>Homework:</strong> Based on this plan, record a 2-3 minute video at home or outside. Bring the recorded footage to the next class and make sure you have access to the Play Store / App Store!
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="goTo(3)">← Wstecz</button>
+      <button class="btn btn-primary" onclick="goTo(5)">Creating Your Channel →</button>
+    </div>
+  </section>
+
+  <!-- ====== SECTION 5: CREATING THE CHANNEL ====== -->
+  <section class="section" id="s5">
+    <div class="sec-header">
+      <div class="sec-icon">⚙️</div>
+      <div>
+        <h2>Setting Up Your YouTube Channel</h2>
+        <p>Step by step - from an empty profile to a finished channel</p>
+      </div>
+    </div>
+
+    <div class="card card-orange">
+      <h3>🚀 Before You Start</h3>
+      <p>You&#x2019;ll need a Google account. Log in at <strong>youtube.com</strong> and click your profile icon → <strong>Create a new channel</strong>.</p>
+    </div>
+
+    <!-- ACCORDION -->
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        🏷️ Step 1 - Name and Basic Info
+        <span class="acc-arrow">▼</span>
+      </div>
+      <div class="acc-body">
+        <p>In the form, enter your <strong>channel name</strong> and accept the terms. Once you&#x2019;re through the form, you&#x2019;ll land on an empty channel view - choose <strong>Customize channel</strong>.</p>
+        <p style="margin-top:0.5rem">In the <strong>Customization → Basic info</strong> tab, fill in:</p>
+        <ul style="margin-top:0.5rem">
+          <li>Channel name (matching your strategy)</li>
+          <li>Handle / @username</li>
+          <li>Channel description (max 1000 characters - from Google Docs!)</li>
+          <li>Social media links</li>
+        </ul>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        🎨 Step 2 - Branding and Banner
+        <span class="acc-arrow">▼</span>
+      </div>
+      <div class="acc-body">
+        <p>In the <strong>Customization → Branding</strong> tab, add:</p>
+        <ul>
+          <li><strong>Channel logo</strong> - min. 98×98 px, PNG file. Appears next to comments and videos</li>
+          <li><strong>Banner</strong> - min. 2048×1152 px. Visible at the top of your channel (you&#x2019;ll create it in Canva!)</li>
+          <li><strong>Watermark</strong> - a logo with a transparent background, shown in the bottom-right corner of videos</li>
+        </ul>
+        <p style="margin-top:0.75rem; font-size:13px; color:#666">💡 Remember to click <strong>Publish changes</strong>!</p>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        📺 Step 3 - Activate Streaming (important!)
+        <span class="acc-arrow">▼</span>
+      </div>
+      <div class="acc-body">
+        <p>Go to <strong>Content → Live</strong> and click <strong>Try it out</strong>, then <strong>Submit request</strong>.</p>
+        <p style="margin-top:0.5rem; color:#C0392B; font-weight:700">⚠️ Activation can take up to 24 hours! Do this now so you can stream during the next class. You&#x2019;ll need your phone for SMS verification.</p>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)">
+        🔧 Step 4 - Channel Settings
+        <span class="acc-arrow">▼</span>
+      </div>
+      <div class="acc-body">
+        <p>Click <strong>Settings</strong> (bottom of the page). In the <strong>Channel → Advanced settings</strong> tab:</p>
+        <ul>
+          <li>Select <strong>&#x201C;No, channel is not made for kids&#x201D;</strong> - this will allow viewers to comment on videos</li>
+          <li>Add keywords describing your topic (a few, e.g. gaming, Minecraft, Poland)</li>
+        </ul>
+        <p style="margin-top:0.75rem">In <strong>Default upload settings → Basic info</strong>, set your video visibility and enter basic tags.</p>
+      </div>
+    </div>
+    <!-- KONFIGURACJA CHECKLISTA -->
+    <div class="card" style="margin-top:1.25rem">
+      <h3>✅ Channel Setup Checklist</h3>
+      <ul class="checklist" id="ytChecklist">
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>Google account ready, logged into YouTube</span></li>
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>Channel created, name entered</span></li>
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>Channel description filled in (from your strategy)</span></li>
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>Channel logo added</span></li>
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>Banner created in Canva and added</span></li>
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>Streaming access request submitted</span></li>
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>Advanced settings configured</span></li>
+        <li><span class="check-box" onclick="toggleCheck(this)"></span><span>Default tags and video visibility set</span></li>
+      </ul>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="goTo(4)">← Wstecz</button>
+      <button class="btn btn-primary" onclick="goTo(6)">Summary →</button>
+    </div>
+  </section>
+
+  <!-- ====== SECTION 6: PODSUMOWANIE ====== -->
+  <section class="section" id="s6">
+    <div class="sec-header">
+      <div class="sec-icon">🏆</div>
+      <div>
+        <h2>Lesson Summary</h2>
+        <p>Your strategy is ready - time to take action!</p>
+      </div>
+    </div>
+
+    <div id="score-display">
+      <span class="big-num" id="finalScore">0</span>
+      <p id="scoreMsg">pts for this lesson - great job!</p>
+    </div>
+
+    <!-- SUMMARY OF FILLED-IN DATA -->
+    <h3 style="font-family:'Nunito',sans-serif; font-weight:800; font-size:1.1rem; color:var(--purple); margin-bottom:1rem">📄 Your Channel Strategy</h3>
+
+    <div class="summary-card">
+      <h4>Channel Name</h4>
+      <div class="summary-val" id="sum-name">—</div>
+    </div>
+    <div class="summary-card">
+      <h4>Channel Goal</h4>
+      <div class="summary-val" id="sum-goal">—</div>
+    </div>
+    <div class="summary-card">
+      <h4>Topic</h4>
+      <div class="summary-val" id="sum-topics">—</div>
+    </div>
+    <div class="summary-card">
+      <h4>Viewers</h4>
+      <div class="summary-val" id="sum-audience">—</div>
+    </div>
+    <div class="summary-card">
+      <h4>First Video Title</h4>
+      <div class="summary-val" id="sum-filmtitle">—</div>
+    </div>
+    <div class="summary-card">
+      <h4>Script</h4>
+      <div class="summary-val" id="sum-script">—</div>
+    </div>
+
+    <!-- FINAL QUESTIONS -->
+    <div class="card card-orange" style="margin-top:1.5rem">
+      <h3>💬 Discussion Questions</h3>
+      <ul>
+        <li>Who is your favorite YouTuber and how do they follow the commandments?</li>
+        <li>Why is it worth creating a strategy before recording your first video?</li>
+        <li>Present your worksheet - what video are you planning and what will you use?</li>
+      </ul>
+    </div>
+
+    <!-- ZADANIE DOMOWE -->
+    <div class="card card-purple">
+      <h3>📚 Homework</h3>
+      <ul>
+        <li>Record a 2-3 minute video based on today&#x2019;s plan</li>
+        <li>Free up space on your phone (min. 2 GB free)</li>
+        <li>Make sure you have access to the Play Store / App Store</li>
+      </ul>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="goTo(5)">← Wstecz</button>
+      <button class="btn btn-purple" onclick="window.print()">🖨️ Print / Save PDF</button>
+      <button class="btn btn-primary" onclick="goTo(0)">↩ Start Over</button>
+    </div>
+  </section>
+
+</main>
+
+<script>
+const TOTAL_SECTIONS = 7;
+let quizScores = {};
+let topicTagList = [];
+let editTagList = [];
+
+const sectionTitles = [
+  'Intro','Commandments','Strategy','Resources','Script','YouTube Channel','Summary'
+];
+
+function buildNav() {
+  const nav = document.getElementById('navSteps');
+  nav.innerHTML = '';
+  for (let i = 0; i < TOTAL_SECTIONS; i++) {
+    const b = document.createElement('button');
+    b.className = 'nav-step';
+    b.title = sectionTitles[i];
+    b.onclick = () => goTo(i);
+    nav.appendChild(b);
+  }
+}
+
+function goTo(n) {
+  document.querySelectorAll('.section').forEach((s,i) => {
+    s.classList.toggle('active', i === n);
+  });
+  document.querySelectorAll('.nav-step').forEach((b,i) => {
+    b.classList.remove('active','done');
+    if (i < n) b.classList.add('done');
+    if (i === n) b.classList.add('active');
+  });
+  const pct = Math.round((n / (TOTAL_SECTIONS-1)) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  window.scrollTo({top:0, behavior:'smooth'});
+  if (n === TOTAL_SECTIONS - 1) buildSummary();
+}
+
+function answer(btn, type, qid) {
+  if (btn.classList.contains('disabled')) return;
+  const container = btn.closest('.quiz-container');
+  container.querySelectorAll('.quiz-btn').forEach(b => b.classList.add('disabled'));
+  btn.classList.add(type);
+  const fb = document.getElementById('fb-' + qid);
+  fb.classList.add('show');
+  if (type === 'correct') {
+    fb.classList.add('ok');
+    fb.textContent = '✅ Correct! ' + getExplanation(qid);
+    quizScores[qid] = 1;
+  } else {
+    fb.classList.add('fail');
+    fb.textContent = '❌ Not this time. ' + getExplanation(qid);
+    quizScores[qid] = 0;
+    container.querySelectorAll('.quiz-btn').forEach(b => {
+      if (b.onclick && b.onclick.toString().includes("'correct'")) b.classList.add('correct');
+    });
+  }
+}
+
+function getExplanation(qid) {
+  const ex = {
+    'q1': 'Poor sound quality is immediately noticed by viewers - a good microphone is a priority!',
+    'q2': 'The "sub for sub" method fills your channel with inactive followers who don\'t watch your videos - the algorithm notices this.',
+    'q3': 'CC-BY (attribution) allows commercial use, but you must credit the author in the description.'
+  };
+  return ex[qid] || '';
+}
+
+function selectProject(btn, name) {
+  document.querySelectorAll('#s4 .quiz-btn').forEach(b => b.classList.remove('correct'));
+  btn.classList.add('correct');
+  const div = document.getElementById('projectChoice');
+  div.style.display = 'block';
+  div.textContent = '✅ Chosen project: ' + name;
+  document.getElementById('filmTitle') && (document.getElementById('filmTitle').placeholder = 'e.g. My ' + name + '...');
+  saveData();
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  const li = el.parentElement;
+  li.classList.toggle('done-item');
+}
+
+function toggleAcc(head) {
+  const body = head.nextElementSibling;
+  head.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+function addTag(containerId, type) {
+  const val = prompt(type === 'topic' ? 'Enter your channel\'s topic (e.g. gaming):' : 'Enter the software (e.g. VivaCut):');
+  if (!val || !val.trim()) return;
+  const wrap = document.getElementById(containerId);
+  const tag = document.createElement('span');
+  tag.className = 'tag ' + (type === 'topic' ? '' : 'orange-tag');
+  tag.innerHTML = val.trim() + ' <span class="del" onclick="this.parentElement.remove(); saveData()">×</span>';
+  wrap.insertBefore(tag, wrap.lastElementChild);
+  saveData();
+}
+
+function saveData() {
+  // just triggers summary refresh if on last section
+}
+
+function buildSummary() {
+  const get = id => (document.getElementById(id) || {}).value || '';
+  const setSum = (id, val) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (val && val.trim()) {
+      el.textContent = val;
+      el.className = 'summary-val';
+    } else {
+      el.textContent = 'Not filled in';
+      el.className = 'summary-val empty';
+    }
+  };
+  setSum('sum-name', get('channelName'));
+  setSum('sum-goal', get('channelGoal'));
+  const topicEls = document.querySelectorAll('#topicTags .tag');
+  const topics = [...topicEls].map(t => t.textContent.replace('×','').trim()).join(', ');
+  setSum('sum-topics', topics);
+  setSum('sum-audience', get('audience'));
+  setSum('sum-filmtitle', get('filmTitle'));
+  setSum('sum-script', get('filmScript'));
+
+  const score = Object.values(quizScores).reduce((a,b) => a+b, 0) * 33 +
+    (get('channelName') ? 5 : 0) +
+    (get('channelGoal') ? 5 : 0) +
+    (get('filmTitle') ? 5 : 0) +
+    (get('filmScript') ? 7 : 0);
+
+  document.getElementById('finalScore').textContent = Math.min(score + 20, 100);
+  const msgs = ['Good start!', 'Not bad!', 'Great job!', 'YouTube master!'];
+  const idx = Math.floor(Math.min(score, 99) / 25);
+  document.getElementById('scoreMsg').textContent = msgs[idx] + ' pts for this lesson';
+}
+
+buildNav();
+goTo(0);
+</script>
+
+</body>
+</html>
