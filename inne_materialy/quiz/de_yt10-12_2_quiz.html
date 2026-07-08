@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz: YouTube-Videos — Coding Giants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #6F499D;
+    --purple-dark: #4a2d70;
+    --purple-deep: #2d1a45;
+    --purple-light: #B4A8CE;
+    --purple-tint: #D4CFE5;
+    --orange: #F58220;
+    --orange-glow: #F5A623;
+    --orange-tint: #F8E2CB;
+    --dark: #2D2D2D;
+    --green: #34c759;
+    --red: #e74c3c;
+    --card-bg: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(160deg, var(--purple) 0%, var(--purple-dark) 50%, var(--purple-deep) 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+    overflow-x: hidden;
+  }
+
+  /* Floating background blobs */
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    opacity: 0.08;
+    background: var(--orange);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::before {
+    width: 500px; height: 500px;
+    top: -120px; right: -140px;
+    animation: blobFloat 18s ease-in-out infinite;
+  }
+  body::after {
+    width: 400px; height: 400px;
+    bottom: -80px; left: -120px;
+    animation: blobFloat 22s ease-in-out infinite reverse;
+  }
+  @keyframes blobFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -20px) scale(1.05); }
+    66% { transform: translate(-20px, 15px) scale(0.95); }
+  }
+
+  .container {
+    width: 100%;
+    max-width: 560px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .header-brand {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--purple-light);
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 28px;
+    color: #fff;
+    line-height: 1.15;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  }
+  .header h1 span {
+    color: var(--orange);
+  }
+
+  /* Progress */
+  .progress-bar {
+    margin-bottom: 20px;
+  }
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--purple-light);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .progress-info .score {
+    color: var(--orange);
+  }
+  .progress-track {
+    height: 7px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.1);
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--orange), var(--orange-glow));
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Card */
+  .card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+    overflow: hidden;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .card.fade-out {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  .card.fade-in {
+    animation: cardIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Question header */
+  .q-header {
+    background: linear-gradient(135deg, var(--purple), #8B6BB5);
+    padding: 22px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .q-header::after {
+    content: '';
+    position: absolute;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    top: -40px; right: -20px;
+  }
+  .q-emoji {
+    font-size: 36px;
+    flex-shrink: 0;
+    line-height: 1;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+    animation: emojiPop 0.4s 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes emojiPop {
+    from { transform: scale(0) rotate(-20deg); }
+    to { transform: scale(1) rotate(0); }
+  }
+  .q-number {
+    font-size: 11px;
+    color: var(--orange-tint);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .q-text {
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  /* Options */
+  .options {
+    padding: 18px 20px 10px;
+  }
+  .option-btn {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    border: 2.5px solid transparent;
+    background: #f7f5fa;
+    color: var(--dark);
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .option-btn:hover:not(.revealed) {
+    background: #efe8f7;
+    border-color: var(--purple-light);
+    transform: translateX(4px);
+  }
+  .option-btn.selected:not(.revealed) {
+    background: #efe8f7;
+    border-color: var(--purple);
+    font-weight: 700;
+  }
+  .option-btn.correct {
+    background: #e4f9ea;
+    border-color: var(--green);
+    font-weight: 700;
+    animation: correctPulse 0.5s ease;
+  }
+  @keyframes correctPulse {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+  }
+  .option-btn.wrong {
+    background: #fef0f0;
+    border-color: var(--red);
+    font-weight: 600;
+    animation: wrongShake 0.4s ease;
+  }
+  @keyframes wrongShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+  .option-btn .letter {
+    width: 30px; height: 30px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+    background: #e0dbe7;
+    color: var(--purple);
+    transition: all 0.2s;
+  }
+  .option-btn.selected .letter,
+  .option-btn.correct .letter {
+    background: var(--purple);
+    color: #fff;
+  }
+  .option-btn.correct .letter {
+    background: var(--green);
+  }
+  .option-btn.wrong .letter {
+    background: var(--red);
+    color: #fff;
+  }
+
+  /* Explanation */
+  .explanation {
+    margin: 0 20px 14px;
+    padding: 16px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #333;
+    animation: slideDown 0.35s ease;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); max-height: 0; }
+    to { opacity: 1; transform: translateY(0); max-height: 200px; }
+  }
+  .explanation.correct-exp {
+    background: linear-gradient(135deg, #e4f9ea, #d0f0da);
+    border-left: 4px solid var(--green);
+  }
+  .explanation.wrong-exp {
+    background: linear-gradient(135deg, #fef5e7, #feeed0);
+    border-left: 4px solid var(--orange);
+  }
+  .explanation strong {
+    display: block;
+    margin-bottom: 4px;
+  }
+  .explanation.correct-exp strong { color: #1a8a3a; }
+  .explanation.wrong-exp strong { color: #d4760a; }
+
+  /* Buttons */
+  .action-area {
+    padding: 0 20px 22px;
+  }
+  .btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    font-weight: 800;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-orange {
+    background: linear-gradient(135deg, var(--orange), #e67310);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(245, 130, 32, 0.35);
+  }
+  .btn-orange:hover { box-shadow: 0 6px 24px rgba(245, 130, 32, 0.5); transform: translateY(-1px); }
+  .btn-purple {
+    background: linear-gradient(135deg, var(--purple), #5a3580);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(111, 73, 157, 0.35);
+  }
+  .btn-purple:hover { box-shadow: 0 6px 24px rgba(111, 73, 157, 0.5); transform: translateY(-1px); }
+  .btn-disabled {
+    background: #e8e5ed;
+    color: #aaa;
+    cursor: default;
+    box-shadow: none;
+  }
+  .btn-disabled:hover { transform: none; box-shadow: none; }
+
+  /* Results screen */
+  .results-header {
+    background: linear-gradient(135deg, var(--purple), #8B6BB5);
+    padding: 36px 24px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .results-header::before {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    top: -60px; left: -40px;
+  }
+  .trophy {
+    font-size: 64px;
+    animation: trophyBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes trophyBounce {
+    from { transform: scale(0) rotate(-15deg); }
+    to { transform: scale(1) rotate(0); }
+  }
+  .results-header h2 {
+    font-family: 'Baloo 2', cursive;
+    color: #fff;
+    font-size: 28px;
+    margin-top: 8px;
+  }
+  .results-body {
+    padding: 28px 24px 24px;
+    text-align: center;
+  }
+  .big-score {
+    font-family: 'Baloo 2', cursive;
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--purple);
+    line-height: 1;
+  }
+  .score-label {
+    font-size: 15px;
+    color: #999;
+    margin-top: 2px;
+    margin-bottom: 22px;
+  }
+  .result-bar-track {
+    height: 12px;
+    border-radius: 6px;
+    background: #f0eaf7;
+    overflow: hidden;
+    margin-bottom: 26px;
+  }
+  .result-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .emoji-cell {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    position: relative;
+  }
+  .emoji-cell.cell-correct { background: #e4f9ea; }
+  .emoji-cell.cell-wrong { background: #fef0f0; }
+  .emoji-cell .cell-badge {
+    position: absolute;
+    bottom: 2px; right: 2px;
+    font-size: 10px;
+  }
+
+  .footer {
+    margin-top: 18px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  .hidden { display: none !important; }
+
+  /* Confetti */
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 10px;
+    z-index: 100;
+    pointer-events: none;
+    animation: confettiFall 2.5s ease-out forwards;
+  }
+  @keyframes confettiFall {
+    0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+    100% { opacity: 0; transform: translateY(100vh) rotate(720deg) scale(0.5); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="header-brand">Coding Giants</div>
+    <h1>Quiz: <span>YouTube</span>-Videos</h1>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-bar" id="progressSection">
+    <div class="progress-info">
+      <span id="progressLabel">Frage 1 / 10</span>
+      <span class="score" id="scoreLabel">Punkte: 0/0</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <!-- Quiz Card -->
+  <div class="card fade-in" id="quizCard">
+    <div class="q-header">
+      <div class="q-emoji" id="qEmoji">🎬</div>
+      <div>
+        <div class="q-number" id="qNumber">Frage 1</div>
+        <div class="q-text" id="qText"></div>
+      </div>
+    </div>
+    <div class="options" id="optionsContainer"></div>
+    <div id="explanationContainer"></div>
+    <div class="action-area">
+      <button class="btn btn-disabled" id="actionBtn" onclick="handleAction()">Antwort pr\u00fcfen</button>
+    </div>
+  </div>
+
+  <!-- Results Card -->
+  <div class="card hidden" id="resultsCard">
+    <div class="results-header">
+      <div class="trophy" id="resultEmoji">🏆</div>
+      <h2 id="resultTitle">Super Ergebnis!</h2>
+    </div>
+    <div class="results-body">
+      <div class="big-score" id="bigScore">0/10</div>
+      <div class="score-label" id="scorePercent">richtige Antworten (0%)</div>
+      <div class="result-bar-track">
+        <div class="result-bar-fill" id="resultBarFill" style="width: 0%"></div>
+      </div>
+      <div class="emoji-grid" id="emojiGrid"></div>
+      <button class="btn btn-orange" onclick="restartQuiz()">Nochmal spielen 🔄</button>
+    </div>
+  </div>
+
+  <div class="footer">Coding Giants · Quiz zur YouTube-Lektion</div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "Wie lang d\u00fcrfen YouTube Shorts sein?",
+    options: ["Bis zu 30 Sekunden", "Bis zu 60 Sekunden", "Bis zu 3 Minuten", "Bis zu 10 Minuten"],
+    correct: 1,
+    emoji: "\ud83c\udfac",
+    explanation: "Shorts sind sehr kurze Clips von maximal 60 Sekunden im Hochformat (9:16)."
+  },
+  {
+    q: "In welchem Format nehmen wir YouTube Shorts auf?",
+    options: ["Querformat (16:9)", "Hochformat (9:16)", "Quadratisch (1:1)", "Beliebig"],
+    correct: 1,
+    emoji: "\ud83d\udcf1",
+    explanation: "Shorts nehmen wir im Hochformat auf, im Verh\u00e4ltnis 9:16 \u2013 so, wie wir das Handy jeden Tag halten."
+  },
+  {
+    q: "Welches Programm ist kostenlos und kann Bildschirm, Mikrofon und Kamera gleichzeitig aufnehmen?",
+    options: ["Adobe Premiere", "OBS Studio", "Final Cut Pro", "PowerPoint"],
+    correct: 1,
+    emoji: "\ud83d\udda5\ufe0f",
+    explanation: "OBS Studio ist ein kostenloses Programm, das Bildschirm, Mikrofonton und Webcam-Bild gleichzeitig aufnimmt."
+  },
+  {
+    q: "Was ist eine \u201eFacecam\u201c?",
+    options: ["Ein Gesichtsfilter in einer App", "Bildschirm und Webcam mit deinem Gesicht gleichzeitig aufnehmen", "Eine Art Fotokamera", "Eine Selfie-App"],
+    correct: 1,
+    emoji: "\ud83c\udfa5",
+    explanation: "Eine Facecam kombiniert die Bildschirmaufnahme (z.\u202fB. eines Spiels) mit einer Webcam, die dein Gesicht zeigt \u2013 die Zuschauer sehen deine Reaktion!"
+  },
+  {
+    q: "Was ist WICHTIGER f\u00fcr die Qualit\u00e4t eines YouTube-Videos?",
+    options: ["Eine teure Kamera", "Ein gutes Mikrofon und guter Ton", "Viele Spezialeffekte", "Eine schnelle Internetverbindung"],
+    correct: 1,
+    emoji: "\ud83c\udfa4",
+    explanation: "Zuschauer schlie\u00dfen ein Video mit schlechtem Ton eher als eines mit schlechterem Bild. Das Mikrofon ist wichtiger als die Kamera!"
+  },
+  {
+    q: "Wie hei\u00dft das Format, in dem du Zuschauern Schritt f\u00fcr Schritt zeigst, wie man etwas macht?",
+    options: ["Vlog", "Tutorial", "Challenge", "Rezension"],
+    correct: 1,
+    emoji: "\ud83d\udcda",
+    explanation: "Ein Tutorial ist ein Video, in dem du Schritt f\u00fcr Schritt zeigst, wie man etwas macht \u2013 zum Beispiel, wie man ein Spiel programmiert."
+  },
+  {
+    q: "Was ist Live-Streaming?",
+    options: ["Ein aufgenommenes und hochgeladenes Video", "Eine Live-\u00dcbertragung mit einem Zuschauer-Chat", "Ein kurzer Clip bis zu 60 Sekunden", "Ein Video mit Spezialeffekten"],
+    correct: 1,
+    emoji: "\ud83d\udce1",
+    explanation: "Live-Streaming ist eine Live-\u00dcbertragung \u2013 die Zuschauer sehen dich in Echtzeit und k\u00f6nnen im Chat kommentieren."
+  },
+  {
+    q: "Welche Art von Licht ist am besten f\u00fcr Videoaufnahmen?",
+    options: ["Licht einer Deckenlampe", "Nat\u00fcrliches Tageslicht", "Bunte LEDs", "Ein dunkler Raum"],
+    correct: 1,
+    emoji: "\ud83d\udca1",
+    explanation: "Am besten nimmst du bei nat\u00fcrlichem Tageslicht auf \u2013 zum Beispiel am Fenster. Dein Gesicht sollte gut beleuchtet sein."
+  },
+  {
+    q: "Was ist ein Vlog?",
+    options: ["Ein Video mit einem Produkttest", "Ein Video \u00fcber deinen Tag oder ein Ereignis", "Eine Aufnahme des Computerbildschirms", "Ein Video mit einer Challenge"],
+    correct: 1,
+    emoji: "\u270d\ufe0f",
+    explanation: "Ein Vlog ist ein pers\u00f6nliches Format \u2013 du erz\u00e4hlst von deinem Tag, einem Ereignis oder teilst deine Gedanken."
+  },
+  {
+    q: "Was kannst du tun, damit das Bild beim Filmen mit dem Handy nicht wackelt?",
+    options: ["Im Dunkeln filmen", "Ein Stativ benutzen oder das Handy anlehnen", "Spezialeffekte einschalten", "In Zeitlupe filmen"],
+    correct: 1,
+    emoji: "\ud83d\udcd0",
+    explanation: "Ein Stativ oder das Anlehnen des Handys an eine stabile Fl\u00e4che ist der einfachste Weg zu einem ruhigen Bild."
+  }
+];
+
+let questions = [];
+let current = 0;
+let selected = null;
+let revealed = false;
+let score = 0;
+let answers = []; // track correct/wrong per question
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function prepareQuestions() {
+  questions = QUESTIONS.map(q => {
+    const indices = q.options.map((_, i) => i);
+    const shuffled = shuffle(indices);
+    return {
+      ...q,
+      options: shuffled.map(i => q.options[i]),
+      correct: shuffled.indexOf(q.correct)
+    };
+  });
+}
+
+function render() {
+  const q = questions[current];
+  const answered = revealed ? current + 1 : current;
+
+  document.getElementById('progressLabel').textContent = `Frage ${current + 1} / ${questions.length}`;
+  document.getElementById('scoreLabel').textContent = `Punkte: ${score}/${answered}`;
+  document.getElementById('progressFill').style.width = `${(answered / questions.length) * 100}%`;
+
+  document.getElementById('qEmoji').textContent = q.emoji;
+  document.getElementById('qEmoji').style.animation = 'none';
+  requestAnimationFrame(() => {
+    document.getElementById('qEmoji').style.animation = 'emojiPop 0.4s 0.15s cubic-bezier(0.34,1.56,0.64,1) both';
+  });
+  document.getElementById('qNumber').textContent = `Frage ${current + 1}`;
+  document.getElementById('qText').textContent = q.q;
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    if (revealed) btn.classList.add('revealed');
+    if (selected === idx && !revealed) btn.classList.add('selected');
+    if (revealed && idx === q.correct) btn.classList.add('correct');
+    if (revealed && idx === selected && idx !== q.correct) btn.classList.add('wrong');
+
+    let letterText = letters[idx];
+    if (revealed && idx === q.correct) letterText = '✓';
+    if (revealed && idx === selected && idx !== q.correct) letterText = '✗';
+
+    btn.innerHTML = `<span class="letter">${letterText}</span><span>${opt}</span>`;
+    btn.onclick = () => {
+      if (revealed) return;
+      selected = idx;
+      render();
+    };
+
+    // Stagger animation
+    btn.style.opacity = '0';
+    btn.style.transform = 'translateX(-10px)';
+    btn.style.transition = `all 0.2s ease ${idx * 0.06}s`;
+    requestAnimationFrame(() => {
+      btn.style.opacity = '1';
+      btn.style.transform = 'translateX(0)';
+    });
+
+    container.appendChild(btn);
+  });
+
+  // Explanation
+  const expContainer = document.getElementById('explanationContainer');
+  if (revealed) {
+    const isCorrect = selected === q.correct;
+    expContainer.innerHTML = `
+      <div class="explanation ${isCorrect ? 'correct-exp' : 'wrong-exp'}">
+        <strong>${isCorrect ? 'Sehr gut! 🎉' : 'Leider nicht 🤔'}</strong>
+        ${q.explanation}
+      </div>`;
+  } else {
+    expContainer.innerHTML = '';
+  }
+
+  // Action button
+  const btn = document.getElementById('actionBtn');
+  if (!revealed) {
+    btn.textContent = 'Antwort pr\u00fcfen';
+    btn.className = selected !== null ? 'btn btn-orange' : 'btn btn-disabled';
+  } else {
+    btn.textContent = current + 1 >= questions.length ? 'Ergebnis ansehen 🏆' : 'N\u00e4chste Frage →';
+    btn.className = 'btn btn-purple';
+  }
+}
+
+function handleAction() {
+  if (!revealed && selected === null) return;
+
+  if (!revealed) {
+    // Confirm answer
+    revealed = true;
+    const isCorrect = selected === questions[current].correct;
+    if (isCorrect) score++;
+    answers.push(isCorrect);
+    render();
+  } else {
+    // Next question or results
+    if (current + 1 >= questions.length) {
+      showResults();
+    } else {
+      const card = document.getElementById('quizCard');
+      card.classList.add('fade-out');
+      card.classList.remove('fade-in');
+      setTimeout(() => {
+        current++;
+        selected = null;
+        revealed = false;
+        render();
+        card.classList.remove('fade-out');
+        card.classList.add('fade-in');
+      }, 300);
+    }
+  }
+}
+
+function showResults() {
+  document.getElementById('quizCard').classList.add('hidden');
+  document.getElementById('progressSection').classList.add('hidden');
+
+  const pct = Math.round((score / questions.length) * 100);
+  let emoji, title, barColor;
+  if (pct >= 80) {
+    emoji = '🏆'; title = 'Super Ergebnis!';
+    barColor = 'linear-gradient(90deg, #34c759, #30d158)';
+    spawnConfetti();
+  } else if (pct >= 50) {
+    emoji = '👏'; title = 'Nicht schlecht!';
+    barColor = 'linear-gradient(90deg, #F58220, #F5A623)';
+  } else {
+    emoji = '💪'; title = 'Versuch es nochmal!';
+    barColor = 'linear-gradient(90deg, #e74c3c, #ff6b6b)';
+  }
+
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('bigScore').textContent = `${score}/${questions.length}`;
+  document.getElementById('scorePercent').textContent = `richtige Antworten (${pct}%)`;
+
+  const bar = document.getElementById('resultBarFill');
+  bar.style.background = barColor;
+  setTimeout(() => { bar.style.width = `${pct}%`; }, 100);
+
+  // Emoji grid
+  const grid = document.getElementById('emojiGrid');
+  grid.innerHTML = '';
+  questions.forEach((q, i) => {
+    const cell = document.createElement('div');
+    cell.className = `emoji-cell ${answers[i] ? 'cell-correct' : 'cell-wrong'}`;
+    cell.innerHTML = `${q.emoji}<span class="cell-badge">${answers[i] ? '✅' : '❌'}</span>`;
+    cell.style.opacity = '0';
+    cell.style.transform = 'scale(0.5)';
+    cell.style.transition = `all 0.3s cubic-bezier(0.34,1.56,0.64,1) ${i * 0.06}s`;
+    grid.appendChild(cell);
+    requestAnimationFrame(() => {
+      cell.style.opacity = '1';
+      cell.style.transform = 'scale(1)';
+    });
+  });
+
+  const resultsCard = document.getElementById('resultsCard');
+  resultsCard.classList.remove('hidden');
+  resultsCard.classList.add('fade-in');
+}
+
+function spawnConfetti() {
+  const colors = ['#F58220', '#6F499D', '#34c759', '#F5A623', '#B4A8CE', '#fff'];
+  for (let i = 0; i < 50; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.top = '-10px';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    piece.style.width = (6 + Math.random() * 8) + 'px';
+    piece.style.height = (6 + Math.random() * 8) + 'px';
+    piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+    piece.style.animationDelay = (Math.random() * 0.8) + 's';
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 4500);
+  }
+}
+
+function restartQuiz() {
+  document.getElementById('resultsCard').classList.add('hidden');
+  document.getElementById('resultsCard').classList.remove('fade-in');
+  document.getElementById('quizCard').classList.remove('hidden');
+  document.getElementById('progressSection').classList.remove('hidden');
+  document.getElementById('resultBarFill').style.width = '0%';
+
+  prepareQuestions();
+  current = 0;
+  selected = null;
+  revealed = false;
+  score = 0;
+  answers = [];
+
+  const card = document.getElementById('quizCard');
+  card.classList.add('fade-in');
+  render();
+}
+
+// Init
+prepareQuestions();
+render();
+</script>
+
+</body>
+</html>
