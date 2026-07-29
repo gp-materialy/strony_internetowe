@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="pytajnik.png" />
+
+    <title>KZG - mAIncraft</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body> 
+    <h1>Master of mAIncraft </h1>
+		<div id="kontener">
+      <div id="naglowek">
+        <h2 id="dymek">Cześć! Tu StAIve. Zaznacz wzór tworzonego narzędzia, a ja spróbuję je odgadnąć.</h2>
+      </div>
+
+      <div id="lewo">
+        <img src="postac-chlopiec.png" height="500">
+      </div>
+
+      <div id="srodek">
+        <div id="siatka">
+          <button class="element" data-index="0" onclick="toggleActive(0)"></button>
+          <button class="element" data-index="1" onclick="toggleActive(1)"></button>
+          <button class="element" data-index="2" onclick="toggleActive(2)"></button>
+          <button class="element" data-index="3" onclick="toggleActive(3)"></button>
+          <button class="element" data-index="4" onclick="toggleActive(4)"></button>
+          <button class="element" data-index="5" onclick="toggleActive(5)"></button>
+          <button class="element" data-index="6" onclick="toggleActive(6)"></button>
+          <button class="element" data-index="7" onclick="toggleActive(7)"></button>
+          <button class="element" data-index="8" onclick="toggleActive(8)"></button>
+        </div>
+      </div>
+
+      <div id="prawo"> 
+        <h2 id="odpowiedz">....<br>...</h2>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Outline&family=Lato&family=Press+Start+2P&display=swap');
+
+
+body {
+    height: 100vh;
+    background-image: url('minecraft-bg.jpg'); 
+    background-color: #6a8394;
+    font-family: 'Lato', Arial, sans-serif;
+    text-align: center;
+    font-size: 18px;
+}
+
+h1{
+    font-family: 'Press Start 2P', Arial;
+    font-size: 60px;
+}
+
+#kontener{
+    background: #c6c6c6dd;
+    min-height: 700px;
+    width:60%;
+    margin: 50px auto;
+    padding: 40px;
+    border-width: 5px;
+    border-color: black;
+    border-style: double;
+}
+
+#naglowek{
+    width: 100%;
+    text-align: center;
+}
+
+#lewo{
+    width: 35%;
+    float: left;
+    text-align: right;
+}
+
+#dymek{
+    padding: 40px;
+    margin: auto;
+    max-width: 500px;
+    min-height: 150px;
+    background: url('dymek.png') no-repeat;
+}
+
+#srodek{
+    width: 30%;
+    float:left;
+    text-align: center;
+    padding-top: 50px;
+}
+
+#prawo{
+    width: 35%;
+    float: left;
+    text-align: center;
+}
+
+#odpowiedz {
+    padding: 35px;
+    padding-top: 17%;
+    background: url('dymek-boczny.png?') no-repeat;
+    height: 300px;
+    width: 250px;
+}
+
+
+#siatka {
+    display: grid;
+	  justify-content: center;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+}
+
+.element{
+    width: 100px;
+    height: 100px;
+    background-color: #8b8b8b;
+    border: 5px groove white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.element.active {
+    background: url("pytajnik.png") #fdbf89;
+    color: #ffffff;
+}
+
+
+@media only screen and (max-width: 1200px) {
+  #lewo{
+    width: 35%;
+    float: left;
+    text-align: right;
+    position:relative;
+    right: 200px;
+}
+
+
+#prawo{
+    width: 35%;
+    float: left;
+    text-align: center;
+    position:relative;
+    left: 100px;
+}
+
+
+}
