@@ -37,9 +37,8 @@ let captchaBtn = document.getElementById("captcha-btn");
 let captchaMessage = document.getElementById("captcha-message");
 
 captchaBtn.addEventListener("click", function () {
-  let captcha = captchaInput.value;
-
-  if (captcha > "10") {
+let captcha = Number(captchaInput.value)
+if (captcha > 10) {
 	captchaMessage.textContent = "Captcha poprawna!";
 	captchaMessage.classList.remove("error");
 	captchaMessage.classList.add("success");
