@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+  font-family: monospace;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+#dashboard {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 28px;
+  color: #00ff88;
+}
+
+h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #aaa;
+}
+
+.panel {
+  background-color: #0f0f23;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  font-family: monospace;
+  background-color: #1a1a2e;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #e0e0e0;
+  margin-bottom: 12px;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: #00ff88;
+}
+
+#stats {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+#stats span {
+  color: #00ff88;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.btn-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+button {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-family: monospace;
+  font-weight: bold;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2a2a4e;
+  border-color: #00ff88;
+}
+
+.action-btn {
+  flex: 1;
+}
+
+#status-msg {
+  color: #00ff88;
+  font-size: 13px;
+  min-height: 18px;
+  margin-top: 4px;
+}
+
+#ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+#ranking-table th {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 2px solid #333;
+  color: #888;
+}
+
+#ranking-table td {
+  padding: 8px;
+  border-bottom: 1px solid #222;
+}
+
+#ranking-table tr:hover {
+  background-color: #1a1a2e;
+}
+
+#add-ranking-btn {
+  width: 100%;
+  background-color: #0a3d20;
+  border-color: #00ff88;
+  color: #00ff88;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: monospace;
+  background-color: #1a1a2e;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #e0e0e0;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 8px;
+}
+
+textarea:focus {
+  border-color: #00ff88;
+}

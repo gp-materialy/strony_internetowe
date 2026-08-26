@@ -1,0 +1,111 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+  font-family: monospace;
+  overflow: hidden;
+  height: 100vh;
+}
+
+#game-area {
+  position: relative;
+  width: 100vw;
+  height: 80vh;
+  border-bottom: 2px solid #444;
+}
+
+#character {
+  position: absolute;
+  font-size: 40px;
+  transition: left 0.1s, top 0.1s;
+  user-select: none;
+}
+
+#character.jump {
+  animation: jump 0.4s ease;
+}
+
+@keyframes jump {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-60px); }
+  100% { transform: translateY(0); }
+}
+
+#enemy, #enemy2 {
+  position: absolute;
+  font-size: 36px;
+  user-select: none;
+}
+
+.collectible {
+  position: absolute;
+  font-size: 28px;
+  user-select: none;
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+#game-over, #win-screen {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 10;
+}
+
+#game-over p {
+  font-size: 48px;
+  color: #ff4444;
+  font-weight: bold;
+}
+
+#win-screen p {
+  font-size: 48px;
+  color: #00ff88;
+  font-weight: bold;
+}
+
+#game-over button, #win-screen button {
+  font-size: 18px;
+  padding: 10px 30px;
+  background-color: #00ff88;
+  color: #1a1a2e;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+#hud {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #0f0f23;
+  display: flex;
+  gap: 30px;
+  font-size: 14px;
+}
+
+#hud span {
+  color: #00ff88;
+  font-weight: bold;
+}

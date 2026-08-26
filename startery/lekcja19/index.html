@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input System - Turniej</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🏆 Input System - Turniej</h1>
+    </header>
+    <main>
+        <section class="task">
+            <h2>Zadanie 1 - Powitanie</h2>
+            <p>Wpisz swoje imię i kliknij przycisk.</p>
+            <input type="text" id="name-input" placeholder="Twoje imię...">
+            <button id="greet-btn">Powitaj</button>
+            <p id="greet-result" class="result"></p>
+        </section>
+        <section class="task">
+            <h2>Zadanie 2 - Walidacja</h2>
+            <p>Wpisz tekst i sprawdź, czy przejdzie walidację.</p>
+            <input type="text" id="valid-input" placeholder="Wpisz coś...">
+            <button id="valid-btn">Sprawdź</button>
+            <p id="valid-result" class="result"></p>
+        </section>
+        <section class="task">
+            <h2>Zadanie 3 - Wyszukiwarka</h2>
+            <p>Wpisz zdanie i sprawdź, czy zawiera słowo kluczowe.</p>
+            <input type="text" id="search-input" placeholder="Wpisz zdanie...">
+            <button id="search-btn">Szukaj</button>
+            <p id="search-result" class="result"></p>
+        </section>
+        <section class="task">
+            <h2>Zadanie 4 - Szyfr</h2>
+            <p>Wpisz tekst, a program odwróci go jak w lustrze.</p>
+            <input type="text" id="cipher-input" placeholder="Wpisz tekst...">
+            <button id="cipher-btn">Szyfruj</button>
+            <p id="cipher-result" class="result"></p>
+        </section>
+        <section class="task">
+            <h2>Zadanie 5 - Cenzura</h2>
+            <p>Wpisz zdanie, a program ocenzuruje wybrane słowo.</p>
+            <input type="text" id="censor-input" placeholder="Wpisz zdanie...">
+            <button id="censor-btn">Cenzuruj</button>
+            <p id="censor-result" class="result"></p>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

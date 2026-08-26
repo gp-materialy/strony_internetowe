@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Métodos de la clase String · JavaScript</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#12101f;--panel:#1a1730;--panel-2:#221f3a;--line:#332e5a;--paper:#f3f0e6;--muted:#a49cc4;--c-trim:#ff6b9d;--c-upper:#f58220;--c-lower:#e99b59;--c-length:#ffd23f;--c-includes:#46e0d0;--c-split:#7c7bff;--c-join:#b97bff;--c-reverse:#ff7bd0;--c-replaceall:#5ce6a0;--c-replace:#6f499d;--c-slice:#ff9e45;--radius:14px}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:radial-gradient(900px 500px at 80% -8%,rgba(111,73,157,.35) 0%,transparent 60%),radial-gradient(700px 600px at -5% 105%,rgba(245,130,32,.2) 0%,transparent 55%),var(--ink);color:var(--paper);font-family:"DM Sans",system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1220px;margin:0 auto;padding:0 22px}
+  header.hero{padding:56px 0 30px}.eyebrow{font-family:"Fira Code",monospace;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}.eyebrow b{color:var(--c-upper);font-weight:500}
+  h1{font-family:"Outfit",sans-serif;font-weight:800;font-size:clamp(2.2rem,5.5vw,3.8rem);line-height:1.05;margin:.18em 0 .35em;letter-spacing:-.02em}h1 em{font-style:normal;color:#f58220}
+  .lede{max-width:62ch;color:var(--muted);font-size:1.05rem}.lede strong{color:var(--paper);font-weight:600}
+  .grid{display:grid;grid-template-columns:340px 1fr;gap:26px;align-items:start;padding-bottom:80px}@media(max-width:880px){.grid{grid-template-columns:1fr}}
+  .playground{position:sticky;top:18px;background:linear-gradient(180deg,#110f22,#181536);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.45)}@media(max-width:880px){.playground{position:static}}
+  .playground .bar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02)}
+  .playground .bar h2{margin:0;font-family:"Outfit",sans-serif;font-size:.98rem;display:flex;align-items:center;gap:9px}
+  .pulse-dot{width:9px;height:9px;border-radius:50%;background:#f58220;box-shadow:0 0 0 0 rgba(245,130,32,.6);animation:beat 2.4s infinite}
+  @keyframes beat{0%{box-shadow:0 0 0 0 rgba(245,130,32,.55)}70%{box-shadow:0 0 0 8px rgba(245,130,32,0)}100%{box-shadow:0 0 0 0 rgba(245,130,32,0)}}
+  .playground-body{padding:14px}
+  .play-input{width:100%;font-family:"Fira Code",monospace;font-size:.88rem;background:#0e0c1e;border:1px solid var(--line);color:var(--paper);border-radius:10px;padding:12px 14px;outline:none;transition:border-color .15s,box-shadow .15s;margin-bottom:10px}
+  .play-input:focus{border-color:#f58220;box-shadow:0 0 0 3px rgba(245,130,32,.22)}.play-input::placeholder{color:#5a5580}
+  #liveResults{list-style:none;padding:0;font-family:"Fira Code",monospace;font-size:.78rem;max-height:55vh;overflow-y:auto}@media(max-width:880px){#liveResults{max-height:260px}}
+  #liveResults li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline;padding:7px 9px;border-radius:8px;transition:background .15s}
+  #liveResults li:nth-child(odd){background:rgba(255,255,255,.025)}
+  #liveResults .method{font-weight:600;white-space:nowrap}#liveResults .val{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #liveResults .dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;flex-shrink:0}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}@media(max-width:620px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:12px;transition:border-color .2s,transform .2s}
+  .card:hover{border-color:var(--accent,var(--line));transform:translateY(-2px)}
+  .card .name{font-family:"Fira Code",monospace;font-weight:700;font-size:1.02rem;display:inline-flex;align-items:center;gap:8px;color:var(--accent,var(--paper))}
+  .card .name::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent,var(--paper))}
+  .card .tag{display:inline-block;font-family:"Fira Code",monospace;font-size:.62rem;padding:2px 8px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--muted);margin-left:4px;vertical-align:middle}
+  .card .desc{color:var(--muted);font-size:.9rem;margin:-2px 0 2px}
+  .stage{background:var(--panel-2);border:1px dashed var(--line);border-radius:10px;padding:14px;min-height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}
+  .field{width:100%;font-family:"DM Sans",sans-serif;font-size:.9rem;background:#0e0c1e;border:1px solid var(--line);color:var(--paper);border-radius:9px;padding:9px 12px;outline:none;transition:border-color .15s,box-shadow .15s}
+  .field:focus{border-color:var(--accent,#7c7bff);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent,#7c7bff) 28%,transparent)}
+  .readout{font-family:"Fira Code",monospace;font-size:.82rem;color:var(--paper);min-height:1.2em;word-break:break-all}
+  .readout span{color:var(--accent,#fff);font-weight:700}.readout .arr{color:#7c7bff}
+  code.snippet{display:block;background:#0e0c1e;border:1px solid var(--line);border-radius:9px;padding:10px 13px;font-family:"Fira Code",monospace;font-size:.74rem;color:#cfcbef;white-space:pre;overflow-x:auto;line-height:1.55}
+  code .k{color:#ffd23f}code .s{color:#5ce6a0}code .c{color:#5a5580}code .m{color:#f58220}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:18px 0 8px;font-family:"Fira Code",monospace;font-size:.72rem;color:var(--muted)}
+  .legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}
+  footer{border-top:1px solid var(--line);padding:26px 0 50px;color:var(--muted);font-size:.85rem}footer code{font-family:"Fira Code",monospace;color:var(--paper)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Chuleta · <b>JavaScript String</b></p>
+    <h1>Métodos de la clase <em>String</em></h1>
+    <p class="lede">Un repaso interactivo de <strong>11 métodos y propiedades</strong> de texto utilizados en la lección <strong>«Input System — Torneo»</strong>. Escribe texto en el sandbox de la izquierda para ver resultados en vivo, o prueba cada método individualmente en las tarjetas.</p>
+    <div class="legend"><span><i style="background:var(--c-trim)"></i>trim()</span><span><i style="background:var(--c-upper)"></i>toUpperCase()</span><span><i style="background:var(--c-lower)"></i>toLowerCase()</span><span><i style="background:var(--c-length)"></i>.length</span><span><i style="background:var(--c-includes)"></i>includes()</span><span><i style="background:var(--c-split)"></i>split()</span><span><i style="background:var(--c-join)"></i>join()</span><span><i style="background:var(--c-reverse)"></i>reverse()</span><span><i style="background:var(--c-replaceall)"></i>replaceAll()</span><span><i style="background:var(--c-replace)"></i>replace()</span><span><i style="background:var(--c-slice)"></i>slice()</span></div>
+  </header>
+  <div class="grid">
+    <aside class="playground">
+      <div class="bar"><h2><span class="pulse-dot"></span> Sandbox</h2></div>
+      <div class="playground-body">
+        <input class="play-input" id="playInput" placeholder="Escribe texto y observa…" value="  Hola JavaScript  ">
+        <ul id="liveResults"></ul>
+      </div>
+    </aside>
+    <section class="cards">
+      <article class="card" style="--accent:var(--c-trim)"><span class="name">.trim() <span class="tag">método</span></span><p class="desc">Elimina los espacios en blanco (espacios, tabulaciones) del <strong>principio y final</strong> de un string. No cambia el medio.</p><div class="stage"><input class="field" id="trimIn" placeholder="  prueba con espacios  " value="  Gigantes  "><div class="readout" id="trimOut"></div></div><code class="snippet"><span class="k">let</span> clean = text.<span class="m">trim</span>();
+<span class="c">// "  Ala  " → "Ala"</span></code></article>
+
+      <article class="card" style="--accent:var(--c-upper)"><span class="name">.toUpperCase() <span class="tag">método</span></span><p class="desc">Devuelve un <strong>nuevo string</strong> con todas las letras convertidas a mayúsculas. El original no cambia.</p><div class="stage"><input class="field" id="upperIn" placeholder="escribe texto…" value="hola"><div class="readout" id="upperOut"></div></div><code class="snippet"><span class="k">let</span> big = text.<span class="m">toUpperCase</span>();
+<span class="c">// "ala" → "ALA"</span></code></article>
+
+      <article class="card" style="--accent:var(--c-lower)"><span class="name">.toLowerCase() <span class="tag">método</span></span><p class="desc">Devuelve un nuevo string con todas las letras en <strong>minúsculas</strong>. Útil antes de hacer comparaciones.</p><div class="stage"><input class="field" id="lowerIn" placeholder="escribe texto…" value="JavaScript"><div class="readout" id="lowerOut"></div></div><code class="snippet"><span class="k">let</span> small = text.<span class="m">toLowerCase</span>();
+<span class="c">// "ALA" → "ala"</span></code></article>
+
+      <article class="card" style="--accent:var(--c-length)"><span class="name">.length <span class="tag">propiedad</span></span><p class="desc">Devuelve el <strong>número de caracteres</strong> del string (incluyendo espacios). Atención: es una propiedad — <strong>¡sin paréntesis!</strong></p><div class="stage"><input class="field" id="lengthIn" placeholder="escribe texto…" value="Gigantes"><div class="readout" id="lengthOut"></div></div><code class="snippet"><span class="k">let</span> len = text.<span class="m">length</span>;
+<span class="c">// "abc" → 3 (¡sin paréntesis!)</span></code></article>
+
+      <article class="card" style="--accent:var(--c-includes)"><span class="name">.includes() <span class="tag">método</span></span><p class="desc">Comprueba si un string contiene un fragmento dado. Devuelve <strong>true</strong> o <strong>false</strong>. ¡Distingue mayúsculas y minúsculas!</p><div class="stage"><input class="field" id="includesIn" placeholder="escribe una frase…" value="¡Me encanta JavaScript!"><input class="field" id="includesNeedle" placeholder="buscar…" value="java" style="margin-top:6px"><div class="readout" id="includesOut"></div></div><code class="snippet"><span class="k">let</span> found = text.<span class="m">includes</span>(<span class="s">"java"</span>);
+<span class="c">// ¡distingue MAYÚSCULAS/minúsculas!</span></code></article>
+
+      <article class="card" style="--accent:var(--c-split)"><span class="name">.split() <span class="tag">método</span></span><p class="desc">Divide un string en un <strong>array</strong> según un separador. <code style="font-family:'Fira Code',monospace;color:var(--c-split)">split("")</code> — cada carácter por separado.</p><div class="stage"><input class="field" id="splitIn" placeholder="escribe texto…" value="uno-dos-tres"><input class="field" id="splitSep" placeholder="separador…" value="-" style="margin-top:6px;width:80px"><div class="readout" id="splitOut"></div></div><code class="snippet"><span class="k">let</span> arr = text.<span class="m">split</span>(<span class="s">"-"</span>);
+<span class="c">// "a-b-c" → ["a","b","c"]</span></code></article>
+
+      <article class="card" style="--accent:var(--c-join)"><span class="name">.join() <span class="tag">método de array</span></span><p class="desc">Une los elementos de un array en un <strong>solo string</strong>, insertando el separador indicado entre ellos.</p><div class="stage"><input class="field" id="joinIn" placeholder="elementos separados por comas…" value="C,o,d,i,n,g"><input class="field" id="joinGlue" placeholder="unión…" value="." style="margin-top:6px;width:80px"><div class="readout" id="joinOut"></div></div><code class="snippet"><span class="k">let</span> str = arr.<span class="m">join</span>(<span class="s">"."</span>);
+<span class="c">// ["a","b","c"] → "a.b.c"</span></code></article>
+
+      <article class="card" style="--accent:var(--c-reverse)"><span class="name">split→reverse→join <span class="tag">cadena</span></span><p class="desc"><strong>Invertir texto</strong> — una cadena de tres métodos: dividir en caracteres, invertir el array, unir de nuevo.</p><div class="stage"><input class="field" id="reverseIn" placeholder="escribe texto…" value="programación"><div class="readout" id="reverseOut"></div></div><code class="snippet"><span class="k">let</span> rev = text.<span class="m">split</span>(<span class="s">""</span>)
+                  .<span class="m">reverse</span>()
+                  .<span class="m">join</span>(<span class="s">""</span>);</code></article>
+
+      <article class="card" style="--accent:var(--c-replaceall)"><span class="name">.replaceAll() <span class="tag">método</span></span><p class="desc">Reemplaza <strong>todas las apariciones</strong> de un fragmento dado por otro texto.</p><div class="stage"><input class="field" id="replaceAllIn" placeholder="escribe texto…" value="un bug en el código y otro bug"><div style="display:flex;gap:6px;margin-top:6px;width:100%"><input class="field" id="raFind" placeholder="buscar…" value="bug" style="flex:1"><input class="field" id="raReplace" placeholder="reemplazar por…" value="***" style="flex:1"></div><div class="readout" id="replaceAllOut"></div></div><code class="snippet"><span class="k">let</span> fixed = text.<span class="m">replaceAll</span>(<span class="s">"bug"</span>, <span class="s">"***"</span>);
+<span class="c">// reemplaza CADA aparición</span></code></article>
+
+      <article class="card" style="--accent:var(--c-replace)"><span class="name">.replace() <span class="tag">método</span></span><p class="desc">Reemplaza solo la <strong>primera aparición</strong> de un fragmento dado. El resto queda sin cambios.</p><div class="stage"><input class="field" id="replaceIn" placeholder="escribe texto…" value="error y error y error"><div style="display:flex;gap:6px;margin-top:6px;width:100%"><input class="field" id="rFind" placeholder="buscar…" value="error" style="flex:1"><input class="field" id="rReplace" placeholder="reemplazar por…" value="OK" style="flex:1"></div><div class="readout" id="replaceOut"></div></div><code class="snippet"><span class="k">let</span> fixed = text.<span class="m">replace</span>(<span class="s">"error"</span>, <span class="s">"OK"</span>);
+<span class="c">// reemplaza SOLO el primero</span></code></article>
+
+      <article class="card" style="--accent:var(--c-slice)"><span class="name">.slice() <span class="tag">método</span></span><p class="desc">Extrae una porción del string desde el índice <strong>inicio</strong> hasta <strong>fin</strong> (sin incluir fin). Los índices empiezan en 0.</p><div class="stage"><input class="field" id="sliceIn" placeholder="escribe texto…" value="JavaScript"><div style="display:flex;gap:6px;margin-top:6px;width:100%"><input class="field" id="sliceStart" placeholder="inicio" value="0" style="flex:1" type="number"><input class="field" id="sliceEnd" placeholder="fin" value="4" style="flex:1" type="number"></div><div class="readout" id="sliceOut"></div></div><code class="snippet"><span class="k">let</span> part = text.<span class="m">slice</span>(0, 4);
+<span class="c">// "JavaScript" → "Java"</span></code></article>
+
+      <article class="card" style="--accent:#ffd23f;border-style:dashed"><span class="name" style="color:#ffd23f">⚡ Propiedad vs Método</span><p class="desc">¡Error frecuente de los alumnos! Una <strong>propiedad</strong> no tiene paréntesis, un <strong>método</strong> siempre tiene <code style="font-family:'Fira Code',monospace;color:#ffd23f">()</code>.</p><div class="stage" style="text-align:left;align-items:stretch"><div class="readout" style="font-size:.78rem;line-height:1.7"><span style="color:#5ce6a0">✓</span> text<span style="color:#ffd23f">.length</span> — propiedad, <strong>SIN</strong> paréntesis<br><span style="color:#5ce6a0">✓</span> text<span style="color:#f58220">.toUpperCase()</span> — método, paréntesis <strong>obligatorios</strong><br><span style="color:#ff5d73">✗</span> <s style="color:#5a5580">text.length()</s> — <span style="color:#ff5d73">¡ERROR!</span><br><span style="color:#ff5d73">✗</span> <s style="color:#5a5580">text.toUpperCase</s> — <span style="color:#ff5d73">¡ERROR!</span> (faltan paréntesis)</div></div><code class="snippet"><span class="c">// Recuerda: .length es la ÚNICA</span>
+<span class="c">// propiedad en esta chuleta.</span>
+<span class="c">// Todo lo demás es un método con ().</span></code></article>
+    </section>
+  </div>
+  <footer><div class="wrap">Consejo: el sandbox de la izquierda reacciona a cada cambio de texto — muestra el resultado de <strong>todos los métodos</strong> a la vez. Las tarjetas permiten probar métodos con <strong>tus propios parámetros</strong>. Cada método (excepto <code>.length</code>) devuelve un valor nuevo — <strong>el original nunca se modifica</strong>.</div></footer>
+</div>
+<script>
+const playInput=document.getElementById('playInput'),liveResults=document.getElementById('liveResults');
+const METHODS=[{name:'.trim()',color:'#ff6b9d',fn:t=>t.trim()},{name:'.toUpperCase()',color:'#f58220',fn:t=>t.toUpperCase()},{name:'.toLowerCase()',color:'#e99b59',fn:t=>t.toLowerCase()},{name:'.length',color:'#ffd23f',fn:t=>String(t.length)},{name:'.includes("java")',color:'#46e0d0',fn:t=>String(t.toLowerCase().includes('java'))},{name:'.split("")',color:'#7c7bff',fn:t=>JSON.stringify(t.split(''))},{name:'.split(" ")',color:'#7c7bff',fn:t=>JSON.stringify(t.split(' '))},{name:'split→reverse→join',color:'#ff7bd0',fn:t=>t.split('').reverse().join('')},{name:'.replaceAll("a","@")',color:'#5ce6a0',fn:t=>t.replaceAll('a','@')},{name:'.replace("a","@")',color:'#6f499d',fn:t=>t.replace('a','@')},{name:'.slice(0,5)',color:'#ff9e45',fn:t=>t.slice(0,5)}];
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function updatePlayground(){const t=playInput.value;liveResults.innerHTML='';METHODS.forEach(m=>{const li=document.createElement('li');let r;try{r=m.fn(t)}catch(e){r='error'}li.innerHTML='<span class="method"><span class="dot" style="background:'+m.color+'"></span>'+m.name+'</span><span class="val">'+esc(String(r))+'</span>';liveResults.appendChild(li)})}
+playInput.addEventListener('input',updatePlayground);updatePlayground();
+const trimIn=document.getElementById('trimIn'),trimOut=document.getElementById('trimOut');function updateTrim(){const v=trimIn.value,t=v.trim();trimOut.innerHTML='"<span>'+esc(t)+'</span>" ('+( v.length-t.length)+' espacios eliminados)'}trimIn.addEventListener('input',updateTrim);updateTrim();
+const upperIn=document.getElementById('upperIn'),upperOut=document.getElementById('upperOut');function updateUpper(){upperOut.innerHTML='<span>'+esc(upperIn.value.toUpperCase())+'</span>'}upperIn.addEventListener('input',updateUpper);updateUpper();
+const lowerIn=document.getElementById('lowerIn'),lowerOut=document.getElementById('lowerOut');function updateLower(){lowerOut.innerHTML='<span>'+esc(lowerIn.value.toLowerCase())+'</span>'}lowerIn.addEventListener('input',updateLower);updateLower();
+const lengthIn=document.getElementById('lengthIn'),lengthOut=document.getElementById('lengthOut');function updateLength(){lengthOut.innerHTML='Número de caracteres: <span>'+lengthIn.value.length+'</span>'}lengthIn.addEventListener('input',updateLength);updateLength();
+const includesIn=document.getElementById('includesIn'),includesNeedle=document.getElementById('includesNeedle'),includesOut=document.getElementById('includesOut');function updateIncludes(){const f=includesIn.value.includes(includesNeedle.value);includesOut.innerHTML=f?'<span style="color:#5ce6a0">true</span> — ¡encontrado!':'<span style="color:#ff5d73">false</span> — no encontrado'}includesIn.addEventListener('input',updateIncludes);includesNeedle.addEventListener('input',updateIncludes);updateIncludes();
+const splitIn=document.getElementById('splitIn'),splitSep=document.getElementById('splitSep'),splitOut=document.getElementById('splitOut');function updateSplit(){splitOut.innerHTML='<span class="arr">'+esc(JSON.stringify(splitIn.value.split(splitSep.value)))+'</span>'}splitIn.addEventListener('input',updateSplit);splitSep.addEventListener('input',updateSplit);updateSplit();
+const joinIn=document.getElementById('joinIn'),joinGlue=document.getElementById('joinGlue'),joinOut=document.getElementById('joinOut');function updateJoin(){joinOut.innerHTML='<span>'+esc(joinIn.value.split(',').join(joinGlue.value))+'</span>'}joinIn.addEventListener('input',updateJoin);joinGlue.addEventListener('input',updateJoin);updateJoin();
+const reverseIn=document.getElementById('reverseIn'),reverseOut=document.getElementById('reverseOut');function updateReverse(){reverseOut.innerHTML='<span>'+esc(reverseIn.value.split('').reverse().join(''))+'</span>'}reverseIn.addEventListener('input',updateReverse);updateReverse();
+const replaceAllIn=document.getElementById('replaceAllIn'),raFind=document.getElementById('raFind'),raReplace=document.getElementById('raReplace'),replaceAllOut=document.getElementById('replaceAllOut');function updateReplaceAll(){const f=raFind.value;if(!f){replaceAllOut.innerHTML='<span>'+esc(replaceAllIn.value)+'</span>';return}replaceAllOut.innerHTML='<span>'+esc(replaceAllIn.value.replaceAll(f,raReplace.value))+'</span>'}replaceAllIn.addEventListener('input',updateReplaceAll);raFind.addEventListener('input',updateReplaceAll);raReplace.addEventListener('input',updateReplaceAll);updateReplaceAll();
+const replaceIn=document.getElementById('replaceIn'),rFind=document.getElementById('rFind'),rReplace=document.getElementById('rReplace'),replaceOut=document.getElementById('replaceOut');function updateReplace(){const f=rFind.value;if(!f){replaceOut.innerHTML='<span>'+esc(replaceIn.value)+'</span>';return}replaceOut.innerHTML='<span>'+esc(replaceIn.value.replace(f,rReplace.value))+'</span>'}replaceIn.addEventListener('input',updateReplace);rFind.addEventListener('input',updateReplace);rReplace.addEventListener('input',updateReplace);updateReplace();
+const sliceIn=document.getElementById('sliceIn'),sliceStart=document.getElementById('sliceStart'),sliceEnd=document.getElementById('sliceEnd'),sliceOut=document.getElementById('sliceOut');function updateSlice(){const s=parseInt(sliceStart.value)||0,e=sliceEnd.value===''?undefined:parseInt(sliceEnd.value);sliceOut.innerHTML='"<span>'+esc(sliceIn.value.slice(s,e))+'</span>"'}sliceIn.addEventListener('input',updateSlice);sliceStart.addEventListener('input',updateSlice);sliceEnd.addEventListener('input',updateSlice);updateSlice();
+</script>
+</body>
+</html>

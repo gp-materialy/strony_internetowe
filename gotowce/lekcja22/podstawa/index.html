@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Save System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="dashboard">
+    <h1>💾 Save System</h1>
+    <div class="panel">
+      <h2>👤 Profil gracza</h2>
+      <input type="text" id="player-name" placeholder="Wpisz swoje imię">
+      <div id="stats">
+        <p>Punkty: <span id="score">0</span></p>
+        <p>Poziom: <span id="level">1</span></p>
+      </div>
+      <div class="btn-row">
+        <button id="add-score-btn">+10 pkt</button>
+        <button id="bonus-btn">+50 bonus</button>
+      </div>
+      <div class="btn-row">
+        <button id="save-btn" class="action-btn">💾 Zapisz</button>
+        <button id="load-btn" class="action-btn">📂 Wczytaj</button>
+        <button id="clear-btn" class="action-btn">🗑️ Wyczyść</button>
+      </div>
+      <p id="status-msg"></p>
+    </div>
+    <div class="panel">
+      <h2>🏆 Ranking</h2>
+      <button id="add-ranking-btn">Dodaj wynik do rankingu</button>
+      <table id="ranking-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Gracz</th>
+            <th>Punkty</th>
+            <th>Poziom</th>
+          </tr>
+        </thead>
+        <tbody id="ranking-body"></tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <h2>📋 Eksport / Import</h2>
+      <textarea id="export-area" rows="6" placeholder="Tu pojawi się JSON..."></textarea>
+      <div class="btn-row">
+        <button id="export-btn">Eksportuj</button>
+        <button id="import-btn">Importuj</button>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
