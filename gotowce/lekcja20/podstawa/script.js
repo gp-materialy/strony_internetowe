@@ -20,6 +20,15 @@ function updateDisplay() {
   cheatDisplay.textContent = cheatBuffer || "_";
 }
 
+function doJump() {
+  isJumping = true;
+  character.classList.add("jump");
+  setTimeout(function () {
+    character.classList.remove("jump");
+    isJumping = false;
+  }, 400);
+}
+
 updateDisplay();
 
 document.addEventListener("keydown", function (e) {
@@ -35,12 +44,7 @@ document.addEventListener("keydown", function (e) {
   updateDisplay();
 
   if (e.key === " " && !isJumping) {
-    isJumping = true;
-    character.classList.add("jump");
-    setTimeout(function () {
-      character.classList.remove("jump");
-      isJumping = false;
-    }, 400);
+    doJump();
   }
 
   if (e.key === "1") {

@@ -14,9 +14,10 @@ body {
 
 #game-area {
   position: relative;
-  width: 100vw;
+  width: min(700px, 100vw);
   height: 80vh;
-  border-bottom: 2px solid #444;
+  border: 3px solid #00ff88;
+  box-sizing: border-box;
 }
 
 #character {
@@ -36,7 +37,7 @@ body {
   100% { transform: translateY(0); }
 }
 
-#enemy {
+.enemy {
   position: absolute;
   font-size: 36px;
   user-select: none;

@@ -6,8 +6,22 @@ const posYDisplay = document.getElementById("pos-y");
 const scoreDisplay = document.getElementById("score");
 const livesDisplay = document.getElementById("lives");
 const statusDisplay = document.getElementById("status");
-const enemy = document.getElementById("enemy");
-const enemy2 = document.getElementById("enemy2");
+const enemyElements = document.querySelectorAll(".enemy");
+const enemySettings = [
+  { x: 500, y: 100, speedX: 2, speedY: 2 },
+  { x: 100, y: 300, speedX: 3, speedY: -2 },
+  { x: 300, y: 200, speedX: -2, speedY: 2 },
+  { x: 600, y: 350, speedX: -3, speedY: -2 },
+];
+const enemies = Array.from(enemyElements).map(function (element, index) {
+  const settings = enemySettings[index] || {
+    x: 100 + (index * 120) % 500,
+    y: 100 + (index * 80) % 300,
+    speedX: index % 2 === 0 ? 2 : -2,
+    speedY: index % 2 === 0 ? 2 : -2,
+  };
+  return { element: element, ...settings };
+});
 const collectibles = document.querySelectorAll(".collectible");
 const gameOverScreen = document.getElementById("game-over");
 
@@ -17,15 +31,9 @@ let isJumping = false;
 let score = 0;
 let lives = 3;
 let gameOver = false;
-let enemyX = 500;
-let enemyY = 100;
-let enemySpeedX = 2;
-let enemySpeedY = 2;
-let enemy2X = 100;
-let enemy2Y = 300;
-let enemy2SpeedX = 3;
-let enemy2SpeedY = -2;
 const step = 20;
+const enemyMaxX = 700;
+let canBeHit = true;
 
 function updateDisplay() {
   character.style.left = posX + "px";
@@ -72,40 +80,40 @@ function collectItem() {
   });
 }
 
-function moveEnemy() {
-  enemyX = enemyX + enemySpeedX;
-  enemyY = enemyY + enemySpeedY;
+function moveEnemies() {
   const area = document.getElementById("game-area");
-  if (enemyX <= 0 || enemyX >= area.clientWidth - 40) {
-    enemySpeedX = enemySpeedX * -1;
-  }
-  if (enemyY <= 0 || enemyY >= area.clientHeight - 40) {
-    enemySpeedY = enemySpeedY * -1;
-  }
-  enemy.style.left = enemyX + "px";
-  enemy.style.top = enemyY + "px";
+  const maxX = Math.min(enemyMaxX, area.clientWidth - 40);
+  enemies.forEach(function (enemy) {
+    enemy.x = enemy.x + enemy.speedX;
+    enemy.y = enemy.y + enemy.speedY;
+    if (enemy.x <= 0 || enemy.x >= maxX) {
+      enemy.speedX = enemy.speedX * -1;
+    }
+    if (enemy.y <= 0 || enemy.y >= area.clientHeight - 40) {
+      enemy.speedY = enemy.speedY * -1;
+    }
+    enemy.element.style.left = enemy.x + "px";
+    enemy.element.style.top = enemy.y + "px";
+  });
 }
 
-function moveEnemy2() {
-  enemy2X = enemy2X + enemy2SpeedX;
-  enemy2Y = enemy2Y + enemy2SpeedY;
-  const area = document.getElementById("game-area");
-  if (enemy2X <= 0 || enemy2X >= area.clientWidth - 40) {
-    enemy2SpeedX = enemy2SpeedX * -1;
-  }
-  if (enemy2Y <= 0 || enemy2Y >= area.clientHeight - 40) {
-    enemy2SpeedY = enemy2SpeedY * -1;
-  }
-  enemy2.style.left = enemy2X + "px";
-  enemy2.style.top = enemy2Y + "px";
-}
-
-function checkEnemyHit() {
-  if (!checkCollision(character, enemy) && !checkCollision(character, enemy2)) return;
+function hitByEnemy() {
+  if (!canBeHit) return;
+  const enemyHit = enemies.some(function (enemy) {
+    return checkCollision(character, enemy.element);
+  });
+  if (!enemyHit) return;
+  canBeHit = false;
   lives = lives - 1;
   posX = 200;
   posY = 200;
   updateDisplay();
+  setTimeout(function () {
+    canBeHit = true;
+  }, 1000);
+}
+
+function checkGameOver() {
   if (lives <= 0) {
     gameOver = true;
     gameOverScreen.style.display = "flex";
@@ -146,9 +154,9 @@ document.addEventListener("keydown", function (e) {
 setInterval(function () {
   if (gameOver) return;
   collectItem();
-  moveEnemy();
-  moveEnemy2();
-  checkEnemyHit();
+  moveEnemies();
+  hitByEnemy();
+  checkGameOver();
 }, 30);
 
 document.getElementById("restart-btn").addEventListener("click", function () {

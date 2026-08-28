@@ -20,6 +20,15 @@ function updateDisplay() {
   cheatDisplay.textContent = cheatBuffer || "_";
 }
 
+function doJump() {
+  isJumping = true;
+  character.classList.add("jump");
+  setTimeout(function () {
+    character.classList.remove("jump");
+    isJumping = false;
+  }, 400);
+}
+
 updateDisplay();
 
 document.addEventListener("keydown", function (e) {
