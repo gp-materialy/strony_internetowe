@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Gienia",
+    "score": 100,
+    "level": 2,
+    "date": "25.08.2026, 15:14:53"
+  },
+  {
+    "name": "gergrdg ",
+    "score": 100,
+    "level": 2,
+    "date": "25.08.2026, 15:14:54"
+  },
+  {
+    "name": "Tomek",
+    "score": 5,
+    "status": "przegrana",
+    "date": "28.08.2026, 12:17:37"
+  },
+  {
+    "name": "Paulina",
+    "score": 0,
+    "status": "przegrana",
+    "date": "28.08.2026, 12:16:45"
+  }
+]

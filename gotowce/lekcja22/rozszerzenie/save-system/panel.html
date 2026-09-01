@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Gracza</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <div id="dashboard">
+    <h1>📊 Panel Gracza</h1>
+    <a href="../index.html" class="back-link">🎮 Wróć do gry</a>
+
+    <div class="panel">
+      <h2>👤 Profil gracza</h2>
+      <input type="text" id="player-name" placeholder="Wpisz swoje imię">
+      <div id="last-result">
+        <p>Ostatni wynik: <span id="last-score">-</span></p>
+        <p>Status: <span id="last-status">-</span></p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>🏆 Ranking</h2>
+      <button id="add-ranking-btn">Dodaj ostatni wynik do rankingu</button>
+      <table id="ranking-table">
+        <thead>
+          <tr><th>#</th><th>Gracz</th><th>Punkty</th><th>Status</th><th>Data</th><th></th></tr>
+        </thead>
+        <tbody id="ranking-body"></tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h2>📋 Eksport / Import</h2>
+      <textarea id="export-area" rows="6" placeholder="Tu pojawi się JSON..."></textarea>
+      <div class="btn-row">
+        <button id="export-btn">Eksportuj</button>
+        <button id="import-btn">Importuj</button>
+      </div>
+    </div>
+
+    <p id="status-msg"></p>
+  </div>
+  <script src="panel.js"></script>
+</body>
+</html>

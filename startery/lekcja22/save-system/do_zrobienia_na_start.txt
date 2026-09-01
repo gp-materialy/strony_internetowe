@@ -1,0 +1,19 @@
+1. Dodaj do swojego skryptu projektu poniższy kod zapisujący postep gracza w przeglądarce:
+//Plik: script.js
+function saveResult(status) {
+  const result = {
+    score: score,
+    status: status
+  };
+  localStorage.setItem("lastResult", JSON.stringify(result));
+}
+
+-------------------------------------
+
+2a. Uruchom tą funkcję w momencie wygranej i przegranej gracza. Znajdź funkcję checkGameOver() i dopisz wywołanie saveResult("przegrana") tuż nad linią gameOverScreen.style.display = "flex";.
+2b. Powtórz to samo w funkcji collectItem(), tuż nad linią z wyświetlaniem ekranu zwycięstwa. Tym razem wpisz saveResult("wygrana").
+
+-------------------------------------
+
+3. Otwórz plik html i dopisz w nim przyciski, pozwalające na otwarcie panelu gracza np. w sekcji hud oraz ekranach zwycięsta/przegranej:
+<a href="save-system/panel.html" class="panel-link">📊 Panel gracza</a>
