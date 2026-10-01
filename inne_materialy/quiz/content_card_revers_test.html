@@ -2,27 +2,34 @@
 <html lang="pl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pasjans</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Piotruś</title>
 <style>
   :root{
+    --desk-1:#7ba2f0; --desk-2:#4a6fcc; --desk-3:#26418f;
     --felt:#008000;
     --felt-dark:#006400;
-    --xp-blue-1:#0058ee;
-    --xp-blue-2:#3a93ff;
-    --xp-blue-3:#0a5ad3;
     --face:#fffefb;
     --card-w:71px;
     --card-h:96px;
-    --gap:10px;
+    --bcard-w:54px;
+    --bcard-h:73px;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top, 0px);
+    padding-bottom:env(safe-area-inset-bottom, 0px);
   }
-  *{box-sizing:border-box;}
-  html,body{height:100%;}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ --desk-1:#3b5aa8; --desk-2:#253f86; --desk-3:#101e48; }
+  }
+  :root[data-theme="dark"]{ --desk-1:#3b5aa8; --desk-2:#253f86; --desk-3:#101e48; }
+  html{scroll-padding-top:env(safe-area-inset-top, 0px);}
+  *,*::before,*::after{box-sizing:border-box;}
+  html,body{min-height:100%;}
   body{
     margin:0;
-    background:#5a7edc;
-    background-image:
-      radial-gradient(120% 80% at 50% 0%, #7ba2f0 0%, #4a6fcc 55%, #26418f 100%);
+    background:var(--desk-2);
+    background-image:radial-gradient(120% 80% at 50% 0%, var(--desk-1) 0%, var(--desk-2) 55%, var(--desk-3) 100%);
+    background-attachment:fixed;
     font-family:Tahoma, "Segoe UI", Verdana, Geneva, sans-serif;
     font-size:11px;
     color:#000;
@@ -35,7 +42,7 @@
 
   /* ---------- okno XP ---------- */
   .window{
-    width:min(100%, 640px);
+    width:min(100%, 760px);
     border:1px solid #0831d9;
     border-radius:8px 8px 0 0;
     background:#ece9d8;
@@ -43,130 +50,182 @@
     overflow:hidden;
   }
   .titlebar{
-    height:29px;
-    display:flex;
-    align-items:center;
-    gap:5px;
+    height:29px; display:flex; align-items:center; gap:5px;
     padding:0 4px 0 6px;
     background:linear-gradient(180deg,#0f68f0 0%, #3a93ff 8%, #0c60e8 40%, #0a58e0 88%, #2a7bf0 100%);
     border-bottom:1px solid #0831d9;
-    color:#fff;
-    text-shadow:1px 1px 1px rgba(0,0,0,.55);
-    font-weight:bold;
-    font-size:12px;
-    user-select:none;
+    color:#fff; text-shadow:1px 1px 1px rgba(0,0,0,.55);
+    font-weight:bold; font-size:12px; user-select:none;
   }
   .titlebar .ico{
     width:16px;height:16px;border-radius:2px;
-    background:linear-gradient(135deg,#fff 50%, #e02020 50%);
-    border:1px solid #7a0000;
-    flex:0 0 auto;
+    background:linear-gradient(135deg,#fff 50%, #101010 50%);
+    border:1px solid #222; flex:0 0 auto;
   }
   .titlebar .spacer{flex:1;}
   .tbtn{
     width:21px;height:21px;margin-left:1px;
-    border:1px solid rgba(255,255,255,.65);
-    border-radius:3px;
+    border:1px solid rgba(255,255,255,.65); border-radius:3px;
     background:linear-gradient(180deg,#5da5ff,#0a56d6);
     color:#fff;font-size:11px;font-weight:bold;
-    display:flex;align-items:center;justify-content:center;
-    cursor:default;
+    display:flex;align-items:center;justify-content:center; cursor:default;
   }
   .tbtn.close{background:linear-gradient(180deg,#f58c78,#d64227 40%,#a32612);}
 
   .menubar{
-    display:flex;
-    flex-wrap:wrap;
-    gap:2px;
-    padding:3px 4px;
+    display:flex; flex-wrap:wrap; gap:2px; padding:3px 4px;
     background:linear-gradient(180deg,#f7f6f0,#ece9d8);
     border-bottom:1px solid #c2bfa8;
   }
+  .menubar .sep{width:1px;background:#c2bfa8;margin:2px 3px;}
   .menubar button, .menubar label{
-    font-family:inherit;font-size:11px;
-    padding:3px 9px;
-    background:transparent;
-    border:1px solid transparent;
-    border-radius:3px;
-    cursor:pointer;
-    color:#000;
+    font-family:inherit;font-size:11px; padding:3px 9px;
+    background:transparent; border:1px solid transparent; border-radius:3px;
+    cursor:pointer; color:#000;
   }
   .menubar button:hover, .menubar label:hover{
-    background:linear-gradient(180deg,#fdfdfd,#dfe9fb);
-    border:1px solid #7ba0e0;
+    background:linear-gradient(180deg,#fdfdfd,#dfe9fb); border:1px solid #7ba0e0;
   }
   .menubar button:active, .menubar label:active{background:#c6d8f5;}
+  .menubar button:disabled{color:#a09c8c;cursor:default;background:transparent;border-color:transparent;}
   .menubar input[type=file]{display:none;}
+  button:focus-visible, label:focus-visible, .tab:focus-visible, .card:focus-visible{outline:1px dotted #000;outline-offset:1px;}
 
-  .board-wrap{overflow-x:auto;}
+  /* ---------- zakładki wariantów ---------- */
+  .tabs{
+    display:flex; flex-wrap:wrap; gap:0; padding:6px 6px 0;
+    background:#ece9d8; border-bottom:1px solid #919b9c;
+  }
+  .tab{
+    font-family:inherit;font-size:11px;
+    padding:4px 12px 4px; margin-right:-1px; margin-bottom:-1px;
+    border:1px solid #919b9c; border-bottom-color:#919b9c;
+    border-radius:3px 3px 0 0;
+    background:linear-gradient(180deg,#fff,#ecebe5 70%,#d8d6c9);
+    cursor:pointer; color:#000; position:relative;
+  }
+  .tab:hover{border-top:2px solid #ffc83c;padding-top:3px;}
+  .tab.on{
+    background:#fcfcfe; border-bottom-color:#fcfcfe;
+    border-top:2px solid #e68b2c; padding-top:3px; z-index:2; font-weight:bold;
+  }
+  .hintbar{
+    padding:6px 8px; background:#fffbe6;
+    border-bottom:1px solid #d9d2a8; font-size:11px; color:#403c20; line-height:1.45;
+  }
+
+  /* ---------- stół ---------- */
   .board{
-    background:
-      radial-gradient(110% 90% at 50% 0%, #0a9b0a 0%, var(--felt) 45%, var(--felt-dark) 100%);
-    padding:12px;
-    min-width:calc(7 * var(--card-w) + 6 * var(--gap) + 24px);
+    background:radial-gradient(110% 90% at 50% 0%, #0a9b0a 0%, var(--felt) 45%, var(--felt-dark) 100%);
+    padding:10px 12px 12px;
     position:relative;
   }
-  .row-top{
-    display:flex;
-    gap:var(--gap);
-    margin-bottom:14px;
+  .bots{display:grid;gap:8px;grid-template-columns:repeat(var(--cols,1), minmax(0,1fr));margin-bottom:8px;}
+  .seat{
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:5px;
+    background:rgba(0,0,0,.12);
+    padding:5px 8px 6px;
+    transition:border-color .2s, box-shadow .2s;
+    min-width:0;
   }
-  .row-top .spring{flex:1;min-width:var(--gap);}
-  .tableau{display:flex;gap:var(--gap);}
-
-  .pile{
-    width:var(--card-w);
-    flex:0 0 var(--card-w);
-    position:relative;
+  .seat.active{border-color:#ffe14d;box-shadow:0 0 0 1px #ffe14d inset, 0 0 12px rgba(255,225,77,.35);}
+  .seat.target{border-color:#9fd8ff;border-style:dashed;}
+  .seat.out{opacity:.6;}
+  .seat .label{
+    display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+    color:#fff; font-weight:bold; font-size:11px;
+    text-shadow:1px 1px 1px rgba(0,0,0,.5); min-height:16px;
   }
-  .pile.slot{height:var(--card-h);}
-  .tableau .pile{min-height:calc(var(--card-h) + 120px);}
+  .seat .label .count{font-weight:normal;opacity:.85;}
+  .badge{
+    font-weight:normal; font-size:10px; text-shadow:none;
+    padding:1px 6px; border-radius:8px; background:#fffbe6; color:#403c20;
+    border:1px solid #d9d2a8;
+  }
+  .badge.turn{background:#ffe14d;border-color:#c7a400;color:#3a2f00;}
+  .badge.pick{background:#dff1ff;border-color:#7ba0e0;color:#0b2a63;}
+  .badge.safe{background:#d8f5d0;border-color:#69a85a;color:#1d4a12;}
+  .badge.lose{background:#ffd9d2;border-color:#c0442c;color:#6b1404;}
+  .avatar{width:34px;height:34px;border-radius:50%;flex:0 0 auto;border:2px solid #fff;
+    box-shadow:0 1px 2px rgba(0,0,0,.45);background:var(--av,#ddd);object-fit:cover;display:block;}
+  .seat.active .avatar{border-color:#ffe14d;}
+  .end-row{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 auto 12px;}
+  .end-row .show-card{margin:0;}
+  .end-row .avatar{width:56px;height:56px;border-width:3px;}
+  .langs{display:flex;gap:1px;margin-left:auto;align-items:center;}
+  .langs span{padding:0 4px;color:#555;}
+  .menubar .langs button{padding:3px 6px;}
+  .menubar .langs button[aria-pressed="true"]{background:#c6d8f5;border:1px solid #7ba0e0;font-weight:bold;}
 
-  .placeholder{
-    position:absolute;inset:0;
+  .hand{position:relative;height:calc(var(--card-h) + 12px);margin-top:3px;}
+  .bots .hand{height:calc(var(--bcard-h) + 10px);}
+  .hand .empty{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    color:rgba(255,255,255,.65);font-size:11px;white-space:nowrap;
+  }
+
+  .middle{
+    display:flex; align-items:center; gap:14px;
+    min-height:calc(var(--card-h) + 26px);
+    margin:2px 0 8px;
+  }
+  .discard{
+    position:relative; flex:0 0 auto;
+    width:calc(var(--card-w) * 2 + 20px); height:calc(var(--card-h) + 20px);
+  }
+  .discard .placeholder{
+    position:absolute;left:10px;top:10px;
     width:var(--card-w);height:var(--card-h);
-    border:1px solid rgba(255,255,255,.55);
-    border-radius:5px;
-    background:rgba(0,0,0,.10);
-    display:flex;align-items:center;justify-content:center;
-    color:rgba(255,255,255,.5);
-    font-size:26px;
-    line-height:1;
+    border:1px solid rgba(255,255,255,.55);border-radius:5px;background:rgba(0,0,0,.10);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    color:rgba(255,255,255,.6);font-size:10px;padding:4px;
   }
+  .discard .pc{position:absolute;}
+  .discard .tally{
+    position:absolute;right:0;bottom:-2px;
+    background:#ece9d8;border:1px solid #7a7a6f;border-radius:8px;
+    font-size:10px;padding:1px 6px;z-index:40;
+  }
+  .talk{flex:1;min-width:0;color:#fff;text-shadow:1px 1px 1px rgba(0,0,0,.5);}
+  .talk .now{font-size:13px;font-weight:bold;margin-bottom:5px;line-height:1.3;}
+  .talk ul{list-style:none;margin:0;padding:0;font-size:11px;line-height:1.5;opacity:.9;}
+  .talk ul li:not(:first-child){opacity:.75;}
 
+  /* ---------- karty ---------- */
   .card{
-    position:absolute;
-    left:0;
-    width:var(--card-w);
-    height:var(--card-h);
-    border-radius:5px;
-    border:1px solid #6d6d6d;
+    position:absolute; left:0; top:8px;
+    width:var(--card-w); height:var(--card-h);
+    border-radius:5px; border:1px solid #6d6d6d;
     background:var(--face);
     box-shadow:0 1px 2px rgba(0,0,0,.35);
-    cursor:pointer;
-    user-select:none;
-    overflow:hidden;
+    user-select:none; overflow:hidden;
+    transition:top .14s ease, box-shadow .14s ease;
   }
+  .bots .card{width:var(--bcard-w);height:var(--bcard-h);top:6px;border-radius:4px;}
+  .discard .card, .dialog .card{top:0;}
   .card.red{color:#d00000;}
   .card.black{color:#101010;}
-  .card .corner{
-    position:absolute;
-    font-weight:bold;
-    font-size:13px;
-    line-height:1;
-    text-align:center;
-    width:16px;
-  }
+  .card.joker{color:#6a1fb0;}
+  .card .corner{position:absolute;font-weight:bold;font-size:13px;line-height:1;text-align:center;width:16px;}
   .card .corner.tl{top:4px;left:3px;}
   .card .corner.br{bottom:4px;right:3px;transform:rotate(180deg);}
   .card .corner small{display:block;font-size:13px;font-weight:normal;margin-top:1px;}
+  .card.joker .corner{font-size:10px;width:12px;letter-spacing:-.5px;}
   .card .pip{
-    position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
-    font-size:34px;
-    line-height:1;
-    opacity:.95;
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    font-size:34px;line-height:1;opacity:.95;
+  }
+  .card .face{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);
+    text-align:center;line-height:1;
+  }
+  .card .face b{display:block;font-size:24px;font-family:Georgia,"Times New Roman",serif;}
+  .card .face span{display:block;font-size:18px;margin-top:1px;}
+  .card.piotrus{background:linear-gradient(180deg,#fffefb 0%,#fff3d6 100%);}
+  .card.piotrus .tag{
+    position:absolute;left:0;right:0;bottom:15px;text-align:center;white-space:nowrap;
+    font-size:9px;font-weight:bold;color:#7a0000;letter-spacing:.2px;
   }
   .card.back{
     background:#1b4ea8;
@@ -174,90 +233,99 @@
       repeating-linear-gradient(45deg, rgba(255,255,255,.18) 0 4px, transparent 4px 8px),
       repeating-linear-gradient(-45deg, rgba(255,255,255,.18) 0 4px, transparent 4px 8px),
       linear-gradient(180deg,#2d6fd0,#123a86);
-    background-size:cover;
     border-color:#0b2a63;
   }
   .card.back.custom{
+    background-color:#333;
     background-image:var(--back-img);
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
+    background-size:cover; background-position:center; background-repeat:no-repeat;
   }
   .card.back .inner{
-    position:absolute;inset:3px;
-    border:1px solid rgba(255,255,255,.75);
-    border-radius:3px;
-    pointer-events:none;
+    position:absolute;inset:3px;border:1px solid rgba(255,255,255,.75);border-radius:3px;pointer-events:none;
   }
-  .card.selected{
-    outline:2px solid #ffe14d;
-    outline-offset:-2px;
-    box-shadow:0 0 10px rgba(255,225,77,.85);
-  }
+  .card.back.custom .inner{border-color:rgba(255,255,255,.4);}
+
+  .hand.pickable .card{cursor:pointer;}
+  .hand.pickable .card:hover, .hand.pickable .card:focus-visible{top:0;box-shadow:0 4px 10px rgba(0,0,0,.45);}
+  .hand.pickable{animation:none;}
+  .card.lift{top:-2px !important;box-shadow:0 0 0 2px #ffe14d, 0 6px 12px rgba(0,0,0,.5);}
+  .card.new{box-shadow:0 0 0 2px #9fd8ff, 0 0 10px rgba(159,216,255,.9);}
+  .card.pairing{top:0 !important;box-shadow:0 0 0 2px #ffe14d, 0 0 14px rgba(255,225,77,.95);}
+  .card.ghost{visibility:hidden;}
   .card.hint{animation:nope .25s linear 2;}
-  @keyframes nope{0%,100%{transform:translateX(0);}25%{transform:translateX(-3px);}75%{transform:translateX(3px);}}
+  @keyframes nope{0%,100%{margin-left:0;}25%{margin-left:-3px;}75%{margin-left:3px;}}
+  .flyer{
+    position:fixed !important; margin:0 !important; z-index:1000; pointer-events:none;
+    transition:transform .42s cubic-bezier(.3,.7,.25,1);
+    box-shadow:0 8px 18px rgba(0,0,0,.5);
+  }
 
+  /* ---------- pasek stanu ---------- */
   .statusbar{
-    display:flex;
-    gap:0;
-    background:#ece9d8;
-    border-top:1px solid #fff;
-    padding:2px;
-    font-size:11px;
+    display:flex; flex-wrap:wrap; background:#ece9d8; border-top:1px solid #fff; padding:2px; font-size:11px;
   }
-  .statusbar div{
-    border:1px solid #c2bfa8;
-    border-top-color:#9a967f;
-    border-left-color:#9a967f;
-    padding:2px 8px;
-    margin-right:2px;
+  .statusbar > div{
+    border:1px solid #c2bfa8; border-top-color:#9a967f; border-left-color:#9a967f;
+    padding:2px 8px; margin-right:2px; display:flex; align-items:center; gap:5px; min-height:20px;
   }
-  .statusbar .grow{flex:1;}
+  .statusbar .grow{flex:1;min-width:120px;}
+  .backprev{width:12px;height:16px;border-radius:2px;border:1px solid #0b2a63;display:inline-block;
+    background:#1b4ea8 linear-gradient(180deg,#2d6fd0,#123a86);background-size:cover;background-position:center;}
+  .backprev.custom{background-image:var(--back-img);border-color:#555;}
 
-  /* wygrana */
+  /* ---------- okno dialogowe ---------- */
   .win{
-    position:absolute;inset:0;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    background:rgba(0,0,0,.35);
-    z-index:50;
+    position:absolute;inset:0;display:none;align-items:center;justify-content:center;
+    background:rgba(0,0,0,.35);z-index:50;
   }
   .win.show{display:flex;}
   .win .dialog{
-    width:260px;
-    background:#ece9d8;
-    border:1px solid #0831d9;
-    border-radius:8px 8px 0 0;
-    overflow:hidden;
-    box-shadow:0 8px 24px rgba(0,0,0,.5);
-    text-align:center;
+    width:min(290px, calc(100% - 20px));
+    background:#ece9d8; border:1px solid #0831d9; border-radius:8px 8px 0 0; overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,0,0,.5); text-align:center;
   }
-  .win .dialog .titlebar{font-size:12px;}
-  .win .dialog .body{padding:16px 12px;}
-  .win .dialog .body p{margin:0 0 12px;font-size:12px;}
-  .win .dialog button{
-    font-family:inherit;font-size:11px;
-    padding:4px 16px;
-    border:1px solid #7a7a6f;
-    border-radius:3px;
-    background:linear-gradient(180deg,#fdfdfd,#e2e0d3);
-    cursor:pointer;
+  .win .dialog .body{padding:14px 12px 16px;}
+  .win .dialog .body p{margin:0 0 12px;font-size:12px;line-height:1.45;}
+  .win .dialog .show-card{position:relative;width:var(--card-w);height:var(--card-h);margin:0 auto 12px;}
+  .xpbtn{
+    font-family:inherit;font-size:11px;padding:4px 16px;
+    border:1px solid #003c74;border-radius:3px;
+    background:linear-gradient(180deg,#fdfdfd,#e2e0d3);cursor:pointer;
   }
-  .hintbar{
-    padding:6px 8px;
-    background:#fffbe6;
-    border-bottom:1px solid #d9d2a8;
-    font-size:11px;
-    color:#403c20;
+  .xpbtn:hover{box-shadow:inset 0 0 0 1px #f8b330;}
+
+  .dropping .board::after{
+    content:attr(data-drop);
+    position:absolute;inset:6px;border:2px dashed #ffe14d;border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:14px;font-weight:bold;background:rgba(0,0,0,.35);z-index:60;
+  }
+
+  @media (max-width:560px){
+    :root{--card-w:52px;--card-h:71px;--bcard-w:40px;--bcard-h:54px;}
+    body{padding:8px 4px 24px;}
+    .card .corner, .card .corner small{font-size:10px;}
+    .card .corner{width:12px;}
+    .card .corner.tl{top:3px;left:2px;}
+    .card .corner.br{bottom:3px;right:2px;}
+    .card .pip{font-size:24px;}
+    .card .face b{font-size:18px;}
+    .card .face span{font-size:13px;}
+    .card.piotrus .tag{font-size:7px;bottom:11px;}
+    .talk .now{font-size:12px;}
+    .bots{grid-template-columns:1fr !important;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .flyer{transition-duration:.01s;}
+    .card{transition:none;}
   }
 </style>
 </head>
 <body>
-<div class="window">
+<div class="window" id="win-root">
   <div class="titlebar">
     <div class="ico"></div>
-    <span id="wtitle">Pasjans</span>
+    <span id="wtitle">Piotruś</span>
     <div class="spacer"></div>
     <div class="tbtn">_</div>
     <div class="tbtn">▢</div>
@@ -265,363 +333,763 @@
   </div>
 
   <div class="menubar">
-    <button id="newGame">Nowa gra</button>
-    <button id="undo">Cofnij</button>
-    <label for="backFile">Wgraj rewers…</label>
+    <button id="newGame"></button>
+    <button id="shuffle"></button>
+    <span class="sep"></span>
+    <button id="botsBtn"></button>
+    <button id="levelBtn"></button>
+    <button id="speedBtn"></button>
+    <span class="sep"></span>
+    <label for="backFile" tabindex="0" id="backLbl"></label>
     <input type="file" id="backFile" accept="image/*">
-    <button id="resetBack">Domyślny rewers</button>
-    <button id="drawMode">Dobieranie: 1</button>
+    <button id="resetBack"></button>
+    <div class="langs" id="langs" role="group"></div>
   </div>
 
-  <div class="hintbar">
-    Kliknij kartę, potem miejsce docelowe. Podwójne kliknięcie odkłada kartę na stos końcowy.
-  </div>
+  <div class="tabs" id="tabs" role="tablist"></div>
+  <div class="hintbar" id="hint"></div>
 
-  <div class="board-wrap">
-    <div class="board" id="board">
-      <div class="row-top">
-        <div class="pile slot" id="stock"></div>
-        <div class="pile slot" id="waste"></div>
-        <div class="spring"></div>
-        <div class="pile slot found" data-f="0"></div>
-        <div class="pile slot found" data-f="1"></div>
-        <div class="pile slot found" data-f="2"></div>
-        <div class="pile slot found" data-f="3"></div>
+  <div class="board" id="board">
+    <div class="bots" id="bots"></div>
+
+    <div class="middle">
+      <div class="discard" id="discard"></div>
+      <div class="talk">
+        <div class="now" id="now">&nbsp;</div>
+        <ul id="log"></ul>
       </div>
-      <div class="tableau" id="tableau"></div>
+    </div>
 
-      <div class="win" id="win">
-        <div class="dialog">
-          <div class="titlebar"><div class="ico"></div><span>Pasjans</span><div class="spacer"></div></div>
-          <div class="body">
-            <p><strong>Gratulacje!</strong><br>Ułożyłeś pasjansa.</p>
-            <button id="winNew">Zagraj jeszcze raz</button>
-          </div>
+    <div class="seat" id="meSeat">
+      <div class="label" id="meLabel"></div>
+      <div class="hand" id="meHand"></div>
+    </div>
+
+    <div class="win" id="end">
+      <div class="dialog">
+        <div class="titlebar"><div class="ico"></div><span id="endTitle">Piotruś</span><div class="spacer"></div></div>
+        <div class="body">
+          <div class="end-row"><div class="show-card" id="endCard"></div><div id="endAv"></div></div>
+          <p id="endText"></p>
+          <button class="xpbtn" id="endNew"></button>
         </div>
       </div>
     </div>
   </div>
 
   <div class="statusbar">
-    <div id="stMoves">Ruchy: 0</div>
-    <div id="stTime">Czas: 0:00</div>
+    <div id="stVariant"></div>
+    <div id="stPairs"></div>
+    <div id="stScore"></div>
     <div class="grow" id="stInfo">&nbsp;</div>
+    <div id="stBack"><span class="backprev" id="backPrev"></span><span id="stBackTxt"></span></div>
   </div>
 </div>
-
 <script>
 (function(){
   "use strict";
 
-  const SUITS = ['\u2660','\u2665','\u2666','\u2663']; // pik kier karo trefl
-  const RANKS = ['','A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+  const SUITS = ['\u2660','\u2665','\u2666','\u2663']; // ♠ ♥ ♦ ♣
   const isRed = s => s === 1 || s === 2;
+  const ALL = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+  const NUM = ['','A','2','3','4','5','6','7','8','9','10'];
 
-  let stock, waste, foundations, tableau, sel, moves, undoStack, drawCount, startTime, timer, won;
+  /* ---------- awatary botów ---------- */
+  const AV = {"brain": "data:image/webp;base64,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", "enterek": "data:image/webp;base64,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", "robot": "data:image/webp;base64,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"};
+  const BOTS = [
+    {name:'GigaBrain', img:AV.brain,   bg:'#ffd7e8'},
+    {name:'Enterek',   img:AV.enterek, bg:'#dcd6f2'},
+    {name:'Robot',     img:AV.robot,   bg:'#d6efe6'}
+  ];
+
+  /* ---------- tłumaczenia ---------- */
+  const pl3 = (n, one, few, many) => {
+    if(n === 1) return one;
+    const d = n % 10, t = n % 100;
+    return (d >= 2 && d <= 4 && !(t >= 12 && t <= 14)) ? few : many;
+  };
+  const en2 = (n, one, more) => n === 1 ? one : more;
+
+  const I18N = {
+    pl:{
+      label:'Polski', game:'Piotruś', tag:'Piotruś',
+      ranks:NUM.concat(['W','D','K']), joker:'Joker', jokerCorner:'JO',
+      gen:n => ({GigaBrain:'GigaBraina', Enterek:'Enterka', Robot:'Robota'})[n] || n,
+      menu:{ newGame:'Nowa gra', shuffle:'Tasuj rękę', shuffleT:'Przetasuj karty w swojej ręce',
+        opp:n => 'Przeciwnicy: ' + n, oppT:'Liczba przeciwników',
+        lvl:{latwy:'Bot: łatwy', sprytny:'Bot: sprytny'},
+        lvlT:{latwy:'Łatwy bot dobiera zupełnie losowo.', sprytny:'Sprytny bot pamięta, gdzie w Twojej ręce jest Piotruś – dopóki nie przetasujesz kart.'},
+        speed:['Tempo: wolne','Tempo: normalne','Tempo: szybkie'], speedT:'Tempo ruchów botów',
+        upload:'Wgraj rewers…', reset:'Domyślny rewers', lang:'Język' },
+      variants:{
+        klasyczny:['Klasyczny','Talia 49 kart – z waletów zostaje tylko walet ♠. Odkładasz pary kart tej samej wartości (np. dwie siódemki). Na zmianę dobierasz zakrytą kartę od sąsiada. Walet ♠ nie ma pary – kto zostanie z nim na końcu, ten jest Piotrusiem.'],
+        kolory:['Pary kolorów','Talia 51 kart (bez waleta ♣). Para musi mieć tę samą wartość i kolor: kier z karem albo pik z treflem. Trudniej o pary, gra trwa dłużej. Piotrusiem jest walet ♠.'],
+        szybki:['Szybki (21 kart)','Krótka talia od dziewiątki do asa, z jednym waletem ♠. Mało kart, szybkie rozdania – dobre na jedną kawę. Piotrusiem jest walet ♠.'],
+        joker:['Z Jokerem','Pełna talia 52 kart i jeden Joker. Wszystkie walety mają pary, więc Piotrusiem jest Joker – nikt nie może go odłożyć.']
+      },
+      you:'Twoja ręka', cards:n => n + ' ' + pl3(n,'karta','karty','kart'),
+      pairsN:n => n + ' ' + pl3(n,'para','pary','par'),
+      badge:{turn:'Twój ruch', botTurn:'dobiera', pick:'wybierz kartę', gives:'oddaje kartę', out:'bez kart', safe:'bezpieczny', lose:'Piotruś'},
+      emptyMe:'Brak kart – jesteś bezpieczny', empty:'Brak kart', pilePh:'Tu trafiają pary',
+      now:{over:'Koniec rozdania.', mine:g => 'Twój ruch – kliknij kartę ' + g + '.', bot:n => 'Ruch: ' + n, watch:' (oglądasz grę)'},
+      log:{
+        dealYou:n => 'Odkładasz ' + n + ' ' + pl3(n,'parę','pary','par') + ' z rozdania.',
+        dealBot:(b,n) => b + ' odkłada ' + n + ' ' + pl3(n,'parę','pary','par') + ' z rozdania.',
+        drawYou:(f,c,p) => 'Dobierasz od ' + f + ': ' + c + (p ? ' – to Piotruś!' : '.'),
+        takeYou:(b,c,p) => b + ' zabiera Ci ' + c + (p ? ' – pozbyłeś się Piotrusia!' : '.'),
+        botBot:(b,f) => b + ' dobiera kartę od ' + f + '.',
+        pairYou:(a,c) => 'Odkładasz parę ' + a + ' ' + c + '.',
+        pairBot:(b,a,c) => b + ' odkłada parę ' + a + ' ' + c + '.',
+        outYou:() => 'Nie masz już kart – jesteś bezpieczny!',
+        outBot:b => b + ' nie ma już kart i wychodzi z gry.',
+        shuffled:() => 'Tasujesz karty w ręce.',
+        endLost:() => 'Koniec gry – zostajesz z Piotrusiem.',
+        endWon:b => 'Koniec gry – Piotrusiem jest ' + b + '.'
+      },
+      end:{lost:'<strong>Zostałeś Piotrusiem!</strong><br>Ostatnia karta została w Twojej ręce.',
+           won:b => '<strong>Wygrana!</strong><br>Piotrusiem został ' + b + '.', again:'Zagraj jeszcze raz'},
+      st:{pairs:n => 'Pary: ' + n, score:(w,l) => 'Wygrane: ' + w + ' · Przegrane: ' + l, newDeal:'Nowe rozdanie',
+          back:f => 'Rewers: ' + f, backDef:'Rewers domyślny', notImg:'To nie jest obrazek – wybierz plik PNG, JPG, GIF lub WebP.',
+          readFail:f => 'Nie udało się odczytać obrazka ' + f + '.', shuffled:'Ręka przetasowana', won:'Wygrana!', lost:'Przegrana',
+          backLbl:'Rewers', backT:'Aktualny rewers'},
+      drop:'Upuść obrazek, aby ustawić go jako rewers', pickAria:(i,n) => 'Dobierz kartę ' + i + ' z ' + n
+    },
+
+    en:{
+      label:'English', game:'Old Maid', tag:'Old Maid',
+      ranks:NUM.concat(['J','Q','K']), joker:'Joker', jokerCorner:'JO',
+      gen:n => n,
+      menu:{ newGame:'New game', shuffle:'Shuffle hand', shuffleT:'Shuffle the cards in your hand',
+        opp:n => 'Opponents: ' + n, oppT:'Number of opponents',
+        lvl:{latwy:'Bot: easy', sprytny:'Bot: smart'},
+        lvlT:{latwy:'The easy bot draws completely at random.', sprytny:'The smart bot remembers where the Old Maid is in your hand – until you shuffle.'},
+        speed:['Speed: slow','Speed: normal','Speed: fast'], speedT:'How fast the bots move',
+        upload:'Upload card back…', reset:'Default card back', lang:'Language' },
+      variants:{
+        klasyczny:['Classic','49 cards – only the jack of spades is left among the jacks. Discard pairs of the same rank, such as two sevens. Take turns drawing a face-down card from your neighbour. The jack of spades has no partner – whoever ends up holding it is the Old Maid.'],
+        kolory:['Colour pairs','51 cards (no jack of clubs). A pair must match in rank and colour: hearts with diamonds, spades with clubs. Pairs are rarer, so games last longer. The jack of spades is the Old Maid.'],
+        szybki:['Quick (21 cards)','A short deck from nine to ace, with only the jack of spades. Few cards, fast rounds – perfect for a coffee break. The jack of spades is the Old Maid.'],
+        joker:['With Joker','A full 52-card deck plus one Joker. Every jack has a partner, so the Joker is the Old Maid – nobody can discard it.']
+      },
+      you:'Your hand', cards:n => n + ' ' + en2(n,'card','cards'),
+      pairsN:n => n + ' ' + en2(n,'pair','pairs'),
+      badge:{turn:'Your turn', botTurn:'drawing', pick:'pick a card', gives:'gives a card', out:'no cards', safe:'safe', lose:'Old Maid'},
+      emptyMe:'No cards – you’re safe', empty:'No cards', pilePh:'Pairs go here',
+      now:{over:'Round over.', mine:g => 'Your turn – click one of ' + g + '’s cards.', bot:n => n + '’s turn', watch:' (you’re watching)'},
+      log:{
+        dealYou:n => 'You discard ' + n + ' ' + en2(n,'pair','pairs') + ' from the deal.',
+        dealBot:(b,n) => b + ' discards ' + n + ' ' + en2(n,'pair','pairs') + ' from the deal.',
+        drawYou:(f,c,p) => 'You draw ' + c + ' from ' + f + (p ? ' – it’s the Old Maid!' : '.'),
+        takeYou:(b,c,p) => b + ' takes your ' + c + (p ? ' – you got rid of the Old Maid!' : '.'),
+        botBot:(b,f) => b + ' draws a card from ' + f + '.',
+        pairYou:(a,c) => 'You discard a pair: ' + a + ' ' + c + '.',
+        pairBot:(b,a,c) => b + ' discards a pair: ' + a + ' ' + c + '.',
+        outYou:() => 'You have no cards left – you’re safe!',
+        outBot:b => b + ' has no cards left and is out.',
+        shuffled:() => 'You shuffle your hand.',
+        endLost:() => 'Game over – you’re stuck with the Old Maid.',
+        endWon:b => 'Game over – ' + b + ' is the Old Maid.'
+      },
+      end:{lost:'<strong>You’re the Old Maid!</strong><br>The last card stayed in your hand.',
+           won:b => '<strong>You win!</strong><br>' + b + ' is the Old Maid.', again:'Play again'},
+      st:{pairs:n => 'Pairs: ' + n, score:(w,l) => 'Wins: ' + w + ' · Losses: ' + l, newDeal:'New round',
+          back:f => 'Card back: ' + f, backDef:'Default card back', notImg:'That’s not an image – choose a PNG, JPG, GIF or WebP file.',
+          readFail:f => 'Couldn’t read the image ' + f + '.', shuffled:'Hand shuffled', won:'You win!', lost:'You lose',
+          backLbl:'Card back', backT:'Current card back'},
+      drop:'Drop an image to use it as the card back', pickAria:(i,n) => 'Draw card ' + i + ' of ' + n
+    },
+
+    de:{
+      label:'Deutsch', game:'Schwarzer Peter', tag:'Sch. Peter',
+      ranks:NUM.concat(['B','D','K']), joker:'Joker', jokerCorner:'JO',
+      gen:n => n,
+      menu:{ newGame:'Neues Spiel', shuffle:'Hand mischen', shuffleT:'Mische die Karten in deiner Hand',
+        opp:n => 'Gegner: ' + n, oppT:'Anzahl der Gegner',
+        lvl:{latwy:'Bot: leicht', sprytny:'Bot: schlau'},
+        lvlT:{latwy:'Der leichte Bot zieht völlig zufällig.', sprytny:'Der schlaue Bot merkt sich, wo der Schwarze Peter in deiner Hand steckt – bis du mischst.'},
+        speed:['Tempo: langsam','Tempo: normal','Tempo: schnell'], speedT:'Zuggeschwindigkeit der Bots',
+        upload:'Kartenrücken hochladen…', reset:'Standard-Rücken', lang:'Sprache' },
+      variants:{
+        klasyczny:['Klassisch','49 Karten – von den Buben bleibt nur der Pik-Bube. Lege Paare gleichen Werts ab, zum Beispiel zwei Siebenen. Reihum ziehst du eine verdeckte Karte von deinem Nachbarn. Der Pik-Bube hat keinen Partner – wer ihn am Ende hält, ist der Schwarze Peter.'],
+        kolory:['Farbpaare','51 Karten (ohne Kreuz-Buben). Ein Paar braucht gleichen Wert und gleiche Farbe: Herz mit Karo, Pik mit Kreuz. Paare sind seltener, das Spiel dauert länger. Der Pik-Bube ist der Schwarze Peter.'],
+        szybki:['Schnell (21 Karten)','Kurzes Blatt von der Neun bis zum Ass, nur mit dem Pik-Buben. Wenige Karten, schnelle Runden – ideal für die Kaffeepause. Der Pik-Bube ist der Schwarze Peter.'],
+        joker:['Mit Joker','Volles Blatt mit 52 Karten und einem Joker. Alle Buben haben einen Partner, daher ist der Joker der Schwarze Peter – niemand kann ihn ablegen.']
+      },
+      you:'Deine Hand', cards:n => n + ' ' + en2(n,'Karte','Karten'),
+      pairsN:n => n + ' ' + en2(n,'Paar','Paare'),
+      badge:{turn:'Du bist dran', botTurn:'zieht', pick:'Karte wählen', gives:'gibt ab', out:'keine Karten', safe:'sicher', lose:'Schwarzer Peter'},
+      emptyMe:'Keine Karten – du bist sicher', empty:'Keine Karten', pilePh:'Hier landen die Paare',
+      now:{over:'Runde beendet.', mine:g => 'Du bist dran – klicke eine Karte von ' + g + '.', bot:n => n + ' ist dran', watch:' (du schaust zu)'},
+      log:{
+        dealYou:n => 'Du legst nach dem Austeilen ' + n + ' ' + en2(n,'Paar','Paare') + ' ab.',
+        dealBot:(b,n) => b + ' legt nach dem Austeilen ' + n + ' ' + en2(n,'Paar','Paare') + ' ab.',
+        drawYou:(f,c,p) => 'Du ziehst ' + c + ' von ' + f + (p ? ' – das ist der Schwarze Peter!' : '.'),
+        takeYou:(b,c,p) => b + ' nimmt dir ' + c + (p ? ' ab – du bist den Schwarzen Peter los!' : ' ab.'),
+        botBot:(b,f) => b + ' zieht eine Karte von ' + f + '.',
+        pairYou:(a,c) => 'Du legst ein Paar ab: ' + a + ' ' + c + '.',
+        pairBot:(b,a,c) => b + ' legt ein Paar ab: ' + a + ' ' + c + '.',
+        outYou:() => 'Du hast keine Karten mehr – du bist sicher!',
+        outBot:b => b + ' hat keine Karten mehr und scheidet aus.',
+        shuffled:() => 'Du mischst deine Hand.',
+        endLost:() => 'Spielende – du hast den Schwarzen Peter.',
+        endWon:b => 'Spielende – ' + b + ' hat den Schwarzen Peter.'
+      },
+      end:{lost:'<strong>Du bist der Schwarze Peter!</strong><br>Die letzte Karte blieb in deiner Hand.',
+           won:b => '<strong>Gewonnen!</strong><br>' + b + ' hat den Schwarzen Peter.', again:'Nochmal spielen'},
+      st:{pairs:n => 'Paare: ' + n, score:(w,l) => 'Siege: ' + w + ' · Niederlagen: ' + l, newDeal:'Neue Runde',
+          back:f => 'Kartenrücken: ' + f, backDef:'Standard-Kartenrücken', notImg:'Das ist kein Bild – wähle eine PNG-, JPG-, GIF- oder WebP-Datei.',
+          readFail:f => 'Das Bild ' + f + ' konnte nicht gelesen werden.', shuffled:'Hand gemischt', won:'Gewonnen!', lost:'Verloren',
+          backLbl:'Rücken', backT:'Aktueller Kartenrücken'},
+      drop:'Bild hier ablegen, um es als Kartenrücken zu verwenden', pickAria:(i,n) => 'Karte ' + i + ' von ' + n + ' ziehen'
+    },
+
+    es:{
+      label:'Español', game:'La Mona', tag:'Mona',
+      ranks:NUM.concat(['J','Q','K']), joker:'Comodín', jokerCorner:'JO',
+      gen:n => n,
+      menu:{ newGame:'Nueva partida', shuffle:'Barajar mano', shuffleT:'Baraja las cartas de tu mano',
+        opp:n => 'Rivales: ' + n, oppT:'Número de rivales',
+        lvl:{latwy:'Bot: fácil', sprytny:'Bot: listo'},
+        lvlT:{latwy:'El bot fácil roba totalmente al azar.', sprytny:'El bot listo recuerda dónde está la Mona en tu mano, hasta que barajes.'},
+        speed:['Ritmo: lento','Ritmo: normal','Ritmo: rápido'], speedT:'Velocidad de los bots',
+        upload:'Subir reverso…', reset:'Reverso por defecto', lang:'Idioma' },
+      variants:{
+        klasyczny:['Clásico','49 cartas: de las J solo queda la J de picas. Descarta parejas del mismo valor, por ejemplo dos sietes. Por turnos, robas una carta boca abajo a tu vecino. La J de picas no tiene pareja: quien acabe con ella se queda con la Mona.'],
+        kolory:['Parejas de color','51 cartas (sin la J de tréboles). La pareja debe tener el mismo valor y color: corazones con diamantes, picas con tréboles. Hay menos parejas y la partida dura más. La J de picas es la Mona.'],
+        szybki:['Rápido (21 cartas)','Baraja corta del nueve al as, solo con la J de picas. Pocas cartas y rondas rápidas, ideal para una pausa de café. La J de picas es la Mona.'],
+        joker:['Con comodín','Baraja completa de 52 cartas más un comodín. Todas las J tienen pareja, así que el comodín es la Mona: nadie puede descartarlo.']
+      },
+      you:'Tu mano', cards:n => n + ' ' + en2(n,'carta','cartas'),
+      pairsN:n => n + ' ' + en2(n,'pareja','parejas'),
+      badge:{turn:'Tu turno', botTurn:'roba', pick:'elige carta', gives:'entrega carta', out:'sin cartas', safe:'a salvo', lose:'la Mona'},
+      emptyMe:'Sin cartas: estás a salvo', empty:'Sin cartas', pilePh:'Aquí van las parejas',
+      now:{over:'Fin de la ronda.', mine:g => 'Tu turno: haz clic en una carta de ' + g + '.', bot:n => 'Turno de ' + n, watch:' (estás mirando)'},
+      log:{
+        dealYou:n => 'Descartas ' + n + ' ' + en2(n,'pareja','parejas') + ' del reparto.',
+        dealBot:(b,n) => b + ' descarta ' + n + ' ' + en2(n,'pareja','parejas') + ' del reparto.',
+        drawYou:(f,c,p) => 'Robas ' + c + ' a ' + f + (p ? ': ¡es la Mona!' : '.'),
+        takeYou:(b,c,p) => b + ' te quita ' + c + (p ? ': ¡te has librado de la Mona!' : '.'),
+        botBot:(b,f) => b + ' roba una carta a ' + f + '.',
+        pairYou:(a,c) => 'Descartas una pareja: ' + a + ' ' + c + '.',
+        pairBot:(b,a,c) => b + ' descarta una pareja: ' + a + ' ' + c + '.',
+        outYou:() => 'Ya no tienes cartas: ¡estás a salvo!',
+        outBot:b => b + ' se queda sin cartas y sale del juego.',
+        shuffled:() => 'Barajas tu mano.',
+        endLost:() => 'Fin de la partida: te quedas con la Mona.',
+        endWon:b => 'Fin de la partida: ' + b + ' se queda con la Mona.'
+      },
+      end:{lost:'<strong>¡Te ha tocado la Mona!</strong><br>La última carta se quedó en tu mano.',
+           won:b => '<strong>¡Has ganado!</strong><br>' + b + ' se queda con la Mona.', again:'Jugar otra vez'},
+      st:{pairs:n => 'Parejas: ' + n, score:(w,l) => 'Victorias: ' + w + ' · Derrotas: ' + l, newDeal:'Nueva ronda',
+          back:f => 'Reverso: ' + f, backDef:'Reverso por defecto', notImg:'No es una imagen: elige un archivo PNG, JPG, GIF o WebP.',
+          readFail:f => 'No se pudo leer la imagen ' + f + '.', shuffled:'Mano barajada', won:'¡Has ganado!', lost:'Has perdido',
+          backLbl:'Reverso', backT:'Reverso actual'},
+      drop:'Suelta una imagen para usarla como reverso', pickAria:(i,n) => 'Robar la carta ' + i + ' de ' + n
+    }
+  };
+  const LANGS = ['pl','en','de','es'];
+
+  /* ---------- warianty (jeden adres, różne #hashe) ---------- */
+  const VARIANTS = {
+    klasyczny:{ranks:ALL, drop:'jacks', joker:false, color:false},
+    kolory:   {ranks:ALL, drop:'clubs', joker:false, color:true},
+    szybki:   {ranks:[9,10,11,12,13,1], drop:'jacks', joker:false, color:false},
+    joker:    {ranks:ALL, drop:'', joker:true,  color:false}
+  };
+  const ORDER = ['klasyczny','kolory','szybki','joker'];
+  const SPEEDS = [1.6, 1, .5];
 
   const $ = id => document.getElementById(id);
-  const boardEl = $('board');
-  const tableauEl = $('tableau');
-  const stockEl = $('stock');
-  const wasteEl = $('waste');
-  const foundEls = [...document.querySelectorAll('.found')];
+  const root = document.documentElement;
 
-  /* ---------- stan ---------- */
-  function newGame(){
-    const deck = [];
-    for(let s=0;s<4;s++) for(let r=1;r<=13;r++) deck.push({r:r,s:s,up:false});
-    for(let i=deck.length-1;i>0;i--){
-      const j = Math.floor(Math.random()*(i+1));
-      [deck[i],deck[j]] = [deck[j],deck[i]];
+  function load(key, def){ try{ const v = localStorage.getItem(key); return v === null ? def : JSON.parse(v); }catch(e){ return def; } }
+  function save(key, v){ try{ localStorage.setItem(key, JSON.stringify(v)); }catch(e){} }
+
+  let settings = Object.assign({bots:1, level:'latwy', speed:1}, load('piotrus_settings', {}));
+  let stats = load('piotrus_stats', {});
+  let lang = load('piotrus_lang', null);
+  if(!I18N[lang]){
+    lang = 'pl';
+  }
+  let T = I18N[lang];
+
+  /* ---------- stan gry ---------- */
+  let variantKey, V, players, turn, discard, over, token = 0, logLines = [];
+  let anim = false;
+  let ui = {ghost:null, lift:null, fresh:null, pairing:[]};
+  let memory = null;      // id Piotrusia w Twojej ręce zapamiętane przez sprytne boty
+  let infoMsg = null;     // [klucz, parametr] dla paska stanu
+  let nextId = 1;
+
+  const rand = n => Math.floor(Math.random()*n);
+  function shuffleArr(a){ for(let i=a.length-1;i>0;i--){ const j=rand(i+1); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+  function pairKey(c){
+    if(c.joker) return 'joker';
+    return V.color ? c.r + (isRed(c.s) ? 'r' : 'b') : String(c.r);
+  }
+  function isPiotrus(c){ return V.joker ? !!c.joker : (c.r === 11 && c.s === 0); }
+  function cardName(c){ return c.joker ? T.joker : T.ranks[c.r] + SUITS[c.s]; }
+  const pname = i => players[i].name;
+
+  function buildDeck(){
+    const d = [];
+    for(const r of V.ranks) for(let s=0;s<4;s++){
+      if(r === 11 && ((V.drop === 'jacks' && s !== 0) || (V.drop === 'clubs' && s === 3))) continue;
+      d.push({id:nextId++, r:r, s:s});
     }
-    tableau = [[],[],[],[],[],[],[]];
-    for(let i=0;i<7;i++){
-      for(let j=i;j<7;j++){
-        const c = deck.pop();
-        c.up = (j===i);
-        tableau[j].push(c);
+    if(V.joker) d.push({id:nextId++, joker:true, r:0, s:-1});
+    return shuffleArr(d);
+  }
+
+  function later(fn, ms){
+    const t = token;
+    setTimeout(() => { if(t === token) fn(); }, ms * SPEEDS[settings.speed]);
+  }
+
+  /* ---------- dziennik (zapisany jako klucze – tłumaczy się przy zmianie języka) ---------- */
+  function addLog(key){
+    const args = [].slice.call(arguments, 1);
+    logLines.unshift({key:key, args:args});
+    if(logLines.length > 4) logLines.length = 4;
+  }
+  // argumenty: {p:i} = imię gracza, {g:i} = imię w dopełniaczu, {c:card} = karta
+  function logText(e){
+    const a = e.args.map(x => {
+      if(x && typeof x === 'object'){
+        if('p' in x) return players[x.p] ? players[x.p].name : '';
+        if('g' in x) return players[x.g] ? T.gen(players[x.g].name) : '';
+        if('c' in x) return cardName(x.c);
+      }
+      return x;
+    });
+    return T.log[e.key].apply(null, a);
+  }
+  function setInfo(key, arg){ infoMsg = [key, arg]; paintInfo(); }
+  function paintInfo(){
+    if(!infoMsg){ $('stInfo').innerHTML = '&nbsp;'; return; }
+    const v = T.st[infoMsg[0]] !== undefined ? T.st[infoMsg[0]] : T.menu.lvlT[infoMsg[1]];
+    $('stInfo').textContent = typeof v === 'function' ? v(infoMsg[1]) : v;
+  }
+
+  function setVariant(key, push){
+    if(!VARIANTS[key]) key = 'klasyczny';
+    variantKey = key; V = VARIANTS[key];
+    if(push && location.hash !== '#' + key){
+      try{ history.replaceState(null, '', '#' + key); }catch(e){ location.hash = key; }
+    }
+    paintStatic();
+    newGame();
+  }
+
+  function newGame(){
+    token++;
+    anim = false; over = false; memory = null;
+    ui = {ghost:null, lift:null, fresh:null, pairing:[]};
+    logLines = []; discard = [];
+    players = [{name:T.you, bot:false, hand:[]}];
+    for(let i=0;i<settings.bots;i++) players.push(Object.assign({bot:true, hand:[]}, BOTS[i]));
+    const deck = buildDeck();
+    let i = 0;
+    while(deck.length){ players[i % players.length].hand.push(deck.pop()); i++; }
+    players.forEach((p, k) => {
+      const n = dropAllPairs(p);
+      if(p.bot) addLog('dealBot', {p:k}, n); else addLog('dealYou', n);
+    });
+    players.forEach(p => { if(p.bot) shuffleArr(p.hand); });
+    $('end').classList.remove('show');
+    turn = 0;
+    setInfo('newDeal');
+    startTurn();
+  }
+
+  function dropAllPairs(p){
+    let count = 0, changed = true;
+    while(changed){
+      changed = false;
+      const seen = {};
+      for(let i=0;i<p.hand.length;i++){
+        const k = pairKey(p.hand[i]);
+        if(k === 'joker') continue;
+        if(seen[k] !== undefined){
+          const a = p.hand[seen[k]], b = p.hand[i];
+          p.hand = p.hand.filter(c => c !== a && c !== b);
+          pushDiscard(a, b);
+          count++; changed = true; break;
+        }
+        seen[k] = i;
       }
     }
-    // poprawka: ostatnia karta każdej kolumny odkryta
-    tableau.forEach(p => { if(p.length) p[p.length-1].up = true; });
-    stock = deck;
-    stock.forEach(c => c.up = false);
-    waste = [];
-    foundations = [[],[],[],[]];
-    sel = null;
-    moves = 0;
-    won = false;
-    undoStack = [];
-    startTime = Date.now();
-    $('win').classList.remove('show');
+    return count;
+  }
+  function pushDiscard(a, b){ discard.push({a:a, b:b, rot:(Math.random()*16-8), dx:rand(10), dy:rand(8)}); }
+
+  function nextActive(i){
+    for(let k=1;k<=players.length;k++){
+      const j = (i + k) % players.length;
+      if(players[j].hand.length) return j;
+    }
+    return -1;
+  }
+  const activeCount = () => players.filter(p => p.hand.length).length;
+
+  /* ---------- przebieg tury ---------- */
+  function startTurn(){
+    if(over) return;
+    if(activeCount() <= 1){ endGame(); return; }
+    if(!players[turn].hand.length) turn = nextActive(turn);
+    const giver = nextActive(turn);
+    anim = false;
     render();
+    if(players[turn].bot){
+      anim = true;
+      later(() => botMove(turn, giver), 650);
+    }
   }
 
-  function snapshot(){
-    undoStack.push(JSON.stringify({stock,waste,foundations,tableau,moves}));
-    if(undoStack.length > 60) undoStack.shift();
-  }
-  function undo(){
-    if(!undoStack.length) return;
-    const s = JSON.parse(undoStack.pop());
-    stock = s.stock; waste = s.waste; foundations = s.foundations;
-    tableau = s.tableau; moves = s.moves;
-    sel = null; won = false;
-    $('win').classList.remove('show');
+  function botMove(taker, giver){
+    const h = players[giver].hand;
+    let idx = rand(h.length);
+    if(settings.level === 'sprytny' && giver === 0 && memory !== null && h.length > 1){
+      const k = h.findIndex(c => c.id === memory);
+      if(k >= 0 && Math.random() < 0.9){ do{ idx = rand(h.length); }while(idx === k); }
+    }
+    ui.lift = h[idx].id;
     render();
+    later(() => doTake(taker, giver, idx), 420);
+  }
+
+  function humanPick(seat, idx, el){
+    if(anim || over || turn !== 0 || !players[0].hand.length) return;
+    const giver = nextActive(0);
+    if(seat !== giver){ el.classList.add('hint'); setTimeout(() => el.classList.remove('hint'), 600); return; }
+    anim = true;
+    doTake(0, giver, idx);
+  }
+
+  function doTake(taker, giver, idx){
+    const fromEl = document.querySelector('[data-id="' + players[giver].hand[idx].id + '"]');
+    const fromRect = fromEl ? fromEl.getBoundingClientRect() : null;
+    const card = players[giver].hand.splice(idx, 1)[0];
+    players[taker].hand.push(card);
+    if(giver === 0 && memory === card.id) memory = null;
+    if(taker === 0 && isPiotrus(card)) memory = card.id;
+    ui.lift = null; ui.ghost = card.id; ui.fresh = null;
+    render();
+    const toEl = document.querySelector('[data-id="' + card.id + '"]');
+    fly(card, fromRect, toEl, giver === 0, taker === 0, () => {
+      ui.ghost = null;
+      if(taker === 0) ui.fresh = card.id;
+      const p = isPiotrus(card);
+      if(taker === 0) addLog('drawYou', {g:giver}, {c:card}, p);
+      else if(giver === 0) addLog('takeYou', {p:taker}, {c:card}, p);
+      else addLog('botBot', {p:taker}, {g:giver});
+      render();
+      afterTake(taker, giver, card);
+    });
+  }
+
+  function afterTake(taker, giver, card){
+    const hand = players[taker].hand;
+    const k = pairKey(card);
+    const mate = k === 'joker' ? null : hand.find(c => c !== card && pairKey(c) === k);
+    if(mate){
+      ui.pairing = [card.id, mate.id];
+      render();
+      later(() => {
+        players[taker].hand = hand.filter(c => c !== card && c !== mate);
+        pushDiscard(mate, card);
+        ui.pairing = []; ui.fresh = null;
+        if(taker === 0) addLog('pairYou', {c:mate}, {c:card});
+        else addLog('pairBot', {p:taker}, {c:mate}, {c:card});
+        finishTurn(taker, giver);
+      }, 650);
+    } else {
+      later(() => finishTurn(taker, giver), 250);
+    }
+  }
+
+  function finishTurn(taker, giver){
+    [giver, taker].forEach(i => {
+      const p = players[i];
+      if(!p.hand.length && !p.doneLogged){
+        p.doneLogged = true;
+        if(i === 0) addLog('outYou'); else addLog('outBot', {p:i});
+      }
+    });
+    if(players[taker].bot) shuffleArr(players[taker].hand);
+    if(activeCount() <= 1){ render(); later(endGame, 350); return; }
+    turn = nextActive(taker);
+    startTurn();
+  }
+
+  function endGame(){
+    if(over) return;
+    over = true; anim = false;
+    const loserIdx = players.findIndex(p => p.hand.length);
+    const st = stats[variantKey] || (stats[variantKey] = {w:0, l:0});
+    if(loserIdx === 0) st.l++; else st.w++;
+    save('piotrus_stats', stats);
+    if(loserIdx === 0) addLog('endLost'); else addLog('endWon', {p:loserIdx});
+    setInfo(loserIdx === 0 ? 'lost' : 'won');
+    render();
+    paintEnd();
+    $('end').classList.add('show');
+  }
+
+  function paintEnd(){
+    if(!over) return;
+    const loserIdx = players.findIndex(p => p.hand.length);
+    const loser = players[loserIdx];
+    $('endCard').innerHTML = '';
+    if(loser){ const e = cardEl(loser.hand[0], true); e.style.left = '0'; $('endCard').appendChild(e); }
+    $('endAv').innerHTML = '';
+    if(loser && loser.bot) $('endAv').appendChild(avatarEl(loser));
+    $('endText').innerHTML = loserIdx === 0 ? T.end.lost : T.end.won(loser.name);
+  }
+
+  /* ---------- animacja przelotu karty ---------- */
+  function fly(card, fromRect, toEl, startFace, endFace, done){
+    if(!fromRect || !toEl){ later(done, 200); return; }
+    const to = toEl.getBoundingClientRect();
+    const el = cardEl(card, startFace);
+    el.classList.add('flyer');
+    el.style.left = fromRect.left + 'px'; el.style.top = fromRect.top + 'px';
+    el.style.width = fromRect.width + 'px'; el.style.height = fromRect.height + 'px';
+    el.style.transformOrigin = '0 0';
+    const dur = 420 * SPEEDS[settings.speed];
+    el.style.transitionDuration = dur + 'ms';
+    document.body.appendChild(el);
+    const sx = to.width / fromRect.width, sy = to.height / fromRect.height;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.style.transform = 'translate(' + (to.left - fromRect.left) + 'px,' + (to.top - fromRect.top) + 'px) scale(' + sx + ',' + sy + ')';
+    }));
+    if(startFace !== endFace){
+      setTimeout(() => {
+        const swap = cardEl(card, endFace);
+        el.className = swap.className + ' flyer';
+        el.innerHTML = swap.innerHTML;
+      }, dur / 2);
+    }
+    const t = token;
+    setTimeout(() => { el.remove(); if(t === token) done(); }, dur + 40);
   }
 
   /* ---------- rysowanie ---------- */
-  function cardEl(c){
+  function avatarEl(p){
+    const img = document.createElement('img');
+    img.className = 'avatar';
+    img.src = p.img; img.alt = p.name;
+    img.style.setProperty('--av', p.bg);
+    return img;
+  }
+
+  function cardEl(c, faceUp){
     const el = document.createElement('div');
-    if(!c.up){
+    if(c && c.id) el.dataset.id = c.id;
+    if(!faceUp){
       el.className = 'card back' + (customBack ? ' custom' : '');
       const inner = document.createElement('div');
       inner.className = 'inner';
       el.appendChild(inner);
       return el;
     }
-    el.className = 'card ' + (isRed(c.s) ? 'red' : 'black');
-    const suit = SUITS[c.s], rank = RANKS[c.r];
+    if(c.joker){
+      el.className = 'card joker piotrus';
+      el.innerHTML =
+        '<div class="corner tl">' + T.jokerCorner + '<small>★</small></div>' +
+        '<div class="face"><b>★</b><span>' + T.joker + '</span></div>' +
+        '<div class="corner br">' + T.jokerCorner + '<small>★</small></div>' +
+        '<div class="tag">' + T.tag + '</div>';
+      return el;
+    }
+    el.className = 'card ' + (isRed(c.s) ? 'red' : 'black') + (isPiotrus(c) ? ' piotrus' : '');
+    const suit = SUITS[c.s], rank = T.ranks[c.r];
+    const mid = c.r >= 11
+      ? '<div class="face"><b>' + rank + '</b><span>' + suit + '</span></div>'
+      : '<div class="pip">' + suit + '</div>';
     el.innerHTML =
-      '<div class="corner tl">'+rank+'<small>'+suit+'</small></div>' +
-      '<div class="pip">'+suit+'</div>' +
-      '<div class="corner br">'+rank+'<small>'+suit+'</small></div>';
+      '<div class="corner tl">' + rank + '<small>' + suit + '</small></div>' + mid +
+      '<div class="corner br">' + rank + '<small>' + suit + '</small></div>' +
+      (isPiotrus(c) ? '<div class="tag">' + T.tag + '</div>' : '');
     return el;
   }
 
-  function placeholder(txt){
-    const d = document.createElement('div');
-    d.className = 'placeholder';
-    d.textContent = txt || '';
-    return d;
+  function px(name){ return parseFloat(getComputedStyle(root).getPropertyValue(name)) || 60; }
+
+  function layoutFan(handEl, cards, faceUp, isBot, pickable, seat){
+    handEl.innerHTML = '';
+    handEl.classList.toggle('pickable', !!pickable);
+    if(!cards.length){
+      const e = document.createElement('div');
+      e.className = 'empty';
+      e.textContent = seat === 0 ? T.emptyMe : T.empty;
+      handEl.appendChild(e);
+      return;
+    }
+    const W = handEl.clientWidth || 300;
+    const cw = isBot ? px('--bcard-w') : px('--card-w');
+    const n = cards.length;
+    const maxStep = isBot ? cw * 0.55 : cw * 0.82;
+    const step = n > 1 ? Math.max(4, Math.min(maxStep, (W - cw) / (n - 1))) : 0;
+    const off = Math.max(0, (W - (step * (n - 1) + cw)) / 2);
+    cards.forEach((c, i) => {
+      const e = cardEl(c, faceUp);
+      e.style.left = (off + i * step) + 'px';
+      e.style.zIndex = i + 1;
+      if(ui.ghost === c.id) e.classList.add('ghost');
+      if(ui.lift === c.id) e.classList.add('lift');
+      if(ui.fresh === c.id && !isBot) e.classList.add('new');
+      if(ui.pairing.includes(c.id)) e.classList.add('pairing');
+      if(pickable){
+        e.tabIndex = 0;
+        e.setAttribute('role', 'button');
+        e.setAttribute('aria-label', T.pickAria(i + 1, n));
+        e.onclick = () => humanPick(seat, i, e);
+        e.onkeydown = ev => { if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); humanPick(seat, i, e); } };
+      }
+      handEl.appendChild(e);
+    });
   }
 
-  function isSel(from, pile, index){
-    return sel && sel.from===from && sel.pile===pile && sel.index===index;
+  function badge(cls, txt){ const b = document.createElement('span'); b.className = 'badge ' + cls; b.textContent = txt; return b; }
+
+  function seatLabel(i, el){
+    const p = players[i];
+    const giverOfHuman = (!over && turn === 0 && players[0].hand.length) ? nextActive(0) : -1;
+    el.innerHTML = '';
+    if(p.bot) el.appendChild(avatarEl(p));
+    const nm = document.createElement('span'); nm.textContent = p.bot ? p.name : T.you; el.appendChild(nm);
+    const ct = document.createElement('span'); ct.className = 'count'; ct.textContent = T.cards(p.hand.length); el.appendChild(ct);
+    if(over){
+      el.appendChild(p.hand.length ? badge('lose', T.badge.lose) : badge('safe', T.badge.safe));
+    } else if(!p.hand.length){
+      el.appendChild(badge('safe', T.badge.out));
+    } else {
+      if(turn === i) el.appendChild(badge('turn', i === 0 ? T.badge.turn : T.badge.botTurn));
+      if(i === giverOfHuman && !anim) el.appendChild(badge('pick', T.badge.pick));
+      else if(players[turn].bot && nextActive(turn) === i) el.appendChild(badge('pick', T.badge.gives));
+    }
   }
 
   function render(){
-    // STOS (rezerwa)
-    stockEl.innerHTML = '';
-    if(stock.length){
-      const e = cardEl({up:false});
-      e.style.top = '0px';
-      e.onclick = () => drawFromStock();
-      stockEl.appendChild(e);
-    } else {
-      const p = placeholder('\u21BB');
-      p.onclick = () => recycle();
-      p.style.cursor = 'pointer';
-      stockEl.appendChild(p);
+    const botsEl = $('bots');
+    const nb = players.length - 1;
+    botsEl.style.setProperty('--cols', nb);
+    botsEl.innerHTML = '';
+    const humanGiver = (!over && !anim && turn === 0 && players[0].hand.length) ? nextActive(0) : -1;
+    for(let i=1;i<players.length;i++){
+      const seat = document.createElement('div');
+      seat.className = 'seat';
+      if(!over && turn === i) seat.classList.add('active');
+      if(i === humanGiver) seat.classList.add('target');
+      if(!players[i].hand.length) seat.classList.add('out');
+      const label = document.createElement('div'); label.className = 'label';
+      const hand = document.createElement('div'); hand.className = 'hand';
+      seat.appendChild(label); seat.appendChild(hand);
+      botsEl.appendChild(seat);
+      seatLabel(i, label);
+      layoutFan(hand, players[i].hand, over, true, i === humanGiver, i);
     }
 
-    // ODKRYTE
-    wasteEl.innerHTML = '';
-    if(waste.length){
-      const show = waste.slice(-Math.min(3, drawCount === 3 ? 3 : 1));
-      show.forEach((c, i) => {
-        const e = cardEl(c);
-        e.style.left = (i * 14) + 'px';
-        const isTop = (i === show.length - 1);
-        if(isTop){
-          if(isSel('waste',0,waste.length-1)) e.classList.add('selected');
-          e.onclick = () => clickCard('waste', 0, waste.length-1);
-          e.ondblclick = () => autoFoundation('waste', 0, waste.length-1);
-        } else {
-          e.style.cursor = 'default';
-        }
-        wasteEl.appendChild(e);
+    const me = $('meSeat');
+    me.classList.toggle('active', !over && turn === 0 && players[0].hand.length > 0);
+    me.classList.toggle('out', !players[0].hand.length);
+    seatLabel(0, $('meLabel'));
+    layoutFan($('meHand'), players[0].hand, true, false, false, 0);
+
+    // stos par
+    const dEl = $('discard');
+    dEl.innerHTML = '';
+    if(!discard.length){
+      const p = document.createElement('div'); p.className = 'placeholder'; p.textContent = T.pilePh;
+      dEl.appendChild(p);
+    } else {
+      discard.slice(-5).forEach((d, i, arr) => {
+        const g = document.createElement('div');
+        g.className = 'pc';
+        g.style.left = (4 + d.dx) + 'px'; g.style.top = (6 + d.dy) + 'px';
+        g.style.transform = 'rotate(' + d.rot + 'deg)';
+        g.style.zIndex = i * 2 + 1;
+        const a = cardEl(d.a, true), b = cardEl(d.b, true);
+        a.style.left = '0'; b.style.left = 'calc(var(--card-w) * .55)';
+        g.appendChild(a); g.appendChild(b);
+        if(i < arr.length - 1) g.style.filter = 'brightness(.93)';
+        dEl.appendChild(g);
       });
-    } else {
-      wasteEl.appendChild(placeholder(''));
+      const t = document.createElement('div'); t.className = 'tally';
+      t.textContent = T.pairsN(discard.length);
+      dEl.appendChild(t);
     }
 
-    // STOSY KOŃCOWE
-    foundEls.forEach((el, f) => {
-      el.innerHTML = '';
-      const pile = foundations[f];
-      if(pile.length){
-        const c = pile[pile.length-1];
-        const e = cardEl(c);
-        if(isSel('foundation', f, pile.length-1)) e.classList.add('selected');
-        e.onclick = () => clickTarget('foundation', f) || clickCard('foundation', f, pile.length-1);
-        foundEls[f].appendChild(e);
-      } else {
-        const p = placeholder(SUITS[f]);
-        p.onclick = () => clickTarget('foundation', f);
-        foundEls[f].appendChild(p);
-      }
-      el.onclick = (ev) => { if(ev.target === el) clickTarget('foundation', f); };
+    // komunikat
+    let now;
+    if(over) now = T.now.over;
+    else if(turn === 0) now = T.now.mine(T.gen(pname(nextActive(0))));
+    else now = T.now.bot(pname(turn)) + (players[0].hand.length ? '' : T.now.watch);
+    $('now').textContent = now;
+    const log = $('log'); log.innerHTML = '';
+    logLines.forEach(e => { const li = document.createElement('li'); li.textContent = logText(e); log.appendChild(li); });
+
+    const st = stats[variantKey] || {w:0, l:0};
+    $('stVariant').textContent = T.variants[variantKey][0];
+    $('stPairs').textContent = T.st.pairs(discard.length);
+    $('stScore').textContent = T.st.score(st.w, st.l);
+    $('shuffle').disabled = anim || over || players[0].hand.length < 2;
+  }
+
+  /* ---------- teksty statyczne (menu, zakładki, język) ---------- */
+  function paintStatic(){
+    root.lang = lang;
+    const vn = T.variants[variantKey];
+    $('wtitle').textContent = T.game + ' – ' + vn[0];
+    $('endTitle').textContent = T.game;
+    document.title = T.game + ' – ' + vn[0];
+    $('hint').textContent = vn[1];
+    $('newGame').textContent = T.menu.newGame;
+    $('shuffle').textContent = T.menu.shuffle; $('shuffle').title = T.menu.shuffleT;
+    $('botsBtn').textContent = T.menu.opp(settings.bots); $('botsBtn').title = T.menu.oppT;
+    $('levelBtn').textContent = T.menu.lvl[settings.level]; $('levelBtn').title = T.menu.lvlT[settings.level];
+    $('speedBtn').textContent = T.menu.speed[settings.speed]; $('speedBtn').title = T.menu.speedT;
+    $('backLbl').textContent = T.menu.upload;
+    $('resetBack').textContent = T.menu.reset;
+    $('endNew').textContent = T.end.again;
+    $('stBackTxt').textContent = T.st.backLbl; $('stBack').title = T.st.backT;
+    $('board').dataset.drop = T.drop;
+
+    const tabs = $('tabs'); tabs.innerHTML = '';
+    ORDER.forEach(k => {
+      const b = document.createElement('button');
+      b.className = 'tab' + (k === variantKey ? ' on' : '');
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', k === variantKey);
+      b.textContent = T.variants[k][0];
+      b.onclick = () => { if(k !== variantKey) setVariant(k, true); };
+      tabs.appendChild(b);
     });
 
-    // KOLUMNY
-    tableauEl.innerHTML = '';
-    tableau.forEach((pile, p) => {
-      const col = document.createElement('div');
-      col.className = 'pile';
-      if(!pile.length){
-        const ph = placeholder('');
-        ph.onclick = () => clickTarget('tableau', p);
-        col.appendChild(ph);
-      }
-      let top = 0;
-      pile.forEach((c, i) => {
-        const e = cardEl(c);
-        e.style.top = top + 'px';
-        e.style.zIndex = i + 1;
-        top += c.up ? 19 : 7;
-        if(isSel('tableau', p, i)) e.classList.add('selected');
-        e.onclick = (ev) => { ev.stopPropagation(); onTableauCardClick(p, i); };
-        e.ondblclick = (ev) => { ev.stopPropagation(); if(i === pile.length-1) autoFoundation('tableau', p, i); };
-        col.appendChild(e);
-      });
-      col.onclick = () => clickTarget('tableau', p);
-      col.style.minHeight = Math.max(96 + 120, top + 96) + 'px';
-      tableauEl.appendChild(col);
+    const lg = $('langs'); lg.innerHTML = '';
+    lg.setAttribute('aria-label', T.menu.lang);
+    const lb = document.createElement('span'); lb.textContent = T.menu.lang + ':'; lg.appendChild(lb);
+    LANGS.forEach(code => {
+      const b = document.createElement('button');
+      b.textContent = code.toUpperCase();
+      b.title = I18N[code].label;
+      b.setAttribute('lang', code);
+      b.setAttribute('aria-pressed', code === lang);
+      b.onclick = () => setLang(code);
+      lg.appendChild(b);
     });
-
-    $('stMoves').textContent = 'Ruchy: ' + moves;
-    checkWin();
+    paintInfo();
   }
 
-  /* ---------- logika ---------- */
-  function drawFromStock(){
-    if(!stock.length) return recycle();
-    snapshot();
-    const n = Math.min(drawCount, stock.length);
-    for(let i=0;i<n;i++){
-      const c = stock.pop();
-      c.up = true;
-      waste.push(c);
-    }
-    sel = null; moves++;
-    render();
-  }
-  function recycle(){
-    if(!waste.length) return;
-    snapshot();
-    while(waste.length){
-      const c = waste.pop();
-      c.up = false;
-      stock.push(c);
-    }
-    sel = null; moves++;
-    render();
-  }
-
-  function onTableauCardClick(p, i){
-    const pile = tableau[p];
-    const c = pile[i];
-    if(!c.up){
-      if(i === pile.length-1){
-        snapshot();
-        c.up = true; moves++;
-        sel = null; render();
-      }
-      return;
-    }
-    // jeśli coś zaznaczone — spróbuj położyć na tę kolumnę
-    if(sel && !(sel.from==='tableau' && sel.pile===p)){
-      if(tryMove(sel, {type:'tableau', pile:p})) return;
-    }
-    clickCard('tableau', p, i);
-  }
-
-  function clickCard(from, pile, index){
-    if(isSel(from, pile, index)){ sel = null; render(); return true; }
-    sel = {from:from, pile:pile, index:index};
-    render();
-    return true;
-  }
-
-  function clickTarget(type, pile){
-    if(!sel) return false;
-    return tryMove(sel, {type:type, pile:pile});
-  }
-
-  function getCards(s){
-    if(s.from === 'waste') return waste.slice(s.index);
-    if(s.from === 'foundation') return foundations[s.pile].slice(s.index);
-    return tableau[s.pile].slice(s.index);
-  }
-  function removeCards(s, n){
-    if(s.from === 'waste') return waste.splice(s.index, n);
-    if(s.from === 'foundation') return foundations[s.pile].splice(s.index, n);
-    return tableau[s.pile].splice(s.index, n);
-  }
-
-  function canPlaceTableau(card, pile){
-    if(!pile.length) return card.r === 13;
-    const t = pile[pile.length-1];
-    if(!t.up) return false;
-    return isRed(t.s) !== isRed(card.s) && t.r === card.r + 1;
-  }
-  function canPlaceFoundation(card, pile){
-    if(!pile.length) return card.r === 1;
-    const t = pile[pile.length-1];
-    return t.s === card.s && t.r === card.r - 1;
-  }
-
-  function tryMove(s, target){
-    const cards = getCards(s);
-    if(!cards.length) return false;
-    if(target.type === 'foundation'){
-      if(cards.length !== 1) return fail();
-      if(!canPlaceFoundation(cards[0], foundations[target.pile])) return fail();
-      snapshot();
-      const m = removeCards(s, cards.length);
-      foundations[target.pile].push(...m);
-    } else {
-      if(s.from === 'tableau' && s.pile === target.pile) { sel = null; render(); return true; }
-      // sekwencja musi być poprawna
-      for(let i=0;i<cards.length-1;i++){
-        const a = cards[i], b = cards[i+1];
-        if(!a.up || !b.up || isRed(a.s) === isRed(b.s) || a.r !== b.r + 1) return fail();
-      }
-      if(!canPlaceTableau(cards[0], tableau[target.pile])) return fail();
-      snapshot();
-      const m = removeCards(s, cards.length);
-      tableau[target.pile].push(...m);
-    }
-    flipExposed();
-    sel = null; moves++;
-    render();
-    return true;
-  }
-
-  function fail(){
-    sel = null;
-    render();
-    return false;
-  }
-
-  function flipExposed(){
-    tableau.forEach(p => {
-      if(p.length && !p[p.length-1].up) p[p.length-1].up = true;
-    });
-  }
-
-  function autoFoundation(from, pile, index){
-    const cards = getCards({from:from, pile:pile, index:index});
-    if(cards.length !== 1) return;
-    for(let f=0; f<4; f++){
-      if(canPlaceFoundation(cards[0], foundations[f])){
-        sel = {from:from, pile:pile, index:index};
-        tryMove(sel, {type:'foundation', pile:f});
-        return;
-      }
-    }
-  }
-
-  function checkWin(){
-    if(won) return;
-    const total = foundations.reduce((a,p) => a + p.length, 0);
-    if(total === 52){
-      won = true;
-      $('win').classList.add('show');
-      $('stInfo').textContent = 'Wygrana!';
-    }
+  function setLang(code){
+    if(!I18N[code] || code === lang) return;
+    lang = code; T = I18N[code];
+    save('piotrus_lang', lang);
+    if(players) players[0].name = T.you;
+    paintStatic();
+    if(players){ render(); paintEnd(); }
   }
 
   /* ---------- rewers ---------- */
@@ -629,65 +1097,99 @@
 
   function applyBack(dataUrl){
     customBack = dataUrl;
-    if(dataUrl) boardEl.style.setProperty('--back-img', 'url("'+dataUrl+'")');
-    else boardEl.style.removeProperty('--back-img');
+    if(dataUrl) root.style.setProperty('--back-img', 'url("' + dataUrl + '")');
+    else root.style.removeProperty('--back-img');
+    $('backPrev').classList.toggle('custom', !!dataUrl);
     try{
-      if(dataUrl) localStorage.setItem('pasjans_back', dataUrl);
-      else localStorage.removeItem('pasjans_back');
-    }catch(e){ /* brak pamięci – trudno */ }
+      if(dataUrl) localStorage.setItem('piotrus_back', dataUrl);
+      else localStorage.removeItem('piotrus_back');
+    }catch(e){}
     render();
   }
 
-  $('backFile').addEventListener('change', function(ev){
-    const f = ev.target.files && ev.target.files[0];
-    if(!f) return;
+  function loadBackFile(f){
+    if(!f || !/^image\//.test(f.type)){ setInfo('notImg'); return; }
     const reader = new FileReader();
     reader.onload = () => {
-      // przeskaluj do rozmiaru karty, żeby nie trzymać ogromnego base64
       const img = new Image();
       img.onload = () => {
         const cw = 142, ch = 192; // 2x rozmiar karty
         const cv = document.createElement('canvas');
         cv.width = cw; cv.height = ch;
         const ctx = cv.getContext('2d');
-        const scale = Math.max(cw/img.width, ch/img.height);
-        const w = img.width*scale, h = img.height*scale;
-        ctx.drawImage(img, (cw-w)/2, (ch-h)/2, w, h);
+        const scale = Math.max(cw / img.width, ch / img.height);
+        const w = img.width * scale, h = img.height * scale;
+        ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
         applyBack(cv.toDataURL('image/jpeg', 0.85));
-        $('stInfo').textContent = 'Rewers: ' + f.name;
+        setInfo('back', f.name);
       };
-      img.onerror = () => { applyBack(reader.result); };
+      img.onerror = () => setInfo('readFail', f.name);
       img.src = reader.result;
     };
     reader.readAsDataURL(f);
-    ev.target.value = '';
-  });
-
-  $('resetBack').onclick = () => { applyBack(null); $('stInfo').textContent = 'Rewers domyślny'; };
-  $('newGame').onclick = () => newGame();
-  $('winNew').onclick = () => newGame();
-  $('undo').onclick = () => undo();
-  $('drawMode').onclick = function(){
-    drawCount = (drawCount === 1) ? 3 : 1;
-    this.textContent = 'Dobieranie: ' + drawCount;
-    newGame();
-  };
-
-  /* ---------- zegar ---------- */
-  function tick(){
-    if(won) return;
-    const s = Math.floor((Date.now() - startTime)/1000);
-    $('stTime').textContent = 'Czas: ' + Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
   }
 
+  $('backFile').addEventListener('change', ev => {
+    loadBackFile(ev.target.files && ev.target.files[0]);
+    ev.target.value = '';
+  });
+  $('backLbl').addEventListener('keydown', ev => {
+    if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); $('backFile').click(); }
+  });
+  $('resetBack').onclick = () => { applyBack(null); setInfo('backDef'); };
+
+  const winRoot = $('win-root');
+  let dragDepth = 0;
+  const hasFiles = e => e.dataTransfer && [...e.dataTransfer.types].includes('Files');
+  winRoot.addEventListener('dragenter', e => { if(hasFiles(e)){ dragDepth++; winRoot.classList.add('dropping'); e.preventDefault(); } });
+  winRoot.addEventListener('dragover', e => { if(hasFiles(e)) e.preventDefault(); });
+  winRoot.addEventListener('dragleave', () => { dragDepth = Math.max(0, dragDepth - 1); if(!dragDepth) winRoot.classList.remove('dropping'); });
+  winRoot.addEventListener('drop', e => {
+    e.preventDefault(); dragDepth = 0; winRoot.classList.remove('dropping');
+    loadBackFile(e.dataTransfer.files && e.dataTransfer.files[0]);
+  });
+
+  /* ---------- menu ---------- */
+  $('newGame').onclick = () => newGame();
+  $('endNew').onclick = () => newGame();
+  $('shuffle').onclick = () => {
+    if(anim || over) return;
+    shuffleArr(players[0].hand);
+    memory = null; ui.fresh = null;
+    addLog('shuffled');
+    setInfo('shuffled');
+    render();
+  };
+  $('botsBtn').onclick = () => {
+    settings.bots = settings.bots % 3 + 1;
+    save('piotrus_settings', settings); paintStatic(); newGame();
+  };
+  $('levelBtn').onclick = () => {
+    settings.level = settings.level === 'sprytny' ? 'latwy' : 'sprytny';
+    save('piotrus_settings', settings); paintStatic();
+    setInfo('lvl', settings.level);
+  };
+  $('speedBtn').onclick = () => {
+    settings.speed = (settings.speed + 1) % SPEEDS.length;
+    save('piotrus_settings', settings); paintStatic();
+  };
+
+  window.addEventListener('hashchange', () => {
+    const k = location.hash.replace('#', '');
+    if(VARIANTS[k] && k !== variantKey) setVariant(k, false);
+  });
+  let rz;
+  window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if(players) render(); }, 80); });
+
   /* ---------- start ---------- */
-  drawCount = 1;
   try{
-    const saved = localStorage.getItem('pasjans_back');
-    if(saved){ customBack = saved; boardEl.style.setProperty('--back-img', 'url("'+saved+'")'); }
+    const saved = localStorage.getItem('piotrus_back');
+    if(saved){ customBack = saved; root.style.setProperty('--back-img', 'url("' + saved + '")'); $('backPrev').classList.add('custom'); }
   }catch(e){}
-  newGame();
-  timer = setInterval(tick, 500);
+  if(![1,2,3].includes(settings.bots)) settings.bots = 1;
+  if(SPEEDS[settings.speed] === undefined) settings.speed = 1;
+  if(!['latwy','sprytny'].includes(settings.level)) settings.level = 'latwy';
+  setVariant(location.hash.replace('#', ''), true);
 })();
 </script>
 </body>
