@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b86e5"/><stop offset="1" stop-color="#f6c0d3"/></linearGradient></defs>
+<rect width="800" height="600" fill="url(#sky)"/>
+<polygon points="80,600 250,200 420,600" fill="#34495e"/>
+<polygon points="380,600 560,150 740,600" fill="#2c3e50"/>
+<ellipse cx="150" cy="420" rx="220" ry="70" fill="#fff" fill-opacity="0.95"/>
+<ellipse cx="450" cy="440" rx="240" ry="75" fill="#fff" fill-opacity="0.95"/>
+<ellipse cx="720" cy="410" rx="200" ry="70" fill="#fff" fill-opacity="0.95"/>
+<rect y="450" width="800" height="150" fill="#fff"/>
+<rect x="290" y="520" width="220" height="56" rx="12" fill="#000" fill-opacity="0.45"/>
+<text x="312" y="558" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#fff">Morze chmur</text>
+</svg>

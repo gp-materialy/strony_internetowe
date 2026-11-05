@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7e5f"/><stop offset="1" stop-color="#feb47b"/></linearGradient></defs>
+<rect width="1200" height="500" fill="url(#sky)"/>
+<circle cx="600" cy="300" r="95" fill="#ffd166"/>
+<polygon points="0,500 0,320 220,170 420,320 600,230 800,340 1000,180 1200,310 1200,500" fill="#6d3b62"/>
+<polygon points="0,500 0,420 300,300 560,430 860,330 1200,440 1200,500" fill="#3d2645"/>
+<rect x="24" y="24" width="252" height="56" rx="12" fill="#000" fill-opacity="0.45"/>
+<text x="46" y="62" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#fff">Wschód słońca</text>
+</svg>

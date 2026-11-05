@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bossowy Quiz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body class="bg-dark text-light">
+  <header class="bg-primary text-white text-center p-4 shadow-lg">
+    <h1 id="start" class="mb-1">Bossowy Quiz</h1>
+    <p class="mb-0">Sprawdź, ilu bossów z gier i anime rozpoznasz!</p>
+  </header>
+  <main class="container py-4">
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      <i class="bi bi-info-circle-fill me-2" aria-hidden="true"></i>Zaznacz po jednej odpowiedzi w każdym pytaniu. Utknąłeś? Przeczytaj podpowiedź pod pytaniem.
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zamknij"></button>
+    </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <i class="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i>Uwaga: w każdym pytaniu tylko jedna odpowiedź jest poprawna.
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zamknij"></button>
+    </div>
+    <nav class="text-center mb-4" aria-label="Skróty do pytań">
+      <a href="#pytanie1" class="btn btn-outline-warning me-2 mb-2">Boss 1</a>
+      <a href="#pytanie2" class="btn btn-outline-danger me-2 mb-2">Boss 2</a>
+      <a href="#pytanie3" class="btn btn-outline-info me-2 mb-2">Boss 3</a>
+      <a href="#pytanie4" class="btn btn-outline-success mb-2">Boss 4</a>
+    </nav>
+    <form>
+      <div class="row g-4 mb-4">
+        <div class="col-md-6">
+          <div id="pytanie1" class="card bg-secondary text-light h-100 shadow-lg">
+            <img src="img/boss1.svg" alt="Tajemniczy boss numer 1" class="card-img-top">
+            <div class="card-header">Pytanie 1</div>
+            <div class="card-body">
+              <h2 class="card-title h4">Jak nazywa się ten boss?</h2>
+              <p class="card-text">Zaznacz jedną odpowiedź.</p>
+              <div class="mb-2"><input type="radio" name="odpowiedz1" id="p1-odp1" class="me-2"><label for="p1-odp1">Ender Dragon</label></div>
+              <div class="mb-2"><input type="radio" name="odpowiedz1" id="p1-odp2" class="me-2"><label for="p1-odp2">Drogon</label></div>
+              <div class="mb-2"><input type="radio" name="odpowiedz1" id="p1-odp3" class="me-2"><label for="p1-odp3">Shén Lóng</label></div>
+            </div>
+            <div class="card-footer">Podpowiedź: mieszka w Endzie, ostatnim wymiarze Minecrafta.</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="pytanie2" class="card bg-secondary text-light h-100 shadow-lg">
+            <img src="img/boss2.svg" alt="Tajemniczy boss numer 2" class="card-img-top">
+            <div class="card-header">Pytanie 2</div>
+            <div class="card-body">
+              <h2 class="card-title h4">Jak nazywa się ten boss?</h2>
+              <p class="card-text">Zaznacz jedną odpowiedź.</p>
+              <div class="mb-2"><input type="radio" name="odpowiedz2" id="p2-odp1" class="me-2"><label for="p2-odp1">Rider</label></div>
+              <div class="mb-2"><input type="radio" name="odpowiedz2" id="p2-odp2" class="me-2"><label for="p2-odp2">Goro</label></div>
+              <div class="mb-2"><input type="radio" name="odpowiedz2" id="p2-odp3" class="me-2"><label for="p2-odp3">Shén Lóng</label></div>
+            </div>
+            <div class="card-footer">Podpowiedź: ma cztery ręce i walczy w turnieju Mortal Kombat.</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="pytanie3" class="card bg-secondary text-light h-100 shadow-lg">
+            <img src="img/boss3.svg" alt="Tajemniczy boss numer 3" class="card-img-top">
+            <div class="card-header">Pytanie 3</div>
+            <div class="card-body">
+              <h2 class="card-title h4">Jak nazywa się ten boss?</h2>
+              <p class="card-text">Zaznacz jedną odpowiedź.</p>
+              <div class="mb-2"><input type="radio" name="odpowiedz3" id="p3-odp1" class="me-2"><label for="p3-odp1">Cell</label></div>
+              <div class="mb-2"><input type="radio" name="odpowiedz3" id="p3-odp2" class="me-2"><label for="p3-odp2">Buu</label></div>
+              <div class="mb-2"><input type="radio" name="odpowiedz3" id="p3-odp3" class="me-2"><label for="p3-odp3">Freezer</label></div>
+            </div>
+            <div class="card-footer">Podpowiedź: to odwieczny wróg Goku z Dragon Balla.</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="pytanie4" class="card bg-secondary text-light h-100 shadow-lg">
+            <img src="img/boss4.svg" alt="Tajemniczy boss numer 4" class="card-img-top">
+            <div class="card-header">Pytanie 4</div>
+            <div class="card-body">
+              <h2 class="card-title h4">Jak nazywa się ten boss?</h2>
+              <p class="card-text">Zaznacz jedną odpowiedź.</p>
+              <div class="mb-2"><input type="radio" name="odpowiedz4" id="p4-odp1" class="me-2"><label for="p4-odp1">Warden</label></div>
+              <div class="mb-2"><input type="radio" name="odpowiedz4" id="p4-odp2" class="me-2"><label for="p4-odp2">Wither</label></div>
+              <div class="mb-2"><input type="radio" name="odpowiedz4" id="p4-odp3" class="me-2"><label for="p4-odp3">Elder Guardian</label></div>
+            </div>
+            <div class="card-footer">Podpowiedź: ma trzy głowy, a przywołuje się go czaszkami i piaskiem dusz.</div>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-trophy-fill me-2" aria-hidden="true"></i>To już wszystkie pytania! Sprawdź, czy w każdym masz zaznaczoną odpowiedź.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zamknij"></button>
+      </div>
+      <div class="btn-group btn-group-lg shadow-lg" role="group" aria-label="Akcje quizu">
+        <button type="button" class="btn btn-primary icon-link icon-link-hover">Sprawdź odpowiedzi<i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+        <button type="reset" class="btn btn-outline-light"><i class="bi bi-arrow-counterclockwise me-2" aria-hidden="true"></i>Wyczyść</button>
+        <a href="#start" class="btn btn-outline-light"><i class="bi bi-arrow-up me-2" aria-hidden="true"></i>Do góry</a>
+      </div>
+    </form>
+    <div class="card bg-primary text-white shadow-sm mt-4">
+      <div class="card-header">Autor quizu</div>
+      <div class="card-body">
+        <h2 class="card-title h4"><i class="bi bi-person-badge me-2" aria-hidden="true"></i>Mistrz Bossów</h2>
+        <p class="card-text">Gram w gry z trudnymi bossami i buduję strony w Bootstrapie.</p>
+      </div>
+      <div class="card-footer">Projekt do portfolio - kurs Strony internetowe</div>
+    </div>
+  </main>
+  <footer class="bg-black text-light text-center p-3">
+    <p class="mb-0"><i class="bi bi-controller me-2" aria-hidden="true"></i>Bossowy Quiz 2026 - projekt do portfolio</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

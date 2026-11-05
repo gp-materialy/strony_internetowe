@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wyprawa w góry - galeria</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+  <header class="bg-success text-white text-center py-5 mb-4">
+    <h1 class="display-5"><i class="bi bi-images" aria-hidden="true"></i> Wyprawa w góry</h1>
+    <p class="lead mb-0">Galeria zdjęć z naszej wycieczki w Tatry</p>
+  </header>
+
+  <main class="container">
+    <section class="mb-5">
+      <h2><i class="bi bi-star" aria-hidden="true"></i> Najlepsze kadry</h2>
+      <div id="mainCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slajd 1"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1" aria-label="Slajd 2"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2" aria-label="Slajd 3"></button>
+          <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="3" aria-label="Slajd 4"></button>
+        </div>
+        <div class="carousel-inner rounded">
+          <div class="carousel-item active" data-bs-interval="6000">
+            <img src="img/sunrise.svg" class="d-block w-100" alt="Pomarańczowe słońce wschodzi zza ciemnych szczytów gór">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+              <h3>Wschód słońca</h3>
+              <p class="mb-0">Pobudka o świcie była tego warta.</p>
+              <a href="#galeria" class="btn btn-light btn-sm mt-2">Zobacz galerię</a>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="img/lake.svg" class="d-block w-100" alt="Ośnieżone szczyty odbijają się w niebieskim jeziorze">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+              <h3>Górskie jezioro</h3>
+              <p class="mb-0">Woda była lodowata, ale widok bezcenny.</p>
+              <a href="#galeria" class="btn btn-light btn-sm mt-2">Zobacz galerię</a>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="img/summit.svg" class="d-block w-100" alt="Ośnieżony szczyt z czerwoną flagą na wierzchołku">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+              <h3>Na szczycie</h3>
+              <p class="mb-0">Zdobyliśmy szczyt! Teraz czas na zejście.</p>
+              <a href="#galeria" class="btn btn-light btn-sm mt-2">Zobacz galerię</a>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="img/waterfall.svg" class="d-block w-100" alt="Biały wodospad spada po szarych skałach do niebieskiego jeziorka">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+              <h3>Szum wodospadu</h3>
+              <p class="mb-0">Woda spadała z hukiem, a wokół unosiła się chłodna mgiełka.</p>
+              <a href="#galeria" class="btn btn-light btn-sm mt-2">Zobacz galerię</a>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Poprzedni slajd</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Następny slajd</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="galeria" class="mb-5">
+      <h2><i class="bi bi-grid-3x3-gap" aria-hidden="true"></i> Galeria</h2>
+      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+        <div class="col">
+          <button type="button" class="btn p-0 border-0" data-bs-toggle="modal" data-bs-target="#lightbox"
+            data-img="img/trail.svg" data-title="Szlak w lesie" data-desc="Pierwszy odcinek trasy prowadził przez cichy, pachnący las.">
+            <img src="img/trail.svg" class="img-thumbnail" alt="Brązowa ścieżka prowadzi między zielonymi świerkami">
+          </button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn p-0 border-0" data-bs-toggle="modal" data-bs-target="#lightbox"
+            data-img="img/shelter.svg" data-title="Schronisko" data-desc="Tu zjedliśmy obiad i odpoczęliśmy przed dalszą drogą.">
+            <img src="img/shelter.svg" class="img-thumbnail" alt="Drewniane schronisko z czerwonym dachem u stóp gór">
+          </button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn p-0 border-0" data-bs-toggle="modal" data-bs-target="#lightbox"
+            data-img="img/stream.svg" data-title="Górski potok" data-desc="Woda była tak czysta, że widać było każdy kamień.">
+            <img src="img/stream.svg" class="img-thumbnail" alt="Niebieski potok płynie między szarymi kamieniami">
+          </button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn p-0 border-0" data-bs-toggle="modal" data-bs-target="#lightbox"
+            data-img="img/meadow.svg" data-title="Hala z kwiatami" data-desc="Latem hala zamienia się w kolorowy dywan kwiatów.">
+            <img src="img/meadow.svg" class="img-thumbnail" alt="Zielona łąka pełna kolorowych kwiatów pod szczytami">
+          </button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn p-0 border-0" data-bs-toggle="modal" data-bs-target="#lightbox"
+            data-img="img/clouds.svg" data-title="Morze chmur" data-desc="Byliśmy wyżej niż chmury, które wyglądały jak wata.">
+            <img src="img/clouds.svg" class="img-thumbnail" alt="Szczyty gór wystają ponad białe chmury">
+          </button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn p-0 border-0" data-bs-toggle="modal" data-bs-target="#lightbox"
+            data-img="img/night.svg" data-title="Nocne niebo" data-desc="Wieczorem nad schroniskiem pojawiły się tysiące gwiazd.">
+            <img src="img/night.svg" class="img-thumbnail" alt="Księżyc i gwiazdy nad ciemnymi szczytami gór">
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <h2><i class="bi bi-signpost-split" aria-hidden="true"></i> Polecane szlaki</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+          <div class="card h-100">
+            <img src="img/trail.svg" class="card-img-top" alt="Brązowa ścieżka prowadzi między zielonymi świerkami">
+            <div class="card-body">
+              <h3 class="card-title h5">Leśna ścieżka</h3>
+              <p class="card-text">Łatwy spacer przez świerkowy las, idealny na rozgrzewkę.</p>
+            </div>
+            <div class="card-footer text-body-secondary"><i class="bi bi-clock" aria-hidden="true"></i> 1 h</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="img/meadow.svg" class="card-img-top" alt="Zielona łąka pełna kolorowych kwiatów pod szczytami">
+            <div class="card-body">
+              <h3 class="card-title h5">Kwiecista hala</h3>
+              <p class="card-text">Szeroka ścieżka przez halę z widokiem na szczyty.</p>
+            </div>
+            <div class="card-footer text-body-secondary"><i class="bi bi-clock" aria-hidden="true"></i> 2 h</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="img/clouds.svg" class="card-img-top" alt="Szczyty gór wystają ponad białe chmury">
+            <div class="card-body">
+              <h3 class="card-title h5">Ponad chmurami</h3>
+              <p class="card-text">Trudniejsze podejście dla wytrwałych, nagrodą jest morze chmur.</p>
+            </div>
+            <div class="card-footer text-body-secondary"><i class="bi bi-clock" aria-hidden="true"></i> 4 h</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <h2><i class="bi bi-camera-reels" aria-hidden="true"></i> Film z gór</h2>
+      <div class="row row-cols-1 row-cols-md-2 g-3">
+        <div class="col">
+          <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/SkVqJ1SGeL0" title="Caminandes 3: Llamigos - lama Koro w zimowych górach Patagonii" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="col">
+          <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/Z4C82eyhwgU" title="Caminandes 2: Gran Dillama - lama Koro przy płocie na górskim pastwisku" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+      <p class="small text-body-secondary mt-2">Filmy: Caminandes 3: Llamigos i Caminandes 2: Gran Dillama, Blender Studio, licencja CC BY.</p>
+    </section>
+
+    <section class="mb-5">
+      <h2><i class="bi bi-table" aria-hidden="true"></i> O zdjęciach</h2>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+          <caption>Skąd pochodzą zdjęcia z karuzeli</caption>
+          <thead>
+            <tr><th scope="col">Tytuł</th><th scope="col">Miejsce</th><th scope="col">Data</th><th scope="col">Źródło</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Wschód słońca</th><td>Kasprowy Wierch</td><td>12.07.2026</td><td>AI Imaging</td></tr>
+            <tr><th scope="row">Górskie jezioro</th><td>Morskie Oko</td><td>13.07.2026</td><td>Własne zdjęcie</td></tr>
+            <tr><th scope="row">Na szczycie</th><td>Rysy</td><td>14.07.2026</td><td>Własne zdjęcie</td></tr>
+            <tr><th scope="row">Szum wodospadu</th><td>Wodogrzmoty Mickiewicza</td><td>15.07.2026</td><td>AI Imaging</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <h2><i class="bi bi-calendar-week" aria-hidden="true"></i> Plan wycieczki</h2>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+          <caption>Plan trzydniowej wycieczki w Tatry</caption>
+          <thead class="table-success">
+            <tr><th scope="col">Dzień</th><th scope="col">Trasa</th><th scope="col">Czas marszu</th><th scope="col">Trudność</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">1</th><td>Kuźnice - Kasprowy Wierch</td><td>3 h</td><td><span class="badge text-bg-warning">średnia</span></td></tr>
+            <tr><th scope="row">2</th><td>Palenica Białczańska - Morskie Oko</td><td>2 h</td><td><span class="badge text-bg-success">łatwa</span></td></tr>
+            <tr><th scope="row">3</th><td>Morskie Oko - Rysy</td><td>4 h</td><td><span class="badge text-bg-danger">trudna</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <h2><i class="bi bi-chat-quote" aria-hidden="true"></i> Księga gości</h2>
+      <div id="guestbook" class="carousel slide bg-light rounded py-5" data-bs-ride="carousel" data-bs-theme="dark">
+        <div class="carousel-inner text-center">
+          <div class="carousel-item active">
+            <blockquote class="blockquote w-75 mx-auto"><p>Najpiękniejsze zdjęcia gór, jakie widziałam!</p></blockquote>
+            <p class="fw-bold mb-1">Ola</p>
+            <p class="text-warning mb-0"><span class="visually-hidden">Ocena: 5 na 5</span><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i></p>
+          </div>
+          <div class="carousel-item">
+            <blockquote class="blockquote w-75 mx-auto"><p>Lightbox działa super, oglądałem każde zdjęcie po kilka razy.</p></blockquote>
+            <p class="fw-bold mb-1">Kuba</p>
+            <p class="text-warning mb-0"><span class="visually-hidden">Ocena: 5 na 5</span><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i></p>
+          </div>
+          <div class="carousel-item">
+            <blockquote class="blockquote w-75 mx-auto"><p>Chcę zobaczyć więcej zdjęć z wodospadów!</p></blockquote>
+            <p class="fw-bold mb-1">Zosia</p>
+            <p class="text-warning mb-0"><span class="visually-hidden">Ocena: 4 na 5</span><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star-fill" aria-hidden="true"></i><i class="bi bi-star" aria-hidden="true"></i></p>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#guestbook" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Poprzedni wpis</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#guestbook" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Następny wpis</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal fade" id="lightbox" tabindex="-1" aria-labelledby="lightboxTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="lightboxTitle">Zdjęcie z galerii</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
+        </div>
+        <div class="modal-body">
+          <figure class="figure mb-0">
+            <img id="lightboxImg" src="img/trail.svg" class="figure-img img-fluid rounded" alt="Brązowa ścieżka prowadzi między zielonymi świerkami">
+            <figcaption id="lightboxDesc" class="figure-caption">Opis zdjęcia</figcaption>
+          </figure>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-outline-secondary" id="prevPhoto"><i class="bi bi-chevron-left" aria-hidden="true"></i> Poprzednie</button>
+          <button type="button" class="btn btn-outline-secondary" id="nextPhoto">Następne <i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

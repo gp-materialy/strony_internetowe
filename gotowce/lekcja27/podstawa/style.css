@@ -1,0 +1,17 @@
+:root {
+  --bs-body-font-family: "Nunito", sans-serif;
+  --bs-primary-rgb: 121, 80, 242;
+}
+
+h1, h2, h3, .navbar-brand {
+  font-family: "Baloo 2", sans-serif;
+}
+
+.btn-primary {
+  --bs-btn-bg: #7950f2;
+  --bs-btn-border-color: #7950f2;
+  --bs-btn-hover-bg: #6741d9;
+  --bs-btn-hover-border-color: #6741d9;
+  --bs-btn-active-bg: #5f3dc4;
+  --bs-btn-active-border-color: #5f3dc4;
+}

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mój UI Kit</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-body-tertiary" data-bs-spy="scroll" data-bs-target="#toc">
+  <header class="bg-primary text-white py-4 mb-4">
+    <div class="container">
+      <h1 class="display-6 mb-1"><i class="bi bi-boxes"></i> Mój UI Kit</h1>
+      <p class="lead mb-0">Paski i popupy - gotowe moduły do kolejnych projektów</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="row">
+      <div class="col-md-4 col-lg-3 mb-4">
+        <div class="list-group sticky-top" id="toc" style="top: 1rem;">
+          <a href="#navbar-module" class="list-group-item list-group-item-action">Navbar</a>
+          <a href="#offcanvas-module" class="list-group-item list-group-item-action">Offcanvas</a>
+          <a href="#modal-module" class="list-group-item list-group-item-action">Modal potwierdzenia</a>
+          <a href="#toast-module" class="list-group-item list-group-item-action">Toast</a>
+          <a href="#progress-module" class="list-group-item list-group-item-action">Pasek ładowania</a>
+          <a href="#spinner-module" class="list-group-item list-group-item-action">Przycisk ze spinnerem</a>
+        </div>
+      </div>
+      <div class="col-md-8 col-lg-9">
+        <div class="alert alert-info">
+          <i class="bi bi-info-circle"></i> Zasada UI Kitu: użytkownik zawsze wie, co się dzieje na stronie.
+        </div>
+
+        <section class="card mb-4" id="navbar-module">
+          <h2 class="card-header h5">Navbar z dropdownem i wyszukiwarką</h2>
+          <div class="card-body">
+            <p class="card-text">Pasek nawigacyjny strony. Na wąskim ekranie chowa linki pod przyciskiem z trzema kreskami.</p>
+            <nav class="navbar navbar-expand-lg bg-body-tertiary border rounded">
+              <div class="container-fluid">
+                <a class="navbar-brand" href="#"><i class="bi bi-boxes"></i> UI Kit</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Pokaż menu">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainMenu">
+                  <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#"><i class="bi bi-house"></i> Start</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-images"></i> Galeria</a></li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i> Więcej</a>
+                      <ul class="dropdown-menu">
+                        <li><h6 class="dropdown-header">Firma</h6></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-people"></i> O nas</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-envelope"></i> Kontakt</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-question-circle"></i> Pomoc</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <form class="d-flex" role="search">
+                    <div class="input-group">
+                      <input class="form-control" type="search" placeholder="Szukaj" aria-label="Szukaj">
+                      <button class="btn btn-outline-primary" type="submit" aria-label="Szukaj"><i class="bi bi-search"></i></button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </nav>
+            <pre class="bg-dark text-light p-3 rounded mt-3 mb-0"><code>&lt;nav class="navbar navbar-expand-lg bg-body-tertiary border rounded"&gt;
+  &lt;div class="container-fluid"&gt;
+    &lt;a class="navbar-brand" href="#"&gt;&lt;i class="bi bi-boxes"&gt;&lt;/i&gt; UI Kit&lt;/a&gt;
+    &lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Pokaż menu"&gt;
+      &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="collapse navbar-collapse" id="mainMenu"&gt;
+      &lt;ul class="navbar-nav me-auto"&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link active" aria-current="page" href="#"&gt;&lt;i class="bi bi-house"&gt;&lt;/i&gt; Start&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#"&gt;&lt;i class="bi bi-images"&gt;&lt;/i&gt; Galeria&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item dropdown"&gt;
+          &lt;a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"&gt;&lt;i class="bi bi-three-dots"&gt;&lt;/i&gt; Więcej&lt;/a&gt;
+          &lt;ul class="dropdown-menu"&gt;
+            &lt;li&gt;&lt;h6 class="dropdown-header"&gt;Firma&lt;/h6&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a class="dropdown-item" href="#"&gt;&lt;i class="bi bi-people"&gt;&lt;/i&gt; O nas&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a class="dropdown-item" href="#"&gt;&lt;i class="bi bi-envelope"&gt;&lt;/i&gt; Kontakt&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;hr class="dropdown-divider"&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a class="dropdown-item" href="#"&gt;&lt;i class="bi bi-question-circle"&gt;&lt;/i&gt; Pomoc&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+      &lt;form class="d-flex" role="search"&gt;
+        &lt;div class="input-group"&gt;
+          &lt;input class="form-control" type="search" placeholder="Szukaj" aria-label="Szukaj"&gt;
+          &lt;button class="btn btn-outline-primary" type="submit" aria-label="Szukaj"&gt;&lt;i class="bi bi-search"&gt;&lt;/i&gt;&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-2 copy-button"><i class="bi bi-clipboard"></i> Kopiuj kod</button>
+          </div>
+        </section>
+
+        <section class="card mb-4" id="offcanvas-module">
+          <h2 class="card-header h5">Offcanvas, czyli wysuwany panel</h2>
+          <div class="card-body">
+            <p class="card-text">Panel wysuwany z boku ekranu. Dobre miejsce na menu, filtry albo koszyk.</p>
+            <button type="button" class="btn btn-dark" data-bs-toggle="offcanvas" data-bs-target="#sideMenu" aria-controls="sideMenu"><i class="bi bi-list"></i> Otwórz panel</button>
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="sideMenu" aria-labelledby="sideMenuLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="sideMenuLabel">Menu boczne</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Zamknij"></button>
+              </div>
+              <div class="offcanvas-body">
+                <div class="list-group">
+                  <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-person"></i> Profil</a>
+                  <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-gear"></i> Ustawienia</a>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-outline-dark" data-bs-toggle="offcanvas" data-bs-target="#cartPanel" aria-controls="cartPanel"><i class="bi bi-cart3"></i> Koszyk</button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="cartPanel" aria-labelledby="cartPanelLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="cartPanelLabel">Twój koszyk</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Zamknij"></button>
+              </div>
+              <div class="offcanvas-body">
+                <ul class="list-group">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">Naklejki <span class="badge text-bg-primary rounded-pill">3</span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">Kubek <span class="badge text-bg-primary rounded-pill">1</span></li>
+                </ul>
+              </div>
+            </div>
+            <pre class="bg-dark text-light p-3 rounded mt-3 mb-0"><code>&lt;button type="button" class="btn btn-dark" data-bs-toggle="offcanvas" data-bs-target="#sideMenu" aria-controls="sideMenu"&gt;&lt;i class="bi bi-list"&gt;&lt;/i&gt; Otwórz panel&lt;/button&gt;
+&lt;div class="offcanvas offcanvas-start" tabindex="-1" id="sideMenu" aria-labelledby="sideMenuLabel"&gt;
+  &lt;div class="offcanvas-header"&gt;
+    &lt;h5 class="offcanvas-title" id="sideMenuLabel"&gt;Menu boczne&lt;/h5&gt;
+    &lt;button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Zamknij"&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="offcanvas-body"&gt;
+    &lt;div class="list-group"&gt;
+      &lt;a href="#" class="list-group-item list-group-item-action"&gt;&lt;i class="bi bi-person"&gt;&lt;/i&gt; Profil&lt;/a&gt;
+      &lt;a href="#" class="list-group-item list-group-item-action"&gt;&lt;i class="bi bi-gear"&gt;&lt;/i&gt; Ustawienia&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;button type="button" class="btn btn-outline-dark" data-bs-toggle="offcanvas" data-bs-target="#cartPanel" aria-controls="cartPanel"&gt;&lt;i class="bi bi-cart3"&gt;&lt;/i&gt; Koszyk&lt;/button&gt;
+&lt;div class="offcanvas offcanvas-end" tabindex="-1" id="cartPanel" aria-labelledby="cartPanelLabel"&gt;
+  &lt;div class="offcanvas-header"&gt;
+    &lt;h5 class="offcanvas-title" id="cartPanelLabel"&gt;Twój koszyk&lt;/h5&gt;
+    &lt;button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Zamknij"&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="offcanvas-body"&gt;
+    &lt;ul class="list-group"&gt;
+      &lt;li class="list-group-item d-flex justify-content-between align-items-center"&gt;Naklejki &lt;span class="badge text-bg-primary rounded-pill"&gt;3&lt;/span&gt;&lt;/li&gt;
+      &lt;li class="list-group-item d-flex justify-content-between align-items-center"&gt;Kubek &lt;span class="badge text-bg-primary rounded-pill"&gt;1&lt;/span&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-2 copy-button"><i class="bi bi-clipboard"></i> Kopiuj kod</button>
+          </div>
+        </section>
+
+        <section class="card mb-4" id="modal-module">
+          <h2 class="card-header h5">Modal potwierdzenia</h2>
+          <div class="card-body">
+            <p class="card-text">Okno, które pyta o zgodę przed akcją, której nie da się cofnąć.</p>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i> Usuń zdjęcie</button>
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Czy na pewno usunąć?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
+                  </div>
+                  <div class="modal-body">
+                    Usuniętego zdjęcia nie da się odzyskać. Jeśli chcesz je zachować, kliknij „Anuluj”.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tak, usuń</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-box-arrow-in-right"></i> Zaloguj się</button>
+            <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Logowanie</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
+                  </div>
+                  <div class="modal-body">
+                    <label for="loginEmail" class="form-label">E-mail</label>
+                    <input type="email" class="form-control mb-3" id="loginEmail">
+                    <label for="loginPassword" class="form-label">Hasło</label>
+                    <input type="password" class="form-control" id="loginPassword">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-link me-auto" data-bs-toggle="modal" data-bs-target="#registerModal">Nie mam konta</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Zaloguj</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Rejestracja</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
+                  </div>
+                  <div class="modal-body">
+                    <label for="registerName" class="form-label">Imię</label>
+                    <input type="text" class="form-control mb-3" id="registerName">
+                    <label for="registerEmail" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="registerEmail">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-link me-auto" data-bs-toggle="modal" data-bs-target="#loginModal">Mam już konto</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Załóż konto</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <pre class="bg-dark text-light p-3 rounded mt-3 mb-0"><code>&lt;button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"&gt;&lt;i class="bi bi-trash"&gt;&lt;/i&gt; Usuń zdjęcie&lt;/button&gt;
+&lt;div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true"&gt;
+  &lt;div class="modal-dialog modal-dialog-centered"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;h5 class="modal-title" id="deleteModalLabel"&gt;Czy na pewno usunąć?&lt;/h5&gt;
+        &lt;button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-body"&gt;
+        Usuniętego zdjęcia nie da się odzyskać. Jeśli chcesz je zachować, kliknij „Anuluj”.
+      &lt;/div&gt;
+      &lt;div class="modal-footer"&gt;
+        &lt;button type="button" class="btn btn-secondary" data-bs-dismiss="modal"&gt;Anuluj&lt;/button&gt;
+        &lt;button type="button" class="btn btn-danger" data-bs-dismiss="modal"&gt;Tak, usuń&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal"&gt;&lt;i class="bi bi-box-arrow-in-right"&gt;&lt;/i&gt; Zaloguj się&lt;/button&gt;
+&lt;div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"&gt;
+  &lt;div class="modal-dialog modal-sm modal-dialog-centered"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;h5 class="modal-title" id="loginModalLabel"&gt;Logowanie&lt;/h5&gt;
+        &lt;button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-body"&gt;
+        &lt;label for="loginEmail" class="form-label"&gt;E-mail&lt;/label&gt;
+        &lt;input type="email" class="form-control mb-3" id="loginEmail"&gt;
+        &lt;label for="loginPassword" class="form-label"&gt;Hasło&lt;/label&gt;
+        &lt;input type="password" class="form-control" id="loginPassword"&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-footer"&gt;
+        &lt;button type="button" class="btn btn-link me-auto" data-bs-toggle="modal" data-bs-target="#registerModal"&gt;Nie mam konta&lt;/button&gt;
+        &lt;button type="button" class="btn btn-primary" data-bs-dismiss="modal"&gt;Zaloguj&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"&gt;
+  &lt;div class="modal-dialog modal-sm modal-dialog-centered"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;h5 class="modal-title" id="registerModalLabel"&gt;Rejestracja&lt;/h5&gt;
+        &lt;button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-body"&gt;
+        &lt;label for="registerName" class="form-label"&gt;Imię&lt;/label&gt;
+        &lt;input type="text" class="form-control mb-3" id="registerName"&gt;
+        &lt;label for="registerEmail" class="form-label"&gt;E-mail&lt;/label&gt;
+        &lt;input type="email" class="form-control" id="registerEmail"&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-footer"&gt;
+        &lt;button type="button" class="btn btn-link me-auto" data-bs-toggle="modal" data-bs-target="#loginModal"&gt;Mam już konto&lt;/button&gt;
+        &lt;button type="button" class="btn btn-success" data-bs-dismiss="modal"&gt;Załóż konto&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-2 copy-button"><i class="bi bi-clipboard"></i> Kopiuj kod</button>
+          </div>
+        </section>
+
+        <section class="card mb-4" id="toast-module">
+          <h2 class="card-header h5">Toast „Zapisano!”</h2>
+          <div class="card-body">
+            <p class="card-text">Krótkie powiadomienie w rogu ekranu, które samo znika. Działa razem ze skryptem z pliku script.js.</p>
+            <button type="button" class="btn btn-success" id="toastButton"><i class="bi bi-bell"></i> Pokaż toast</button>
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+              <div class="toast align-items-center text-bg-success border-0" id="saveToast" role="status" aria-live="polite" aria-atomic="true">
+                <div class="d-flex">
+                  <div class="toast-body"><i class="bi bi-check-circle-fill"></i> Zapisano!</div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Zamknij"></button>
+                </div>
+              </div>
+              <div class="toast align-items-center text-bg-dark border-0" id="copyToast" role="status" aria-live="polite" aria-atomic="true">
+                <div class="d-flex">
+                  <div class="toast-body"><i class="bi bi-clipboard-check"></i> Skopiowano</div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Zamknij"></button>
+                </div>
+              </div>
+            </div>
+            <pre class="bg-dark text-light p-3 rounded mt-3 mb-0"><code>&lt;button type="button" class="btn btn-success" id="toastButton"&gt;&lt;i class="bi bi-bell"&gt;&lt;/i&gt; Pokaż toast&lt;/button&gt;
+&lt;div class="toast-container position-fixed bottom-0 end-0 p-3"&gt;
+  &lt;div class="toast align-items-center text-bg-success border-0" id="saveToast" role="status" aria-live="polite" aria-atomic="true"&gt;
+    &lt;div class="d-flex"&gt;
+      &lt;div class="toast-body"&gt;&lt;i class="bi bi-check-circle-fill"&gt;&lt;/i&gt; Zapisano!&lt;/div&gt;
+      &lt;button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Zamknij"&gt;&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-2 copy-button"><i class="bi bi-clipboard"></i> Kopiuj kod</button>
+          </div>
+        </section>
+
+        <section class="card mb-4" id="progress-module">
+          <h2 class="card-header h5">Pasek ładowania</h2>
+          <div class="card-body">
+            <p class="card-text">Pokazuje, ile już się załadowało. Działa razem ze skryptem z pliku script.js.</p>
+            <div class="progress mb-3" id="loadProgress" role="progressbar" aria-label="Postęp ładowania" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" id="loadBar" style="width: 0%">0%</div>
+            </div>
+            <button type="button" class="btn btn-primary" id="loadButton"><i class="bi bi-download"></i> Załaduj</button>
+            <pre class="bg-dark text-light p-3 rounded mt-3 mb-0"><code>&lt;div class="progress mb-3" id="loadProgress" role="progressbar" aria-label="Postęp ładowania" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"&gt;
+  &lt;div class="progress-bar progress-bar-striped progress-bar-animated" id="loadBar" style="width: 0%"&gt;0%&lt;/div&gt;
+&lt;/div&gt;
+&lt;button type="button" class="btn btn-primary" id="loadButton"&gt;&lt;i class="bi bi-download"&gt;&lt;/i&gt; Załaduj&lt;/button&gt;</code></pre>
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-2 copy-button"><i class="bi bi-clipboard"></i> Kopiuj kod</button>
+          </div>
+        </section>
+
+        <section class="card mb-4" id="spinner-module">
+          <h2 class="card-header h5">Przycisk „Wyślij” ze spinnerem</h2>
+          <div class="card-body">
+            <p class="card-text">Przycisk pokazuje, że wysyłanie trwa. Działa razem ze skryptem z pliku script.js.</p>
+            <div class="d-flex align-items-center gap-3">
+              <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Ładowanie...</span></div>
+              <div class="spinner-grow text-success" role="status"><span class="visually-hidden">Ładowanie...</span></div>
+              <button type="button" class="btn btn-primary" id="sendButton"><i class="bi bi-send"></i> Wyślij</button>
+            </div>
+            <div class="mt-3" id="sendAlert"></div>
+            <pre class="bg-dark text-light p-3 rounded mt-3 mb-0"><code>&lt;div class="d-flex align-items-center gap-3"&gt;
+  &lt;div class="spinner-border text-primary" role="status"&gt;&lt;span class="visually-hidden"&gt;Ładowanie...&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="spinner-grow text-success" role="status"&gt;&lt;span class="visually-hidden"&gt;Ładowanie...&lt;/span&gt;&lt;/div&gt;
+  &lt;button type="button" class="btn btn-primary" id="sendButton"&gt;&lt;i class="bi bi-send"&gt;&lt;/i&gt; Wyślij&lt;/button&gt;
+&lt;/div&gt;
+&lt;div class="mt-3" id="sendAlert"&gt;&lt;/div&gt;</code></pre>
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-2 copy-button"><i class="bi bi-clipboard"></i> Kopiuj kod</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+</html>

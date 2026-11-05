@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a90d9"/><stop offset="1" stop-color="#d6eaff"/></linearGradient></defs>
+<rect width="1200" height="500" fill="url(#sky)"/>
+<polygon points="0,500 0,380 200,260 380,500" fill="#95a5a6"/>
+<polygon points="820,500 1000,240 1200,360 1200,500" fill="#95a5a6"/>
+<polygon points="300,500 700,110 1100,500" fill="#7f8c8d"/>
+<polygon points="620,188 700,110 780,188 740,172 700,198 660,172" fill="#fff"/>
+<line x1="700" y1="110" x2="700" y2="40" stroke="#4d4d4d" stroke-width="6"/>
+<polygon points="703,40 770,56 703,72" fill="#e74c3c"/>
+<rect x="24" y="24" width="220" height="56" rx="12" fill="#000" fill-opacity="0.45"/>
+<text x="46" y="62" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#fff">Na szczycie</text>
+</svg>

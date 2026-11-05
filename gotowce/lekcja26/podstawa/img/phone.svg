@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="460" viewBox="0 0 260 460">
+  <rect x="10" y="10" width="240" height="440" rx="36" fill="#212529"/>
+  <rect x="24" y="44" width="212" height="380" rx="14" fill="#ffffff"/>
+  <rect x="100" y="24" width="60" height="8" rx="4" fill="#495057"/>
+  <rect x="24" y="44" width="212" height="60" rx="14" fill="#0d6efd"/>
+  <text x="130" y="82" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">StudyBuddy</text>
+  <rect x="42" y="124" width="176" height="44" rx="10" fill="#e9ecef"/>
+  <circle cx="64" cy="146" r="10" fill="#198754"/>
+  <rect x="84" y="140" width="112" height="12" rx="6" fill="#adb5bd"/>
+  <rect x="42" y="180" width="176" height="44" rx="10" fill="#e9ecef"/>
+  <circle cx="64" cy="202" r="10" fill="#198754"/>
+  <rect x="84" y="196" width="92" height="12" rx="6" fill="#adb5bd"/>
+  <rect x="42" y="236" width="176" height="44" rx="10" fill="#e9ecef"/>
+  <circle cx="64" cy="258" r="9" fill="none" stroke="#adb5bd" stroke-width="3"/>
+  <rect x="84" y="252" width="104" height="12" rx="6" fill="#adb5bd"/>
+  <rect x="42" y="306" width="176" height="14" rx="7" fill="#dee2e6"/>
+  <rect x="42" y="306" width="118" height="14" rx="7" fill="#198754"/>
+  <rect x="42" y="346" width="176" height="44" rx="22" fill="#ffc107"/>
+</svg>

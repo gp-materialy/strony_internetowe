@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bossowy Quiz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body class="bg-dark text-light">
+  <main class="container py-4">
+    <h1 class="text-center text-warning mb-4">Bossowy Quiz</h1>
+    <div class="alert alert-info" role="alert">
+      <i class="bi bi-info-circle-fill me-2" aria-hidden="true"></i>Zaznacz po jednej odpowiedzi w każdym pytaniu. Utknąłeś? Przeczytaj podpowiedź pod pytaniem.
+    </div>
+    <form>
+      <div class="card bg-secondary text-light mb-4">
+        <div class="card-header">Pytanie 1</div>
+        <div class="card-body">
+          <img src="img/boss1.svg" alt="Tajemniczy boss numer 1" class="img-fluid rounded mb-3">
+          <h2 class="card-title h4">Jak nazywa się ten boss?</h2>
+          <p class="card-text">Zaznacz jedną odpowiedź.</p>
+          <div class="mb-2"><input type="radio" name="odpowiedz1" id="p1-odp1" class="me-2"><label for="p1-odp1">Ender Dragon</label></div>
+          <div class="mb-2"><input type="radio" name="odpowiedz1" id="p1-odp2" class="me-2"><label for="p1-odp2">Drogon</label></div>
+          <div class="mb-2"><input type="radio" name="odpowiedz1" id="p1-odp3" class="me-2"><label for="p1-odp3">Shén Lóng</label></div>
+        </div>
+        <div class="card-footer">Podpowiedź: mieszka w Endzie, ostatnim wymiarze Minecrafta.</div>
+      </div>
+      <div class="card bg-secondary text-light mb-4">
+        <div class="card-header">Pytanie 2</div>
+        <div class="card-body">
+          <img src="img/boss2.svg" alt="Tajemniczy boss numer 2" class="img-fluid rounded mb-3">
+          <h2 class="card-title h4">Jak nazywa się ten boss?</h2>
+          <p class="card-text">Zaznacz jedną odpowiedź.</p>
+          <div class="mb-2"><input type="radio" name="odpowiedz2" id="p2-odp1" class="me-2"><label for="p2-odp1">Rider</label></div>
+          <div class="mb-2"><input type="radio" name="odpowiedz2" id="p2-odp2" class="me-2"><label for="p2-odp2">Goro</label></div>
+          <div class="mb-2"><input type="radio" name="odpowiedz2" id="p2-odp3" class="me-2"><label for="p2-odp3">Shén Lóng</label></div>
+        </div>
+        <div class="card-footer">Podpowiedź: ma cztery ręce i walczy w turnieju Mortal Kombat.</div>
+      </div>
+      <div class="card bg-secondary text-light mb-4">
+        <div class="card-header">Pytanie 3</div>
+        <div class="card-body">
+          <img src="img/boss3.svg" alt="Tajemniczy boss numer 3" class="img-fluid rounded mb-3">
+          <h2 class="card-title h4">Jak nazywa się ten boss?</h2>
+          <p class="card-text">Zaznacz jedną odpowiedź.</p>
+          <div class="mb-2"><input type="radio" name="odpowiedz3" id="p3-odp1" class="me-2"><label for="p3-odp1">Cell</label></div>
+          <div class="mb-2"><input type="radio" name="odpowiedz3" id="p3-odp2" class="me-2"><label for="p3-odp2">Buu</label></div>
+          <div class="mb-2"><input type="radio" name="odpowiedz3" id="p3-odp3" class="me-2"><label for="p3-odp3">Freezer</label></div>
+        </div>
+        <div class="card-footer">Podpowiedź: to odwieczny wróg Goku z Dragon Balla.</div>
+      </div>
+      <button type="button" class="btn btn-primary btn-lg me-2">
+        <i class="bi bi-check2-circle me-2" aria-hidden="true"></i>Sprawdź odpowiedzi
+      </button>
+      <button type="reset" class="btn btn-outline-light btn-lg">
+        <i class="bi bi-arrow-counterclockwise me-2" aria-hidden="true"></i>Wyczyść
+      </button>
+    </form>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

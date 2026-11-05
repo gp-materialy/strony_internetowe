@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pl" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyBuddy - ucz się mądrzej</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@500;700&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar bg-body-tertiary">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">StudyBuddy</a>
+      <button id="theme-toggle" class="btn btn-primary" type="button" aria-label="Przełącz tryb jasny i ciemny">
+        <i id="theme-icon" class="bi bi-moon" aria-hidden="true"></i>
+      </button>
+    </div>
+  </nav>
+
+  <header class="bg-primary text-white py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-md-6">
+          <h1 class="display-4 fw-bold">Ucz się mądrzej ze StudyBuddy</h1>
+          <p class="lead">Plan nauki, przypomnienia i quizy w jednym miejscu. Za każdą powtórkę zbierasz punkty!</p>
+          <a href="#cennik" class="btn btn-light btn-lg">Zacznij za darmo</a>
+        </div>
+        <div class="col-md-6 text-center">
+          <img src="img/hero.svg" class="img-fluid" alt="Otwarta książka, nad którą świeci żarówka">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="zalety" class="py-5">
+      <div class="container">
+        <h2 class="text-center fw-bold mb-4">Dlaczego StudyBuddy?</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <i class="bi bi-calendar-check fs-1 text-primary" aria-hidden="true"></i>
+            <h3 class="h5 mt-2">Plan na każdy dzień</h3>
+            <p class="text-body-secondary">Dzielisz materiał na małe porcje i wiesz, co powtórzyć dzisiaj.</p>
+          </div>
+          <div class="col-md-4">
+            <i class="bi bi-bell fs-1 text-primary" aria-hidden="true"></i>
+            <h3 class="h5 mt-2">Przypomnienia</h3>
+            <p class="text-body-secondary">Aplikacja przypomni ci o powtórce, zanim zapomnisz.</p>
+          </div>
+          <div class="col-md-4">
+            <i class="bi bi-trophy fs-1 text-primary" aria-hidden="true"></i>
+            <h3 class="h5 mt-2">Punkty i odznaki</h3>
+            <p class="text-body-secondary">Za każdą powtórkę dostajesz punkty, a za serie odznaki.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="jak-to-dziala" class="py-5 bg-body-tertiary">
+      <div class="container">
+        <h2 class="text-center fw-bold mb-4">Jak to działa?</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <span class="badge bg-primary rounded-pill fs-5">1</span>
+            <h3 class="h5 mt-2">Załóż konto</h3>
+            <p class="text-body-secondary">Wpisz imię i wybierz swoją klasę.</p>
+          </div>
+          <div class="col-md-4">
+            <span class="badge bg-primary rounded-pill fs-5">2</span>
+            <h3 class="h5 mt-2">Dodaj przedmioty</h3>
+            <p class="text-body-secondary">Wybierz, czego chcesz się uczyć, i ustaw datę sprawdzianu.</p>
+          </div>
+          <div class="col-md-4">
+            <span class="badge bg-primary rounded-pill fs-5">3</span>
+            <h3 class="h5 mt-2">Ucz się po kawałku</h3>
+            <p class="text-body-secondary">Codziennie rób krótką powtórkę i zbieraj punkty.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="opinie" class="py-5">
+      <div class="container">
+        <h2 class="text-center fw-bold mb-4">Co mówią uczniowie?</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <figure class="card h-100 p-3 mb-0">
+              <blockquote class="blockquote text-warning-emphasis">
+                <p>Wreszcie wiem, co powtórzyć przed klasówką!</p>
+              </blockquote>
+              <figcaption class="mb-0">Ola, 11 lat</figcaption>
+            </figure>
+          </div>
+          <div class="col-md-4">
+            <figure class="card h-100 p-3 mb-0 text-bg-info">
+              <blockquote class="blockquote">
+                <p>Punkty za powtórki motywują mnie bardziej niż oceny.</p>
+              </blockquote>
+              <figcaption class="mb-0">Kuba, 12 lat</figcaption>
+            </figure>
+          </div>
+          <div class="col-md-4">
+            <figure class="card h-100 p-3 mb-0">
+              <blockquote class="blockquote text-body-secondary">
+                <p>Przypomnienia uratowały mój sprawdzian z angielskiego.</p>
+              </blockquote>
+              <figcaption class="mb-0">Zuza, 10 lat</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cennik" class="py-5">
+      <div class="container">
+        <h2 class="text-center fw-bold mb-4">Cennik</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h3 class="h5">Start</h3>
+                <p class="fs-2 fw-bold">0 zł</p>
+                <ul class="list-unstyled text-body-secondary">
+                  <li>Plan nauki</li>
+                  <li>3 quizy w tygodniu</li>
+                </ul>
+                <a href="#" class="btn btn-primary">Wybieram</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 border-primary border-2">
+              <div class="card-body">
+                <span class="badge text-bg-warning mb-2">Najczęściej wybierany</span>
+                <h3 class="h5">Plus</h3>
+                <p class="fs-2 fw-bold">19 zł / mies.</p>
+                <ul class="list-unstyled text-body-secondary">
+                  <li>Wszystko ze Startu</li>
+                  <li>Quizy bez limitu</li>
+                  <li>Przypomnienia</li>
+                </ul>
+                <a href="#" class="btn btn-primary">Wybieram</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h3 class="h5">Rodzina</h3>
+                <p class="fs-2 fw-bold">39 zł / mies.</p>
+                <ul class="list-unstyled text-body-secondary">
+                  <li>Wszystko z Plusa</li>
+                  <li>Do 4 kont</li>
+                  <li>Raport dla rodzica</li>
+                </ul>
+                <a href="#" class="btn btn-primary">Wybieram</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="blog" class="py-5 bg-body-tertiary">
+      <div class="container">
+        <h2 class="text-center fw-bold mb-4">Blog StudyBuddy</h2>
+        <article class="col-lg-8 mx-auto">
+          <h3 class="display-6 fw-bold">3 sposoby na szybszą powtórkę</h3>
+          <p class="text-end small text-body-secondary">4 listopada 2026</p>
+          <p class="lead">Masz 15 minut przed lekcją? Tyle wystarczy, jeśli wiesz, od czego zacząć.</p>
+          <ol>
+            <li class="fw-bold">Zacznij od tego, czego nie pamiętasz.</li>
+            <li class="fw-bold">Opowiedz temat własnymi słowami.</li>
+            <li class="fw-bold">Na koniec zrób krótki quiz.</li>
+          </ol>
+          <figure class="text-center my-4">
+            <blockquote class="blockquote">
+              <p>Lepiej uczyć się 15 minut codziennie niż 2 godziny raz w tygodniu.</p>
+            </blockquote>
+            <figcaption class="blockquote-footer text-body-secondary">Zespół StudyBuddy</figcaption>
+          </figure>
+          <p>
+            Uczysz się <span class="text-uppercase">codziennie</span>? Super!
+            Pamiętaj tylko, żeby <span class="text-danger-emphasis">wyciszyć powiadomienia z gier</span>,
+            zrobić <span class="fw-light">krótką przerwę</span> co 15 minut
+            i <span class="text-body-secondary">pić wodę</span>.
+          </p>
+          <p class="text-start">Powodzenia na najbliższym sprawdzianie!</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="rymowanka" class="py-5">
+      <div class="container text-center">
+        <h2 class="display-5 fw-bold">Rymowanka na dobry start</h2>
+        <figure class="mt-4">
+          <blockquote class="blockquote">
+            <p class="lead">
+              Krótka powtórka <span class="text-uppercase">każdego dnia</span><br>
+              sprawia, że wiedza w głowie trwa.<br>
+              Zbieraj punkty, zdobywaj <span class="text-danger-emphasis">odznaki</span> -<br>
+              nauka jest lepsza niż słodkie przysmaki!
+            </p>
+          </blockquote>
+          <figcaption class="blockquote-footer text-body-secondary">Rymowanka od AI Text</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-dark text-white py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 text-center text-md-start">
+          <p class="mb-0">&copy; 2026 StudyBuddy</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end fst-italic">
+          <p class="mb-0">Ucz się mądrze, nie dłużej.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
