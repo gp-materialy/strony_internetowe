@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@600&display=swap");
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #0083b0, #00b4db);
+}
+
+.app-title {
+    font-family: "Kanit", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#meme {
+    display: block;
+    max-width: 100%;
+}

@@ -1,0 +1,15 @@
+.nav-pills {
+  --bs-nav-pills-link-active-bg: #e62117;
+}
+
+.card {
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.recommended-thumb {
+  width: 168px;
+}
